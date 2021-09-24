@@ -74,9 +74,11 @@ app.get('/weeklys-answers', (req, res) => {
   })
 })
 
-// Get Main Challenge questions from MainChallengeAdmin table
-app.get('/mc-questions', (req, res) => {
-    connection.query('SELECT * FROM MainChallengeAdmin;', (err, result) => {
+// SELECT MainChallengeAdmin_V2.MC_Questions, MainChallengeAdmin_V2.MC_Point_Value, MainChallengeResults_V2.* FROM MainChallengeAdmin_V2 JOIN MainChallengeResults_V2 WHERE MainChallengeAdmin_V2.Question_Number = MainChallengeResults_V2.Question_Number;
+
+// Get Main Challenge questions and results from MainChallengeAdmin_V2 and MainChallengeResults_V2 table
+app.get('/mc-questions-and-results', (req, res) => {
+    connection.query('SELECT MainChallengeAdmin_V2.MC_Questions, MainChallengeAdmin_V2.MC_Point_Value, MainChallengeResults_V2.* FROM MainChallengeAdmin_V2 JOIN MainChallengeResults_V2 WHERE MainChallengeAdmin_V2.Question_Number = MainChallengeResults_V2.Question_Number;', (err, result) => {
       if(err) {
         console.log(err);
       } else {
@@ -85,16 +87,27 @@ app.get('/mc-questions', (req, res) => {
   })
 })
 
-// Get Main Challenge players answers from MainChallengeResults table
-app.get('/mc-answers', (req, res) => {
-    connection.query('SELECT Contestants.Contestant_Name, MainChallengeResults.* FROM Contestants JOIN MainChallengeResults ON Contestants.Contestant_ID = MainChallengeResults.Contestant_ID;', (err, result) => {
-      if(err) {
-        console.log(err);
-      } else {
-        res.send(result);
-      }
-  })
-})
+// // Get Main Challenge questions from MainChallengeAdmin table
+// app.get('/mc-questions', (req, res) => {
+//     connection.query('SELECT * FROM MainChallengeAdmin;', (err, result) => {
+//       if(err) {
+//         console.log(err);
+//       } else {
+//         res.send(result);
+//       }
+//   })
+// })
+
+// // Get Main Challenge players answers from MainChallengeResults table
+// app.get('/mc-answers', (req, res) => {
+//     connection.query('SELECT Contestants.Contestant_Name, MainChallengeResults.* FROM Contestants JOIN MainChallengeResults ON Contestants.Contestant_ID = MainChallengeResults.Contestant_ID;', (err, result) => {
+//       if(err) {
+//         console.log(err);
+//       } else {
+//         res.send(result);
+//       }
+//   })
+// })
 
 app.listen(PORT, hostname, () =>
   console.log(`Server running on http://${hostname}:${PORT}`)
