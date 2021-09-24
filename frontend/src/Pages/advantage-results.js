@@ -14,13 +14,18 @@ export default function AdvantageResults() {
       .catch((err) => console.log(err));
   }, []);
 
+const sumEachPlayerScore = (players) => {
+  
+  return players.Week_1 + players.Week_2 + players.Week_3 + players.Week_4 + players.Week_5 + players.Week_6 + players.Week_7 + players.Week_8 + players.Week_9 + players.Week_10 + players.Week_11 + players.Week_12 + players.Week_13 + players.Week_14  ;
+}
+
   return (
     <div>
-      {/* <p>{advantageResults}</p> */}
       <table>
           <thead>
             <tr>
               <th>Player Name</th>
+              <th>Total</th>
               <th>Week 1</th>
               <th>Week 2</th>
               <th>Week 3</th>
@@ -41,6 +46,7 @@ export default function AdvantageResults() {
           <tbody key={index}>
             <tr>
               <td>{result.Player_Name}</td>
+              <td>{sumEachPlayerScore(result)}</td>
               <td>{result.Week_1}</td>
               <td>{result.Week_2}</td>
               <td>{result.Week_3}</td>

@@ -7,6 +7,7 @@ export default function Navbar() {
       <Link to='/'>Home</Link>
       <Link to='/advantage-results'>Advantage Results</Link>
       <Link to='/mc-results'>Advantage Results</Link>
+      <Link to='/weeklys-results'>Weekly Results</Link>
     </nav>
   )
 }
