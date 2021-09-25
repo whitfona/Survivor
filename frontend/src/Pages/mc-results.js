@@ -32,88 +32,88 @@ export default function MCResults() {
   return (
     <div>
       {(week1.length > 0) && 
-        <>
+        <div className="my-2">
           <h1>Week 1</h1>
           <MainChallengeTable questionAndResults={week1} />
-        </>
+        </div>
       }
       {(week2.length > 0) && 
-        <>
+        <div className="my-2">
           <h1>Week 2</h1>
           <MainChallengeTable questionAndResults={week2} />
-        </>
+        </div>
       }
       {(week3.length > 0) && 
-        <>
+        <div className="my-2">
           <h1>Week 3</h1>
           <MainChallengeTable questionAndResults={week3} />
-        </>
+        </div>
       }
       {(week4.length > 0) && 
-        <>
+        <div className="my-2">
           <h1>Week 4</h1>
           <MainChallengeTable questionAndResults={week4} />
-        </>
+        </div>
       }
       {(week5.length > 0) && 
-        <>
+        <div className="my-2">
           <h1>Week 5</h1>
           <MainChallengeTable questionAndResults={week5} />
-        </>
+        </div>
       }
       {(week6.length > 0) && 
-        <>
+        <div className="my-2">
           <h1>Week 6</h1>
           <MainChallengeTable questionAndResults={week6} />
-        </>
+        </div>
       }
       {(week7.length > 0) && 
-        <>
+        <div className="my-2">
           <h1>Week 7</h1>
           <MainChallengeTable questionAndResults={week7} />
-        </>
+        </div>
       }
       {(week8.length > 0) && 
-        <>
+        <div className="my-2">
           <h1>Week 8</h1>
           <MainChallengeTable questionAndResults={week8} />
-        </>
+        </div>
       }
       {(week9.length > 0) && 
-        <>
+        <div className="my-2">
           <h1>Week 9</h1>
           <MainChallengeTable questionAndResults={week9} />
-        </>
+        </div>
       }
       {(week10.length > 0) && 
-        <>
+        <div className="my-2">
           <h1>Week 10</h1>
           <MainChallengeTable questionAndResults={week10} />
-        </>
+        </div>
       }
       {(week11.length > 0) && 
-        <>
+        <div className="my-2">
           <h1>Week 11</h1>
           <MainChallengeTable questionAndResults={week11} />
-        </>
+        </div>
       }
       {(week12.length > 0) && 
-        <>
+        <div className="my-2">
           <h1>Week 12</h1>
           <MainChallengeTable questionAndResults={week12} />
-        </>
+        </div>
       }
       {(week13.length > 0) && 
-        <>
+        <div className="my-2">
           <h1>Week 13</h1>
           <MainChallengeTable questionAndResults={week13} />
-        </>
+        </div>
       }
       {(week14.length > 0) && 
-        <>
+        <div className="my-2">
           <h1>Week 14</h1>
           <MainChallengeTable questionAndResults={week14} />
-        </>
+        </div>
       }
     </div>
   )

@@ -1,38 +1,125 @@
-.App {
+
+/*
+
+
+*/
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Lato', sans-serif;
+  color: var(--clr-text-primary);
+}
+
+:root {
+  --clr-primary: #054C58;  /* Dark Blue */
+  --clr-primary-lighter: #839699; /* Light Blue, almost grey */
+  --clr-secondary: #A6560C; /* Dark Orange */
+  --clr-secondary-lighter: #D1AD8B; /* Light Orange */
+  --clr-table-grey: #F3F3F3; /* Light Grey */
+  --clr-table-blue: #EBFCFF; /* Light Blue */
+  --clr-text-primary: #838181;
+}
+
+body {
+  background-color: lightblue;
+}
+
+/****************************** UTILITY CLASSES ******************************/
+p {
+  line-height: 1.6;
+}
+
+.font-900 {
+  font-weight: 900;
+}
+
+.my-1 {
+  padding: 1rem 0;
+}
+
+.my-2 {
+  padding: 2rem 0;
+}
+
+.page-container {
+  max-width: 1280px;
+  margin: auto;
+}
+
+.content-container {
+  background-color: #fff;
+  margin-top: 2.5rem;
+  padding: 2rem;
+}
+
+
+/****************************** NAVBAR ******************************/
+nav a {
+  color: #fff;
+  background-color: var(--clr-primary-lighter);
+  text-decoration: none;
+  display: inline-block;
+  width: 120px;
+  margin-right: 16px;
+  padding: 3rem 0 1rem;
+  text-align: center;
+  transition: all 0.3s ease-in-out;
+}
+
+nav a:hover {
+  background-color: var(--clr-primary);
+  cursor: pointer;
+}
+
+.link-active {
+  background-color: var(--clr-primary);
+}
+
+/****************************** TABLES ******************************/
+
+.table-container {
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+table tbody:nth-child(odd) {
+  background-color: var(--clr-table-grey);
+}
+
+table tbody:nth-child(even) {
+  background-color: var(--clr-table-blue);
+}
+
+table th {
+  padding: 1rem;
+}
+
+table td {
+  padding: 0.5rem;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+table td:nth-child(1) {
+  text-align: left;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/****************************** FOOTER ******************************/
+footer {
+  padding: 0.75rem;
+  background: var(--clr-secondary);
+  color: #fff;
+  text-align: center;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+footer a {
+  color: #fff;
+  text-decoration: none;
 }
