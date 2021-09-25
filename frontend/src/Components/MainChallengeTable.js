@@ -27,9 +27,10 @@ questionAndResults.map((result) => (
 
   return (
     <>
-      <table>
+      <div className="table-container">
+        <table>
           <thead>
-            <tr>
+            <tr className="font-900">
               <th>Activity</th>
               <th>Points</th>
               <th>Eric E</th>
@@ -79,31 +80,32 @@ questionAndResults.map((result) => (
             
           {questionAndResults.map((result, index) => (
             <tbody key={index}>
-            <tr>
-              <td>{result.MC_Questions}</td>
-              <td>{result.MC_Point_Value}</td>
-              <td>{result.Eric_E * result.MC_Point_Value}</td>
-              <td>{result.Heather_A * result.MC_Point_Value}</td>
-              <td>{result.Erika_C * result.MC_Point_Value}</td>
-              <td>{result.Genie_C * result.MC_Point_Value}</td>
-              <td>{result.Ricard_F * result.MC_Point_Value}</td>
-              <td>{result.Xander_H * result.MC_Point_Value}</td>
-              <td>{result.Evvie_J * result.MC_Point_Value}</td>
-              <td>{result.Danny_M * result.MC_Point_Value}</td>
-              <td>{result.Nasser_M * result.MC_Point_Value}</td>
-              <td>{result.Deshawn_R * result.MC_Point_Value}</td>
-              <td>{result.Brad_R * result.MC_Point_Value}</td>
-              <td>{result.Jairus_R * result.MC_Point_Value}</td>
-              <td>{result.Tiffany_S * result.MC_Point_Value}</td>
-              <td>{result.Sydney_S * result.MC_Point_Value}</td>
-              <td>{result.Shantel_S * result.MC_Point_Value}</td>
-              <td>{result.David_V * result.MC_Point_Value}</td>
-              <td>{result.Liana_W * result.MC_Point_Value}</td>
-              <td>{result.Sara_W * result.MC_Point_Value}</td>
-            </tr>
-          </tbody>
+              <tr>
+                <td>{result.MC_Questions}</td>
+                <td>{result.MC_Point_Value}</td>
+                <td>{result.Eric_E * result.MC_Point_Value}</td>
+                <td>{result.Heather_A * result.MC_Point_Value}</td>
+                <td>{result.Erika_C * result.MC_Point_Value}</td>
+                <td>{result.Genie_C * result.MC_Point_Value}</td>
+                <td>{result.Ricard_F * result.MC_Point_Value}</td>
+                <td>{result.Xander_H * result.MC_Point_Value}</td>
+                <td>{result.Evvie_J * result.MC_Point_Value}</td>
+                <td>{result.Danny_M * result.MC_Point_Value}</td>
+                <td>{result.Nasser_M * result.MC_Point_Value}</td>
+                <td>{result.Deshawn_R * result.MC_Point_Value}</td>
+                <td>{result.Brad_R * result.MC_Point_Value}</td>
+                <td>{result.Jairus_R * result.MC_Point_Value}</td>
+                <td>{result.Tiffany_S * result.MC_Point_Value}</td>
+                <td>{result.Sydney_S * result.MC_Point_Value}</td>
+                <td>{result.Shantel_S * result.MC_Point_Value}</td>
+                <td>{result.David_V * result.MC_Point_Value}</td>
+                <td>{result.Liana_W * result.MC_Point_Value}</td>
+                <td>{result.Sara_W * result.MC_Point_Value}</td>
+              </tr>
+            </tbody>
           ))}
         </table>
+      </div>
     </>
   )
 }

@@ -1,13 +1,14 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 export default function Navbar() {
   return (
     <nav>
-      <Link to='/'>Home</Link>
-      <Link to='/advantage-results'>Advantage Results</Link>
-      <Link to='/mc-results'>Advantage Results</Link>
-      <Link to='/weeklys-results'>Weekly Results</Link>
+      <NavLink activeClassName="link-active" exact to='/'>Home</NavLink>
+      <NavLink activeClassName="link-active" to='/mc-results'>Tribe Score</NavLink>
+      <NavLink activeClassName="link-active" to='/advantage-results'>Advantage</NavLink>
+      <NavLink activeClassName="link-active" to='/weeklys-results'>Weeklys</NavLink>
+      <NavLink activeClassName="link-active" exact to='/'>Survivors</NavLink>
     </nav>
   )
 }
