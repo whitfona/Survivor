@@ -10,6 +10,9 @@ import Home from './Pages/home'
 import MCResults from './Pages/mc-results';
 import PlayerDashboard from './Pages/player-dashboard';
 import WeeklysResults from './Pages/weeklys-results';
+import Login from './Pages/login';
+import Signup from './Pages/signup';
+import WeeklysSubmissionForm from './Components/WeeklysSubmissionForm';
 // import logo from './logo.svg';
 
 export default function App() {
@@ -25,6 +28,9 @@ export default function App() {
             <Route path='/weeklys-results' component={WeeklysResults} />
             <Route path='/player-dashboard' component={PlayerDashboard} />
             <Route path='/admin-dashboard' component={AdminDashboard} />
+            <Route path='/login' component={Login} />
+            <Route path='/signup' component={Signup} />
+            <Route path='/weeklysform' component={WeeklysSubmissionForm} />
             <Route path='*' component={Error404} />
           </Switch>
         </div>

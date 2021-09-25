@@ -87,6 +87,19 @@ app.get('/mc-questions-and-results', (req, res) => {
   })
 })
 
+// Add Player answer for Weekly Questions
+app.post('/weekly-submissions', (req, res) => {
+  const { user, week, q1, q2, q3, q4, q5 } = req.body;
+
+  connection.query("INSERT INTO `WeeklysPlayerAnswers` (`Weeklys_Player_Results_ID`, `Player_ID`, `Week`, `WC_Q1_Answer`, `WC_Q2_Answer`, `WC_Q3_Answer`, `WC_Q4_Answer`, `WC_Q5_Answer`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?)", [user, week, q1, q2, q3, q4, q5], (err, result) => {
+    if(err) {
+      console.log(err)
+    } else {
+      res.send('Answers Received!')
+    }
+  })
+})
+
 // // Get Main Challenge questions from MainChallengeAdmin table
 // app.get('/mc-questions', (req, res) => {
 //     connection.query('SELECT * FROM MainChallengeAdmin;', (err, result) => {
