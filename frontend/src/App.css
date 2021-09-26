@@ -52,7 +52,7 @@ p {
 
 .page-container {
   max-width: 1280px;
-  margin: -2px auto;
+  margin: -6px auto;
 }
 
 .content-container {
@@ -200,7 +200,7 @@ nav a:hover {
   background: var(--clr-secondary);
   color: #fff;
   transition: var(--btn-transition);
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
 }
 
 .login input[type="submit"]:hover, .signup input[type="submit"]:hover {
@@ -208,6 +208,16 @@ nav a:hover {
   background: var(--clr-secondary-lighter);
   color: #606060;
   cursor: pointer;
+}
+
+.error-msg {
+  height: 60px;
+}
+
+.error-msg p {
+  color: red;
+  font-size: 20px;
+  font-weight: 600;
 }
 
 /****************************** TABLES ******************************/

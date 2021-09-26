@@ -13,27 +13,30 @@ import WeeklysResults from './Pages/weeklys-results';
 import Login from './Pages/login';
 import Signup from './Pages/signup';
 import WeeklysSubmissionForm from './Components/WeeklysSubmissionForm';
+import { UserProvider } from './Components/UserContext';
 // import logo from './logo.svg';
 
 export default function App() {
   return (
     <div className='page-container'>
       <Router>
+        <UserProvider>
         <Navbar />
-        <div className="content-container">
-          <Switch>
-            <Route exact path='/' component={Home} />
-            <Route path='/advantage-results' component={AdvantageResults} />
-            <Route path='/mc-results' component={MCResults} />
-            <Route path='/weeklys-results' component={WeeklysResults} />
-            <Route path='/player-dashboard' component={PlayerDashboard} />
-            <Route path='/admin-dashboard' component={AdminDashboard} />
-            <Route path='/login' component={Login} />
-            <Route path='/signup' component={Signup} />
-            <Route path='/weeklysform' component={WeeklysSubmissionForm} />
-            <Route path='*' component={Error404} />
-          </Switch>
-        </div>
+          <div className="content-container">
+            <Switch>
+              <Route exact path='/' component={Home} />
+              <Route path='/advantage-results' component={AdvantageResults} />
+              <Route path='/mc-results' component={MCResults} />
+              <Route path='/weeklys-results' component={WeeklysResults} />
+              <Route path='/player-dashboard' component={PlayerDashboard} />
+              <Route path='/admin-dashboard' component={AdminDashboard} />
+              <Route path='/login' component={Login} />
+              <Route path='/signup' component={Signup} />
+              <Route path='/weeklysform' component={WeeklysSubmissionForm} />
+              <Route path='*' component={Error404} />
+            </Switch>
+          </div>
+        </UserProvider>
         <Footer />
       </Router>
     </div>
