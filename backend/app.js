@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const mysql = require('mysql');
 const cors = require('cors');
+const e = require('express');
 // const bcrypt = require('bcrypt');
 
 const app = express();
@@ -96,6 +97,49 @@ app.post('/weekly-submissions', (req, res) => {
       console.log(err)
     } else {
       res.send('Answers Received!')
+    }
+  })
+})
+
+// Create new user
+app.post('/create-user', (req, res) => {
+  const { name, email, password, passphrase } = req.body;
+
+  if (passphrase != process.env.PASSPHRASE) {
+    console.log('Incorrect Passphrase!');
+  } else {
+    connection.query('INSERT INTO `Players` (`Player_ID`, `Admin`, `Player_Name`, `Player_Password`, `Player_Email`, `Player_Tribe`) VALUES (NULL, 0, ?, ?, ?, null);', [name, password, email], (err, result) => {
+      if(err) {
+        res.status(400).send('Player not added.')
+      } else {
+        res.send('Player Added!');
+      }
+    })
+  }
+})
+
+//SELECT * FROM `Players` WHERE Player_Email = 'nick@test.ca'
+// Login User
+app.post('/login-user', (req, res) => {
+  const { email, password } = req.body;
+
+  connection.query('SELECT * FROM `Players` WHERE Player_Email = ?', [email], (err, result) => {
+    if(err) {
+      console.log(err);
+    } else {
+      if (result[0].Player_Password == password) {
+        user = {
+          Player_ID: result[0].Player_ID,
+          Player_Name: result[0].Player_Name,
+          Player_Tribe: result[0].Player_Tribe,
+          Player_Email: result[0].Player_Email,
+          Admin: result[0].Admin
+        }
+        res.send(user);
+      }
+      else {
+        res.status(404).send('Username or Password is incorrect.')
+      }
     }
   })
 })
