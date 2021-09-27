@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
+import { UserContext } from '../Components/UserContext';
 
 export default function WeeklysSubmissionForm() {
 
   const [ answersSubmitted, setAnswersSubmitted] = useState(false);
+
+  const { week, user } = useContext(UserContext);
 
   useEffect(() => {
     axios.get('http://localhost:5000/weeklys-answers',)
@@ -14,7 +17,7 @@ export default function WeeklysSubmissionForm() {
         }
       }))
       .catch((err) => console.log(err));
-  }, [])
+  }, [user, week])
 
   const [q1a, setq1a] = useState('Eric E');
   const [q1b, setq1b] = useState('Eric E');
@@ -25,13 +28,12 @@ export default function WeeklysSubmissionForm() {
   const [q5, setq5] = useState(0);
   const q1 = `${q1a}, ${q1b}`;
   const q2 = `${q2a}, ${q2b}`;
-  const week =7;
-  const user = 1;
+  const userID = user.Player_ID
 
   const sendWeeklys = (e) => {
     e.preventDefault();
     const answers = {
-      user, 
+      userID, 
       week,
       q1,
       q2,
@@ -58,9 +60,9 @@ export default function WeeklysSubmissionForm() {
       <p>Thanks for filling out this weeks questions!</p>
     </div>
     : <div className="weeklysForm">
-      <h3 className="my-2">Week 2 Questions</h3>
+      <h3 className="my-2">Week {week} Questions</h3>
       <form onSubmit={sendWeeklys} method="post">
-        <div className="flex-2-cols">
+        <div className="flex">
         <label htmlFor="q1">Who will be sent to Edge of Extinction? (Choose 2)
           <div>
             <select name="q1a" value={q1a} onChange={(e) => setq1a(e.target.value)}>
@@ -105,7 +107,6 @@ export default function WeeklysSubmissionForm() {
             </select>
           </div>
         </label>
-        </div>
 
         <label htmlFor="q2">Who will win the immunity challenge? (Pick 2)
           <div>
@@ -151,7 +152,8 @@ export default function WeeklysSubmissionForm() {
             </select>
           </div>
         </label>
-
+        </div>
+        <div className="flex">
         <label htmlFor="q3">Tony will play his Idol this episode?
           <div className="checkbox-container"><span>No</span><input type="checkbox" name="q3" id="q3" checked={q3} onChange={() => !q3 ? setq3(1) : setq3(0)} /><span>Yes</span></div>
         </label>
@@ -159,12 +161,14 @@ export default function WeeklysSubmissionForm() {
         <label htmlFor="q4">There will be an advantage found in the main game this episode. (Not on EoE)
           <div className="checkbox-container"><span>No</span><input type="checkbox" name="q4" id="q4" checked={q4} onChange={() => !q4 ? setq4(1) : setq4(0)} /><span>Yes</span></div>
         </label>
-
+        </div>
+        <div className="flex-2">
         <label htmlFor="q5">A challenge at any point in the episode (on EoE or Regular Game) will involve digging?
           <div className="checkbox-container"><span>No</span><input type="checkbox" name="q5" id="q5" checked={q5} onChange={() => !q5 ? setq5(1) : setq5(0)} /><span>Yes</span></div>
         </label>
 
         <input className="btn-primary" type="submit" value="Submit" />
+        </div>
       </form>
     </div>}
   </div>

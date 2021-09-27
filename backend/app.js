@@ -118,7 +118,6 @@ app.post('/create-user', (req, res) => {
   }
 })
 
-//SELECT * FROM `Players` WHERE Player_Email = 'nick@test.ca'
 // Login User
 app.post('/login-user', (req, res) => {
   const { email, password } = req.body;
@@ -127,17 +126,21 @@ app.post('/login-user', (req, res) => {
     if(err) {
       console.log(err);
     } else {
-      if (result[0].Player_Password == password) {
-        user = {
-          Player_ID: result[0].Player_ID,
-          Player_Name: result[0].Player_Name,
-          Player_Tribe: result[0].Player_Tribe,
-          Player_Email: result[0].Player_Email,
-          Admin: result[0].Admin
+      if (result.length > 0) {
+        if (result[0].Player_Password === password) {
+          user = {
+            Player_ID: result[0].Player_ID,
+            Player_Name: result[0].Player_Name,
+            Player_Tribe: result[0].Player_Tribe,
+            Player_Email: result[0].Player_Email,
+            Admin: result[0].Admin
+          }
+          res.send(user);
         }
-        res.send(user);
-      }
-      else {
+        else {
+          res.status(404).send('Username or Password is incorrect.')
+        }
+      } else {
         res.status(404).send('Username or Password is incorrect.')
       }
     }
