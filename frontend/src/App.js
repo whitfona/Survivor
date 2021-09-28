@@ -14,6 +14,7 @@ import Login from './Pages/login';
 import Signup from './Pages/signup';
 import WeeklysSubmissionForm from './Components/WeeklysSubmissionForm';
 import { UserProvider } from './Components/UserContext';
+import Leaderboard from './Pages/leaderboard';
 // import logo from './logo.svg';
 
 export default function App() {
@@ -32,7 +33,7 @@ export default function App() {
               <Route path='/admin-dashboard' component={AdminDashboard} />
               <Route path='/login' component={Login} />
               <Route path='/signup' component={Signup} />
-              <Route path='/weeklysform' component={WeeklysSubmissionForm} />
+              <Route path='/leaderboard' component={Leaderboard} />
               <Route path='*' component={Error404} />
             </Switch>
           </div>

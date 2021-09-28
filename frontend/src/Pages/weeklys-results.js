@@ -12,14 +12,12 @@ export default function WeeklysResults() {
 
   useEffect(() => {
     axios.get('http://localhost:5000/weeklys-questions',)
-      // .then((data) => console.log(data.data))
       .then((data) => {
         setWeeklyQuestionsAndAnswers(data.data)
         setIsLoaded(true);
       })
       .catch((err) => console.log(err));
     axios.get('http://localhost:5000/weeklys-answers',)
-      // .then((data) => console.log(data.data))
       .then((data) => setWeeklyResults(data.data))
       .catch((err) => console.log(err));
   }, []);
@@ -65,11 +63,11 @@ export default function WeeklysResults() {
             <h1>Week 1</h1>
 
             <div className="my-1">
-              <p>Question 1: {week1QA[0].Weeklys_Q1}, Answer: {week1QA[0].Weeklys_Q1_Answer}</p>
-              <p>Question 2: {week1QA[0].Weeklys_Q2}, Answer: {week1QA[0].Weeklys_Q2_Answer}</p>
-              <p>Question 3: {week1QA[0].Weeklys_Q3}, Answer: {week1QA[0].Weeklys_Q3_Answer}</p>
-              <p>Question 4: {week1QA[0].Weeklys_Q4}, Answer: {week1QA[0].Weeklys_Q4_Answer}</p>
-              <p>Question 5: {week1QA[0].Weeklys_Q5}, Answer: {week1QA[0].Weeklys_Q5_Answer}</p> 
+              <p>{week1QA[0].Weeklys_Q1}: <span className="font-900">{week1QA[0].Weeklys_Q1_Answer}</span></p>
+              <p>{week1QA[0].Weeklys_Q2}: <span className="font-900">{week1QA[0].Weeklys_Q2_Answer}</span></p>
+              <p>{week1QA[0].Weeklys_Q3} <span className="font-900">{(week1QA[0].Weeklys_Q3_Answer) ? "True" : "False"}</span></p>
+              <p>{week1QA[0].Weeklys_Q4} <span className="font-900">{(week1QA[0].Weeklys_Q4_Answer) ? "True" : "False"}</span></p>
+              <p>{week1QA[0].Weeklys_Q5} <span className="font-900">{(week1QA[0].Weeklys_Q5_Answer) ? "True" : "False"}</span></p> 
             </div>
             <WeeklysResultsTable questionAndAnswers={week1QA} playerResults={week1R} />
           </div>
@@ -80,11 +78,11 @@ export default function WeeklysResults() {
             <h1>Week 2</h1>
 
             <div className="my-1">
-              <p>Question 1: {week2QA[0].Weeklys_Q1}, Answer: {week2QA[0].Weeklys_Q1_Answer}</p>
-              <p>Question 2: {week2QA[0].Weeklys_Q2}, Answer: {week2QA[0].Weeklys_Q2_Answer}</p>
-              <p>Question 3: {week2QA[0].Weeklys_Q3}, Answer: {week2QA[0].Weeklys_Q3_Answer}</p>
-              <p>Question 4: {week2QA[0].Weeklys_Q4}, Answer: {week2QA[0].Weeklys_Q4_Answer}</p>
-              <p>Question 5: {week2QA[0].Weeklys_Q5}, Answer: {week2QA[0].Weeklys_Q5_Answer}</p> 
+              <p>{week2QA[0].Weeklys_Q1}: <span className="font-900">{week2QA[0].Weeklys_Q1_Answer}</span></p>
+              <p>{week2QA[0].Weeklys_Q2}: <span className="font-900">{week2QA[0].Weeklys_Q2_Answer}</span></p>
+              <p>{week2QA[0].Weeklys_Q3} <span className="font-900">{(week2QA[0].Weeklys_Q3_Answer) ? "True" : "False"}</span></p>
+              <p>{week2QA[0].Weeklys_Q4} <span className="font-900">{(week2QA[0].Weeklys_Q4_Answer) ? "True" : "False"}</span></p>
+              <p>{week2QA[0].Weeklys_Q5} <span className="font-900">{(week2QA[0].Weeklys_Q5_Answer) ? "True" : "False"}</span></p> 
             </div>
 
             <WeeklysResultsTable questionAndAnswers={week2QA} playerResults={week2R} />
@@ -96,11 +94,11 @@ export default function WeeklysResults() {
             <h1>Week 3</h1>
 
             <div className="my-1">
-              <p>Question 1: {week3QA[0].Weeklys_Q1}, Answer: {week3QA[0].Weeklys_Q1_Answer}</p>
-              <p>Question 2: {week3QA[0].Weeklys_Q2}, Answer: {week3QA[0].Weeklys_Q2_Answer}</p>
-              <p>Question 3: {week3QA[0].Weeklys_Q3}, Answer: {week3QA[0].Weeklys_Q3_Answer}</p>
-              <p>Question 4: {week3QA[0].Weeklys_Q4}, Answer: {week3QA[0].Weeklys_Q4_Answer}</p>
-              <p>Question 5: {week3QA[0].Weeklys_Q5}, Answer: {week3QA[0].Weeklys_Q5_Answer}</p> 
+              <p>{week3QA[0].Weeklys_Q1}: <span className="font-900">{week3QA[0].Weeklys_Q1_Answer}</span></p>
+              <p>{week3QA[0].Weeklys_Q2}: <span className="font-900">{week3QA[0].Weeklys_Q2_Answer}</span></p>
+              <p>{week3QA[0].Weeklys_Q3} <span className="font-900">{(week3QA[0].Weeklys_Q3_Answer) ? "True" : "False"}</span></p>
+              <p>{week3QA[0].Weeklys_Q4} <span className="font-900">{(week3QA[0].Weeklys_Q4_Answer) ? "True" : "False"}</span></p>
+              <p>{week3QA[0].Weeklys_Q5} <span className="font-900">{(week3QA[0].Weeklys_Q5_Answer) ? "True" : "False"}</span></p> 
             </div>
 
             <WeeklysResultsTable questionAndAnswers={week3QA} playerResults={week3R} />
@@ -112,11 +110,11 @@ export default function WeeklysResults() {
             <h1>Week 4</h1>
 
             <div className="my-1">
-              <p>Question 1: {week4QA[0].Weeklys_Q1}, Answer: {week4QA[0].Weeklys_Q1_Answer}</p>
-              <p>Question 2: {week4QA[0].Weeklys_Q2}, Answer: {week4QA[0].Weeklys_Q2_Answer}</p>
-              <p>Question 3: {week4QA[0].Weeklys_Q3}, Answer: {week4QA[0].Weeklys_Q3_Answer}</p>
-              <p>Question 4: {week4QA[0].Weeklys_Q4}, Answer: {week4QA[0].Weeklys_Q4_Answer}</p>
-              <p>Question 5: {week4QA[0].Weeklys_Q5}, Answer: {week4QA[0].Weeklys_Q5_Answer}</p> 
+              <p>{week4QA[0].Weeklys_Q1}: <span className="font-900">{week4QA[0].Weeklys_Q1_Answer}</span></p>
+              <p>{week4QA[0].Weeklys_Q2}: <span className="font-900">{week4QA[0].Weeklys_Q2_Answer}</span></p>
+              <p>{week4QA[0].Weeklys_Q3} <span className="font-900">{(week4QA[0].Weeklys_Q3_Answer) ? "True" : "False"}</span></p>
+              <p>{week4QA[0].Weeklys_Q4} <span className="font-900">{(week4QA[0].Weeklys_Q4_Answer) ? "True" : "False"}</span></p>
+              <p>{week4QA[0].Weeklys_Q5} <span className="font-900">{(week4QA[0].Weeklys_Q5_Answer) ? "True" : "False"}</span></p> 
             </div>
             <WeeklysResultsTable questionAndAnswers={week4QA} playerResults={week4R} />
           </div>
@@ -127,11 +125,11 @@ export default function WeeklysResults() {
             <h1>Week 5</h1>
 
             <div className="my-1">
-              <p>Question 1: {week5QA[0].Weeklys_Q1}, Answer: {week5QA[0].Weeklys_Q1_Answer}</p>
-              <p>Question 2: {week5QA[0].Weeklys_Q2}, Answer: {week5QA[0].Weeklys_Q2_Answer}</p>
-              <p>Question 3: {week5QA[0].Weeklys_Q3}, Answer: {week5QA[0].Weeklys_Q3_Answer}</p>
-              <p>Question 4: {week5QA[0].Weeklys_Q4}, Answer: {week5QA[0].Weeklys_Q4_Answer}</p>
-              <p>Question 5: {week5QA[0].Weeklys_Q5}, Answer: {week5QA[0].Weeklys_Q5_Answer}</p> 
+              <p>{week5QA[0].Weeklys_Q1}: <span className="font-900">{week5QA[0].Weeklys_Q1_Answer}</span></p>
+              <p>{week5QA[0].Weeklys_Q2}: <span className="font-900">{week5QA[0].Weeklys_Q2_Answer}</span></p>
+              <p>{week5QA[0].Weeklys_Q3} <span className="font-900">{(week5QA[0].Weeklys_Q3_Answer) ? "True" : "False"}</span></p>
+              <p>{week5QA[0].Weeklys_Q4} <span className="font-900">{(week5QA[0].Weeklys_Q4_Answer) ? "True" : "False"}</span></p>
+              <p>{week5QA[0].Weeklys_Q5} <span className="font-900">{(week5QA[0].Weeklys_Q5_Answer) ? "True" : "False"}</span></p> 
             </div>
 
             <WeeklysResultsTable questionAndAnswers={week5QA} playerResults={week5R} />
@@ -143,11 +141,11 @@ export default function WeeklysResults() {
             <h1>Week 6</h1>
 
             <div className="my-1">
-              <p>Question 1: {week6QA[0].Weeklys_Q1}, Answer: {week6QA[0].Weeklys_Q1_Answer}</p>
-              <p>Question 2: {week6QA[0].Weeklys_Q2}, Answer: {week6QA[0].Weeklys_Q2_Answer}</p>
-              <p>Question 3: {week6QA[0].Weeklys_Q3}, Answer: {week6QA[0].Weeklys_Q3_Answer}</p>
-              <p>Question 4: {week6QA[0].Weeklys_Q4}, Answer: {week6QA[0].Weeklys_Q4_Answer}</p>
-              <p>Question 5: {week6QA[0].Weeklys_Q5}, Answer: {week6QA[0].Weeklys_Q5_Answer}</p> 
+              <p>{week6QA[0].Weeklys_Q1}: <span className="font-900">{week6QA[0].Weeklys_Q1_Answer}</span></p>
+              <p>{week6QA[0].Weeklys_Q2}: <span className="font-900">{week6QA[0].Weeklys_Q2_Answer}</span></p>
+              <p>{week6QA[0].Weeklys_Q3} <span className="font-900">{(week6QA[0].Weeklys_Q3_Answer) ? "True" : "False"}</span></p>
+              <p>{week6QA[0].Weeklys_Q4} <span className="font-900">{(week6QA[0].Weeklys_Q4_Answer) ? "True" : "False"}</span></p>
+              <p>{week6QA[0].Weeklys_Q5} <span className="font-900">{(week6QA[0].Weeklys_Q5_Answer) ? "True" : "False"}</span></p> 
             </div>
 
             <WeeklysResultsTable questionAndAnswers={week6QA} playerResults={week6R} />
@@ -159,11 +157,11 @@ export default function WeeklysResults() {
             <h1>Week 7</h1>
 
             <div className="my-1">
-              <p>Question 1: {week7QA[0].Weeklys_Q1}, Answer: {week7QA[0].Weeklys_Q1_Answer}</p>
-              <p>Question 2: {week7QA[0].Weeklys_Q2}, Answer: {week7QA[0].Weeklys_Q2_Answer}</p>
-              <p>Question 3: {week7QA[0].Weeklys_Q3}, Answer: {week7QA[0].Weeklys_Q3_Answer}</p>
-              <p>Question 4: {week7QA[0].Weeklys_Q4}, Answer: {week7QA[0].Weeklys_Q4_Answer}</p>
-              <p>Question 5: {week7QA[0].Weeklys_Q5}, Answer: {week7QA[0].Weeklys_Q5_Answer}</p> 
+              <p>{week7QA[0].Weeklys_Q1}: <span className="font-900">{week7QA[0].Weeklys_Q1_Answer}</span></p>
+              <p>{week7QA[0].Weeklys_Q2}: <span className="font-900">{week7QA[0].Weeklys_Q2_Answer}</span></p>
+              <p>{week7QA[0].Weeklys_Q3} <span className="font-900">{(week7QA[0].Weeklys_Q3_Answer) ? "True" : "False"}</span></p>
+              <p>{week7QA[0].Weeklys_Q4} <span className="font-900">{(week7QA[0].Weeklys_Q4_Answer) ? "True" : "False"}</span></p>
+              <p>{week7QA[0].Weeklys_Q5} <span className="font-900">{(week7QA[0].Weeklys_Q5_Answer) ? "True" : "False"}</span></p> 
             </div>
 
             <WeeklysResultsTable questionAndAnswers={week7QA} playerResults={week7R} />
@@ -175,11 +173,11 @@ export default function WeeklysResults() {
             <h1>Week 8</h1>
 
             <div className="my-1">
-              <p>Question 1: {week8QA[0].Weeklys_Q1}, Answer: {week8QA[0].Weeklys_Q1_Answer}</p>
-              <p>Question 2: {week8QA[0].Weeklys_Q2}, Answer: {week8QA[0].Weeklys_Q2_Answer}</p>
-              <p>Question 3: {week8QA[0].Weeklys_Q3}, Answer: {week8QA[0].Weeklys_Q3_Answer}</p>
-              <p>Question 4: {week8QA[0].Weeklys_Q4}, Answer: {week8QA[0].Weeklys_Q4_Answer}</p>
-              <p>Question 5: {week8QA[0].Weeklys_Q5}, Answer: {week8QA[0].Weeklys_Q5_Answer}</p> 
+              <p>{week8QA[0].Weeklys_Q1}: <span className="font-900">{week8QA[0].Weeklys_Q1_Answer}</span></p>
+              <p>{week8QA[0].Weeklys_Q2}: <span className="font-900">{week8QA[0].Weeklys_Q2_Answer}</span></p>
+              <p>{week8QA[0].Weeklys_Q3} <span className="font-900">{(week8QA[0].Weeklys_Q3_Answer) ? "True" : "False"}</span></p>
+              <p>{week8QA[0].Weeklys_Q4} <span className="font-900">{(week8QA[0].Weeklys_Q4_Answer) ? "True" : "False"}</span></p>
+              <p>{week8QA[0].Weeklys_Q5} <span className="font-900">{(week8QA[0].Weeklys_Q5_Answer) ? "True" : "False"}</span></p> 
             </div>
 
             <WeeklysResultsTable questionAndAnswers={week8QA} playerResults={week8R} />
@@ -191,11 +189,11 @@ export default function WeeklysResults() {
             <h1>Week 9</h1>
 
             <div className="my-1">
-              <p>Question 1: {week9QA[0].Weeklys_Q1}, Answer: {week9QA[0].Weeklys_Q1_Answer}</p>
-              <p>Question 2: {week9QA[0].Weeklys_Q2}, Answer: {week9QA[0].Weeklys_Q2_Answer}</p>
-              <p>Question 3: {week9QA[0].Weeklys_Q3}, Answer: {week9QA[0].Weeklys_Q3_Answer}</p>
-              <p>Question 4: {week9QA[0].Weeklys_Q4}, Answer: {week9QA[0].Weeklys_Q4_Answer}</p>
-              <p>Question 5: {week9QA[0].Weeklys_Q5}, Answer: {week9QA[0].Weeklys_Q5_Answer}</p> 
+              <p>{week9QA[0].Weeklys_Q1}: <span className="font-900">{week9QA[0].Weeklys_Q1_Answer}</span></p>
+              <p>{week9QA[0].Weeklys_Q9}: <span className="font-900">{week9QA[0].Weeklys_Q9_Answer}</span></p>
+              <p>{week9QA[0].Weeklys_Q3} <span className="font-900">{(week9QA[0].Weeklys_Q3_Answer) ? "True" : "False"}</span></p>
+              <p>{week9QA[0].Weeklys_Q4} <span className="font-900">{(week9QA[0].Weeklys_Q4_Answer) ? "True" : "False"}</span></p>
+              <p>{week9QA[0].Weeklys_Q5} <span className="font-900">{(week9QA[0].Weeklys_Q5_Answer) ? "True" : "False"}</span></p> 
             </div>
 
             <WeeklysResultsTable questionAndAnswers={week9QA} playerResults={week9R} />
@@ -207,11 +205,11 @@ export default function WeeklysResults() {
             <h1>Week 10</h1>
 
             <div className="my-1">
-              <p>Question 1: {week10QA[0].Weeklys_Q1}, Answer: {week10QA[0].Weeklys_Q1_Answer}</p>
-              <p>Question 2: {week10QA[0].Weeklys_Q2}, Answer: {week10QA[0].Weeklys_Q2_Answer}</p>
-              <p>Question 3: {week10QA[0].Weeklys_Q3}, Answer: {week10QA[0].Weeklys_Q3_Answer}</p>
-              <p>Question 4: {week10QA[0].Weeklys_Q4}, Answer: {week10QA[0].Weeklys_Q4_Answer}</p>
-              <p>Question 5: {week10QA[0].Weeklys_Q5}, Answer: {week10QA[0].Weeklys_Q5_Answer}</p> 
+              <p>{week10QA[0].Weeklys_Q1}: <span className="font-900">{week10QA[0].Weeklys_Q1_Answer}</span></p>
+              <p>{week10QA[0].Weeklys_Q2}: <span className="font-900">{week10QA[0].Weeklys_Q2_Answer}</span></p>
+              <p>{week10QA[0].Weeklys_Q3} <span className="font-900">{(week10QA[0].Weeklys_Q3_Answer) ? "True" : "False"}</span></p>
+              <p>{week10QA[0].Weeklys_Q4} <span className="font-900">{(week10QA[0].Weeklys_Q4_Answer) ? "True" : "False"}</span></p>
+              <p>{week10QA[0].Weeklys_Q5} <span className="font-900">{(week10QA[0].Weeklys_Q5_Answer) ? "True" : "False"}</span></p>  
             </div>
 
             <WeeklysResultsTable questionAndAnswers={week10QA} playerResults={week10R} />
@@ -223,11 +221,11 @@ export default function WeeklysResults() {
             <h1>Week 11</h1>
 
             <div className="my-1">
-              <p>Question 1: {week11QA[0].Weeklys_Q1}, Answer: {week11QA[0].Weeklys_Q1_Answer}</p>
-              <p>Question 2: {week11QA[0].Weeklys_Q2}, Answer: {week11QA[0].Weeklys_Q2_Answer}</p>
-              <p>Question 3: {week11QA[0].Weeklys_Q3}, Answer: {week11QA[0].Weeklys_Q3_Answer}</p>
-              <p>Question 4: {week11QA[0].Weeklys_Q4}, Answer: {week11QA[0].Weeklys_Q4_Answer}</p>
-              <p>Question 5: {week11QA[0].Weeklys_Q5}, Answer: {week11QA[0].Weeklys_Q5_Answer}</p> 
+              <p>{week11QA[0].Weeklys_Q1}: <span className="font-900">{week11QA[0].Weeklys_Q1_Answer}</span></p>
+              <p>{week11QA[0].Weeklys_Q2}: <span className="font-900">{week11QA[0].Weeklys_Q2_Answer}</span></p>
+              <p>{week11QA[0].Weeklys_Q3} <span className="font-900">{(week11QA[0].Weeklys_Q3_Answer) ? "True" : "False"}</span></p>
+              <p>{week11QA[0].Weeklys_Q4} <span className="font-900">{(week11QA[0].Weeklys_Q4_Answer) ? "True" : "False"}</span></p>
+              <p>{week11QA[0].Weeklys_Q5} <span className="font-900">{(week11QA[0].Weeklys_Q5_Answer) ? "True" : "False"}</span></p> 
             </div>
 
             <WeeklysResultsTable questionAndAnswers={week11QA} playerResults={week11R} />
@@ -239,11 +237,11 @@ export default function WeeklysResults() {
             <h1>Week 12</h1>
 
             <div className="my-1">
-              <p>Question 1: {week12QA[0].Weeklys_Q1}, Answer: {week12QA[0].Weeklys_Q1_Answer}</p>
-              <p>Question 2: {week12QA[0].Weeklys_Q2}, Answer: {week12QA[0].Weeklys_Q2_Answer}</p>
-              <p>Question 3: {week12QA[0].Weeklys_Q3}, Answer: {week12QA[0].Weeklys_Q3_Answer}</p>
-              <p>Question 4: {week12QA[0].Weeklys_Q4}, Answer: {week12QA[0].Weeklys_Q4_Answer}</p>
-              <p>Question 5: {week12QA[0].Weeklys_Q5}, Answer: {week12QA[0].Weeklys_Q5_Answer}</p> 
+              <p>{week12QA[0].Weeklys_Q1}: <span className="font-900">{week12QA[0].Weeklys_Q1_Answer}</span></p>
+              <p>{week12QA[0].Weeklys_Q2}: <span className="font-900">{week12QA[0].Weeklys_Q2_Answer}</span></p>
+              <p>{week12QA[0].Weeklys_Q3} <span className="font-900">{(week12QA[0].Weeklys_Q3_Answer) ? "True" : "False"}</span></p>
+              <p>{week12QA[0].Weeklys_Q4} <span className="font-900">{(week12QA[0].Weeklys_Q4_Answer) ? "True" : "False"}</span></p>
+              <p>{week12QA[0].Weeklys_Q5} <span className="font-900">{(week12QA[0].Weeklys_Q5_Answer) ? "True" : "False"}</span></p> 
             </div>
 
             <WeeklysResultsTable questionAndAnswers={week12QA} playerResults={week12R} />
@@ -255,11 +253,11 @@ export default function WeeklysResults() {
             <h1>Week 13</h1>
 
             <div className="my-1">
-              <p>Question 1: {week13QA[0].Weeklys_Q1}, Answer: {week13QA[0].Weeklys_Q1_Answer}</p>
-              <p>Question 2: {week13QA[0].Weeklys_Q2}, Answer: {week13QA[0].Weeklys_Q2_Answer}</p>
-              <p>Question 3: {week13QA[0].Weeklys_Q3}, Answer: {week13QA[0].Weeklys_Q3_Answer}</p>
-              <p>Question 4: {week13QA[0].Weeklys_Q4}, Answer: {week13QA[0].Weeklys_Q4_Answer}</p>
-              <p>Question 5: {week13QA[0].Weeklys_Q5}, Answer: {week13QA[0].Weeklys_Q5_Answer}</p> 
+              <p>{week13QA[0].Weeklys_Q1}: <span className="font-900">{week13QA[0].Weeklys_Q1_Answer}</span></p>
+              <p>{week13QA[0].Weeklys_Q2}: <span className="font-900">{week13QA[0].Weeklys_Q2_Answer}</span></p>
+              <p>{week13QA[0].Weeklys_Q3} <span className="font-900">{(week13QA[0].Weeklys_Q3_Answer) ? "True" : "False"}</span></p>
+              <p>{week13QA[0].Weeklys_Q4} <span className="font-900">{(week13QA[0].Weeklys_Q4_Answer) ? "True" : "False"}</span></p>
+              <p>{week13QA[0].Weeklys_Q5} <span className="font-900">{(week13QA[0].Weeklys_Q5_Answer) ? "True" : "False"}</span></p> 
             </div>
 
             <WeeklysResultsTable questionAndAnswers={week13QA} playerResults={week13R} />
@@ -271,11 +269,11 @@ export default function WeeklysResults() {
             <h1>Week 14</h1>
 
             <div className="my-1">
-              <p>Question 1: {week14QA[0].Weeklys_Q1}, Answer: {week14QA[0].Weeklys_Q1_Answer}</p>
-              <p>Question 2: {week14QA[0].Weeklys_Q2}, Answer: {week14QA[0].Weeklys_Q2_Answer}</p>
-              <p>Question 3: {week14QA[0].Weeklys_Q3}, Answer: {week14QA[0].Weeklys_Q3_Answer}</p>
-              <p>Question 4: {week14QA[0].Weeklys_Q4}, Answer: {week14QA[0].Weeklys_Q4_Answer}</p>
-              <p>Question 5: {week14QA[0].Weeklys_Q5}, Answer: {week14QA[0].Weeklys_Q5_Answer}</p> 
+              <p>{week14QA[0].Weeklys_Q1}: <span className="font-900">{week14QA[0].Weeklys_Q1_Answer}</span></p>
+              <p>{week14QA[0].Weeklys_Q2}: <span className="font-900">{week14QA[0].Weeklys_Q2_Answer}</span></p>
+              <p>{week14QA[0].Weeklys_Q3} <span className="font-900">{(week14QA[0].Weeklys_Q3_Answer) ? "True" : "False"}</span></p>
+              <p>{week14QA[0].Weeklys_Q4} <span className="font-900">{(week14QA[0].Weeklys_Q4_Answer) ? "True" : "False"}</span></p>
+              <p>{week14QA[0].Weeklys_Q5} <span className="font-900">{(week14QA[0].Weeklys_Q5_Answer) ? "True" : "False"}</span></p> 
             </div>
 
             <WeeklysResultsTable questionAndAnswers={week14QA} playerResults={week14R} />

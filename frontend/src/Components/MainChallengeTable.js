@@ -5,6 +5,7 @@ export default function MainChallengeTable({ questionAndResults} ) {
 let countEric = 0, countHeather = 0, countErika = 0, countGenie = 0, countRicard = 0, countXander = 0, countEvvie = 0, countDanny = 0, countNasser = 0, countDeshawn = 0, countBrad = 0, countJairus = 0, countTiffany = 0, countSydney = 0, countShantel = 0, countDavid = 0, countLiana = 0, countSara = 0;
 
 questionAndResults.map((result) => (
+  // eslint-disable-next-line no-sequences
   countEric += (result.Eric_E * result.MC_Point_Value),
   countHeather += (result.Heather_A * result.MC_Point_Value),
   countErika += (result.Erika_C * result.MC_Point_Value),

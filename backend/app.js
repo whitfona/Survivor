@@ -147,6 +147,18 @@ app.post('/login-user', (req, res) => {
   })
 })
 
+// Get all players id, name and player tribe
+// SELECT Player_ID, Player_Name, Player_Tribe FROM `Players`
+app.get('/all-players', (req, res) => {
+  connection.query('SELECT Player_ID, Player_Name, Player_Tribe FROM `Players`', (err, result) => {
+    if(err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  })
+})
+
 // // Get Main Challenge questions from MainChallengeAdmin table
 // app.get('/mc-questions', (req, res) => {
 //     connection.query('SELECT * FROM MainChallengeAdmin;', (err, result) => {
