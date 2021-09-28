@@ -7,10 +7,10 @@ export default function Navbar() {
       <div>
         <NavLink activeClassName="link-active" exact to='/'>Home</NavLink>
         <NavLink activeClassName="link-active" to='/mc-results'>Tribe Score</NavLink>
-        <NavLink activeClassName="link-active" to='/advantage-results'>Advantage</NavLink>
         <NavLink activeClassName="link-active" to='/weeklys-results'>Weeklys</NavLink>
+        <NavLink activeClassName="link-active" to='/advantage-results'>Advantage</NavLink>
+        <NavLink activeClassName="link-active" to='/leaderboard'>Leaderboard</NavLink>
         <NavLink activeClassName="link-active" exact to='/'>Survivors</NavLink>
-        <NavLink activeClassName="link-active" to='/weeklysform'>Weeklys Form</NavLink>
       </div>
       <div>
         <Link className="btn-primary mx-0" to='/signup'>Sign Up!</Link>

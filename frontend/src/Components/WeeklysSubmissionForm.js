@@ -28,7 +28,7 @@ export default function WeeklysSubmissionForm() {
   const [q5, setq5] = useState(0);
   const q1 = `${q1a}, ${q1b}`;
   const q2 = `${q2a}, ${q2b}`;
-  const userID = user.Player_ID
+  const userID = user.Player_ID;
 
   const sendWeeklys = (e) => {
     e.preventDefault();

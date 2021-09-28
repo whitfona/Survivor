@@ -1,7 +1,7 @@
 import React from 'react'
 
-export default function WeeklysResultsTable({ questionAndAnswers, playerResults} ) {  
-  
+export default function WeeklysResultsTable({ questionAndAnswers, playerResults }) { 
+
   const calcWeeklyScore = ( playerAnswers ) => {
     let score = 0;
     
@@ -21,6 +21,11 @@ export default function WeeklysResultsTable({ questionAndAnswers, playerResults}
     if (playerAnswers.WC_Q5_Answer === q5Answer) { score += 2; }
 
     return score;
+  }
+
+  let total = [];
+  for (let i = 0; i < playerResults.length; i++) {
+    total[i] = { name: playerResults[i].Player_Name, score: calcWeeklyScore(playerResults[i])}
   }
 
   return (

@@ -1,23 +1,26 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { UserContext } from '../Components/UserContext';
 
 export default function AdvantageResults() {
 
 
-  const [advantageResults, setAdvantageResults] = useState([]);
-
-  useEffect(() => {
-    axios.get('http://localhost:5000/advantage',)
-      // .then((data) => console.log(data.data))
-      // .then((data) => setAdvantageResults(data.data))
-      .then((data) => setAdvantageResults(data.data))
-      .catch((err) => console.log(err));
-  }, []);
-
-const sumEachPlayerScore = (players) => {
+  const [ advantageResults, setAdvantageResults ] = useState([]);
+  const { playerAdvantageScores } = useContext(UserContext);
   
-  return players.Week_1 + players.Week_2 + players.Week_3 + players.Week_4 + players.Week_5 + players.Week_6 + players.Week_7 + players.Week_8 + players.Week_9 + players.Week_10 + players.Week_11 + players.Week_12 + players.Week_13 + players.Week_14  ;
-}
+  useEffect(() => {
+    axios.get('http://localhost:5000/advantage')
+    .then((data) => setAdvantageResults(data.data))
+    .catch((err) => console.log(err));
+  }, []);
+  
+  const sumEachPlayerScore = (player) => {
+    return player.Week_1 + player.Week_2 + player.Week_3 + player.Week_4 + player.Week_5 + player.Week_6 + player.Week_7 + player.Week_8 + player.Week_9 + player.Week_10 + player.Week_11 + player.Week_12 + player.Week_13 + player.Week_14  ;
+  }
+
+  for (let i = 0; i < advantageResults.length; i++) {
+    playerAdvantageScores[i] = { player: advantageResults[i].Player_Name, total: sumEachPlayerScore(advantageResults[i]) }
+  }
 
   return (
     <div>
