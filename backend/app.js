@@ -159,6 +159,18 @@ app.get('/all-players', (req, res) => {
   })
 })
 
+
+// Get Advantage from Advantage_V2
+app.get('/advantage-v2', (req, res) => {
+  connection.query('SELECT Players.Player_Name, Advantage_V2.* FROM Players JOIN Advantage_V2 WHERE Players.Player_ID = Advantage_V2.Player_ID;', (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  })
+})
+
 // // Get Main Challenge questions from MainChallengeAdmin table
 // app.get('/mc-questions', (req, res) => {
 //     connection.query('SELECT * FROM MainChallengeAdmin;', (err, result) => {
