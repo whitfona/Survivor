@@ -8,14 +8,14 @@ import AdvantageResults from './Pages/advantage-results';
 import Error404 from './Pages/error-404';
 import Home from './Pages/home'
 import MCResults from './Pages/mc-results';
-import PlayerDashboard from './Pages/player-dashboard';
 import WeeklysResults from './Pages/weeklys-results';
 import Login from './Pages/login';
 import Signup from './Pages/signup';
-import WeeklysSubmissionForm from './Components/WeeklysSubmissionForm';
 import { UserProvider } from './Components/UserContext';
 import Leaderboard from './Pages/leaderboard';
 import Survivors from './Pages/survivor';
+import { ProtectedRoute } from './Components/ProtectedRoute';
+import Welcome from './Pages/welcome';
 // import logo from './logo.svg';
 
 export default function App() {
@@ -26,16 +26,16 @@ export default function App() {
         <Navbar />
           <div className="content-container">
             <Switch>
-              <Route exact path='/' component={Home} />
-              <Route path='/advantage-results' component={AdvantageResults} />
-              <Route path='/mc-results' component={MCResults} />
-              <Route path='/weeklys-results' component={WeeklysResults} />
-              <Route path='/player-dashboard' component={PlayerDashboard} />
+              <Route exact path='/' component={Welcome} />
+              <ProtectedRoute path='/leaderboard' component={Leaderboard} />
+              <ProtectedRoute path='/tribe-scores' component={MCResults} />
+              <ProtectedRoute path='/weeklys' component={WeeklysResults} />
+              <ProtectedRoute path='/advantage' component={AdvantageResults} />
+              <ProtectedRoute path='/profile' component={Home} />
+              <ProtectedRoute path='/survivors' component={Survivors} />
               <Route path='/admin-dashboard' component={AdminDashboard} />
               <Route path='/login' component={Login} />
               <Route path='/signup' component={Signup} />
-              <Route path='/leaderboard' component={Leaderboard} />
-              <Route path='/survivors' component={Survivors} />
               <Route path='*' component={Error404} />
             </Switch>
           </div>

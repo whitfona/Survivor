@@ -6,13 +6,15 @@ export const UserContext = createContext(null);
 
 export const UserProvider = ({children}) => {
 
-  const [ players, setPlayers ] = useState([{}]);
+  const [ players, setPlayers ] = useState([{}])
   const [ advantageTotals, setAdvantageTotals ] = useState([{}]);
   const [ survivorTotals, setSurvivorTotals ] = useState([{}]);
+  const [ weeklysTotals, setWeeklysTotals ] = useState([{}]);
   const [ week, setWeek ] = useState(5);
   const [ currentPlayer, setCurrentPlayer ] = useState({});
+  const [ authenticated, setAuthenticated ] = useState(false);
 
-  const value = useMemo(() => ({ players, advantageTotals, survivorTotals, week, setWeek, currentPlayer, setCurrentPlayer }), [ players, advantageTotals, survivorTotals, week, setWeek, currentPlayer, setCurrentPlayer ]);
+  const value = useMemo(() => ({ players, advantageTotals, survivorTotals, week, setWeek, currentPlayer, setCurrentPlayer, authenticated, setAuthenticated }), [ players, advantageTotals, survivorTotals, week, setWeek, currentPlayer, setCurrentPlayer, authenticated, setAuthenticated ]);
 
 
   // PLAYERS START
@@ -148,7 +150,7 @@ export const UserProvider = ({children}) => {
 
  for (let i = 0; i< weeklysQnA.length; i++) {
    weeklysAnswerKey[i] = {
-     week: weeklysQnA[i].Week_ID,
+     week: weeklysQnA[i].Week,
      q1: weeklysQnA[i].Weeklys_Q1_Answer,
      q2: weeklysQnA[i].Weeklys_Q2_Answer,
      q3: weeklysQnA[i].Weeklys_Q3_Answer,
@@ -171,34 +173,40 @@ export const UserProvider = ({children}) => {
     return score;
   }
 
-  let weeklysTotalNick = 0, weeklysTotalJill = 0, weeklysTotalAnna = 0;
+  
+  useEffect(() => {
+    let weeklysOrdered = [{}];
 
-  weeklysPlayerAnswers.map(playerAnswer => {
+    let weeklysTotalNick = 0, weeklysTotalJill = 0, weeklysTotalAnna = 0;
+  
+    weeklysPlayerAnswers.forEach(playerAnswer => {
+      for (let i = 0; i < weeklysAnswerKey.length; i++) {
+        if (playerAnswer.Week === weeklysAnswerKey[i].week) {
+          
+          // Nick
+          if (playerAnswer.Player_Name === "Nick") {
+            weeklysTotalNick += checkScores(playerAnswer, weeklysAnswerKey[i]);
+          }
+          //  Jill
+          if (playerAnswer.Player_Name === "Jill") {
+            weeklysTotalJill += checkScores(playerAnswer, weeklysAnswerKey[i]);
+          }
+          // Anna
+          if (playerAnswer.Player_Name === "Anna") {
+            weeklysTotalAnna += checkScores(playerAnswer, weeklysAnswerKey[i]);
+          }
+        }
+      }
+    })
+  
+    weeklysOrdered = [
+      { Player_ID: 1, Player_Name: "Nick", Weeklys_Total: weeklysTotalNick },
+      { Player_ID: 2, Player_Name: "Anna", Weeklys_Total: weeklysTotalAnna },
+      { Player_ID: 3, Player_Name: "Jill", Weeklys_Total: weeklysTotalJill }
+    ]
 
-    for (let i = 0; i < weeklysAnswerKey.length; i++) {
-      if (playerAnswer.Week === weeklysAnswerKey[i].week) {
-        // Nick
-        
-      if (playerAnswer.Player_Name === "Nick") {
-        weeklysTotalNick += checkScores(playerAnswer, weeklysAnswerKey[i]);
-      }
-      //  Jill
-      if (playerAnswer.Player_Name === "Jill") {
-        weeklysTotalJill += checkScores(playerAnswer, weeklysAnswerKey[i]);
-      }
-      // Anna
-      if (playerAnswer.Player_Name === "Anna") {
-        weeklysTotalAnna += checkScores(playerAnswer, weeklysAnswerKey[i]);
-      }
-      }
-    }
-  })
-
-  const weeklysTotal = [
-    { Player_ID: 1, Player_Name: "Nick", Weeklys_Total: weeklysTotalNick },
-    { Player_ID: 2, Player_Name: "Anna", Weeklys_Total: weeklysTotalAnna },
-    { Player_ID: 3, Player_Name: "Jill", Weeklys_Total: weeklysTotalJill }
-  ]
+    setWeeklysTotals(weeklysOrdered);
+  },[weeklysPlayerAnswers])
 
   // WEEKLYS SCORES END
 
@@ -217,11 +225,16 @@ export const UserProvider = ({children}) => {
       }
     }
 
-    for (let j = 0; j < weeklysTotal.length; j++) {
-      if (playersRaw[i].Player_ID === weeklysTotal[j].Player_ID) {
-        weeklys += weeklysTotal[j].Weeklys_Total
+    for (let j = 0; j < weeklysTotals.length; j++) {
+      if (playersRaw[i].Player_ID === weeklysTotals[j].Player_ID) {
+        weeklys += weeklysTotals[j].Weeklys_Total
       }
     }
+    // for (let j = 0; j < weeklysTotal.length; j++) {
+    //   if (playersRaw[i].Player_ID === weeklysTotal[j].Player_ID) {
+    //     weeklys += weeklysTotal[j].Weeklys_Total
+    //   }
+    // }
 
     for(let j = 0; j < survivorTotals.length; j++) {
       if (playersRaw[i].Player_Tribe.includes(survivorTotals[j].name)) {

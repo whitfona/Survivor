@@ -3,13 +3,13 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { UserContext } from '../Components/UserContext';
 
-export default function Login() {
+export default function Login(props) {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showErrorMsg, setShowErrorMsg] = useState(false);
 
-  const { setCurrentPlayer } = useContext(UserContext);
+  const { setCurrentPlayer, setAuthenticated } = useContext(UserContext);
 
   const showMsg = () => {
     setTimeout(() => {
@@ -30,6 +30,8 @@ export default function Login() {
         setCurrentPlayer(res.data)
         setEmail('')
         setPassword('')
+        setAuthenticated(true);
+        props.history.push('/leaderboard');
       })
       .catch((err) => {
         setShowErrorMsg(true);
