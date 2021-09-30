@@ -4,20 +4,19 @@ import { UserContext } from '../Components/UserContext';
 
 export default function WeeklysSubmissionForm() {
 
-  const [ answersSubmitted, setAnswersSubmitted] = useState(false);
+  const [ answersSubmitted, setAnswersSubmitted ] = useState(false);
 
-  const { week, user } = useContext(UserContext);
+  const { currentPlayer, week } = useContext(UserContext);
 
   useEffect(() => {
     axios.get('http://localhost:5000/weeklys-answers',)
-      // .then((data) => console.log(data.data))
       .then((data) => (data.data).map((result) => {
-        if (result.Player_ID === user && result.Week === week) {
+        if (result.Player_ID === currentPlayer.Player_ID && result.Week === week) {
           setAnswersSubmitted(true);
         }
       }))
       .catch((err) => console.log(err));
-  }, [user, week])
+  }, [])
 
   const [q1a, setq1a] = useState('Eric E');
   const [q1b, setq1b] = useState('Eric E');
@@ -28,7 +27,7 @@ export default function WeeklysSubmissionForm() {
   const [q5, setq5] = useState(0);
   const q1 = `${q1a}, ${q1b}`;
   const q2 = `${q2a}, ${q2b}`;
-  const userID = user.Player_ID;
+  const userID = currentPlayer.Player_ID
 
   const sendWeeklys = (e) => {
     e.preventDefault();
@@ -44,6 +43,7 @@ export default function WeeklysSubmissionForm() {
     axios.post('http://localhost:5000/weekly-submissions', answers)
       .then((res) => {
         console.log(res);
+        setAnswersSubmitted(true);
       })
       .catch((err) => {
         console.log(err);

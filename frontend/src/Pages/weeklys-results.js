@@ -58,9 +58,11 @@ export default function WeeklysResults() {
     <div>
       {isLoaded ?
         <>
+        <h1>Weeklys Scores</h1>
+
         {(week1R.length > 0) &&
           <div className="my-2">
-            <h1>Week 1</h1>
+            <h2>Week 1</h2>
 
             <div className="my-1">
               <p>{week1QA[0].Weeklys_Q1}: <span className="font-900">{week1QA[0].Weeklys_Q1_Answer}</span></p>
@@ -75,7 +77,7 @@ export default function WeeklysResults() {
 
         {(week2R.length > 0) &&
           <div className="my-2">
-            <h1>Week 2</h1>
+            <h2>Week 2</h2>
 
             <div className="my-1">
               <p>{week2QA[0].Weeklys_Q1}: <span className="font-900">{week2QA[0].Weeklys_Q1_Answer}</span></p>
@@ -91,7 +93,7 @@ export default function WeeklysResults() {
 
         {(week3R.length > 0) && 
           <div className="my-2">
-            <h1>Week 3</h1>
+            <h2>Week 3</h2>
 
             <div className="my-1">
               <p>{week3QA[0].Weeklys_Q1}: <span className="font-900">{week3QA[0].Weeklys_Q1_Answer}</span></p>
@@ -107,7 +109,7 @@ export default function WeeklysResults() {
 
         {(week4R.length > 0) && 
           <div className="my-2">
-            <h1>Week 4</h1>
+            <h2>Week 4</h2>
 
             <div className="my-1">
               <p>{week4QA[0].Weeklys_Q1}: <span className="font-900">{week4QA[0].Weeklys_Q1_Answer}</span></p>
@@ -122,7 +124,7 @@ export default function WeeklysResults() {
 
         {(week5R.length > 0) && 
           <div className="my-2">
-            <h1>Week 5</h1>
+            <h2>Week 5</h2>
 
             <div className="my-1">
               <p>{week5QA[0].Weeklys_Q1}: <span className="font-900">{week5QA[0].Weeklys_Q1_Answer}</span></p>
@@ -138,7 +140,7 @@ export default function WeeklysResults() {
 
         {(week6R.length > 0) && 
           <div className="my-2">
-            <h1>Week 6</h1>
+            <h2>Week 6</h2>
 
             <div className="my-1">
               <p>{week6QA[0].Weeklys_Q1}: <span className="font-900">{week6QA[0].Weeklys_Q1_Answer}</span></p>
@@ -154,7 +156,7 @@ export default function WeeklysResults() {
 
         {(week7R.length > 0) && 
           <div className="my-2">
-            <h1>Week 7</h1>
+            <h2>Week 7</h2>
 
             <div className="my-1">
               <p>{week7QA[0].Weeklys_Q1}: <span className="font-900">{week7QA[0].Weeklys_Q1_Answer}</span></p>
@@ -170,7 +172,7 @@ export default function WeeklysResults() {
 
         {(week8R.length > 0) && 
           <div className="my-2">
-            <h1>Week 8</h1>
+            <h2>Week 8</h2>
 
             <div className="my-1">
               <p>{week8QA[0].Weeklys_Q1}: <span className="font-900">{week8QA[0].Weeklys_Q1_Answer}</span></p>
@@ -186,7 +188,7 @@ export default function WeeklysResults() {
 
         {(week9R.length > 0) && 
           <div className="my-2">
-            <h1>Week 9</h1>
+            <h2>Week 9</h2>
 
             <div className="my-1">
               <p>{week9QA[0].Weeklys_Q1}: <span className="font-900">{week9QA[0].Weeklys_Q1_Answer}</span></p>
@@ -202,7 +204,7 @@ export default function WeeklysResults() {
 
         {(week10R.length > 0) && 
           <div className="my-2">
-            <h1>Week 10</h1>
+            <h2>Week 10</h2>
 
             <div className="my-1">
               <p>{week10QA[0].Weeklys_Q1}: <span className="font-900">{week10QA[0].Weeklys_Q1_Answer}</span></p>
@@ -218,7 +220,7 @@ export default function WeeklysResults() {
 
         {(week11R.length > 0) && 
           <div className="my-2">
-            <h1>Week 11</h1>
+            <h2>Week 11</h2>
 
             <div className="my-1">
               <p>{week11QA[0].Weeklys_Q1}: <span className="font-900">{week11QA[0].Weeklys_Q1_Answer}</span></p>
@@ -234,7 +236,7 @@ export default function WeeklysResults() {
 
         {(week12R.length > 0) && 
           <div className="my-2">
-            <h1>Week 12</h1>
+            <h2>Week 12</h2>
 
             <div className="my-1">
               <p>{week12QA[0].Weeklys_Q1}: <span className="font-900">{week12QA[0].Weeklys_Q1_Answer}</span></p>
@@ -250,7 +252,7 @@ export default function WeeklysResults() {
 
         {(week13R.length > 0) && 
           <div className="my-2">
-            <h1>Week 13</h1>
+            <h2>Week 13</h2>
 
             <div className="my-1">
               <p>{week13QA[0].Weeklys_Q1}: <span className="font-900">{week13QA[0].Weeklys_Q1_Answer}</span></p>
@@ -266,7 +268,7 @@ export default function WeeklysResults() {
 
         {(week14R.length > 0) && 
           <div className="my-2">
-            <h1>Week 14</h1>
+            <h2>Week 14</h2>
 
             <div className="my-1">
               <p>{week14QA[0].Weeklys_Q1}: <span className="font-900">{week14QA[0].Weeklys_Q1_Answer}</span></p>

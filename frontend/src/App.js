@@ -15,6 +15,7 @@ import Signup from './Pages/signup';
 import WeeklysSubmissionForm from './Components/WeeklysSubmissionForm';
 import { UserProvider } from './Components/UserContext';
 import Leaderboard from './Pages/leaderboard';
+import Survivors from './Pages/survivor';
 // import logo from './logo.svg';
 
 export default function App() {
@@ -34,6 +35,7 @@ export default function App() {
               <Route path='/login' component={Login} />
               <Route path='/signup' component={Signup} />
               <Route path='/leaderboard' component={Leaderboard} />
+              <Route path='/survivors' component={Survivors} />
               <Route path='*' component={Error404} />
             </Switch>
           </div>

@@ -9,7 +9,7 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [showErrorMsg, setShowErrorMsg] = useState(false);
 
-  const { setUser } = useContext(UserContext);
+  const { setCurrentPlayer } = useContext(UserContext);
 
   const showMsg = () => {
     setTimeout(() => {
@@ -27,7 +27,7 @@ export default function Login() {
 
     axios.post('http://localhost:5000/login-user', user)
       .then((res) => {
-        setUser(res.data)
+        setCurrentPlayer(res.data)
         setEmail('')
         setPassword('')
       })

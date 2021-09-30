@@ -58,27 +58,26 @@ questionAndResults.map((result) => (
             <tr>
               <td></td>
               <td></td>
-              <td>{countEric}</td>
-              <td>{countHeather}</td>
-              <td>{countErika}</td>
-              <td>{countGenie}</td>
-              <td>{countRicard}</td>
-              <td>{countXander}</td>
-              <td>{countEvvie}</td>
-              <td>{countDanny}</td>
-              <td>{countNasser}</td>
-              <td>{countDeshawn}</td>
-              <td>{countBrad}</td>
-              <td>{countJairus}</td>
-              <td>{countTiffany}</td>
-              <td>{countSydney}</td>
-              <td>{countShantel}</td>
-              <td>{countDavid}</td>
-              <td>{countLiana}</td>
-              <td>{countSara}</td>
+              <td className="font-900">{countEric}</td>
+              <td className="font-900">{countHeather}</td>
+              <td className="font-900">{countErika}</td>
+              <td className="font-900">{countGenie}</td>
+              <td className="font-900">{countRicard}</td>
+              <td className="font-900">{countXander}</td>
+              <td className="font-900">{countEvvie}</td>
+              <td className="font-900">{countDanny}</td>
+              <td className="font-900">{countNasser}</td>
+              <td className="font-900">{countDeshawn}</td>
+              <td className="font-900">{countBrad}</td>
+              <td className="font-900">{countJairus}</td>
+              <td className="font-900">{countTiffany}</td>
+              <td className="font-900">{countSydney}</td>
+              <td className="font-900">{countShantel}</td>
+              <td className="font-900">{countDavid}</td>
+              <td className="font-900">{countLiana}</td>
+              <td className="font-900">{countSara}</td>
             </tr>
           </tbody>
-            
           {questionAndResults.map((result, index) => (
             <tbody key={index}>
               <tr>
