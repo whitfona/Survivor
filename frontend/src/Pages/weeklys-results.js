@@ -23,20 +23,20 @@ export default function WeeklysResults() {
   }, []);
 
   // Filter each one week for Questions and Answers
-  const week1QA = weeklyQuestionsAndAnswers.filter(week => week.Week_ID === 1);
-  const week2QA = weeklyQuestionsAndAnswers.filter(week => week.Week_ID === 2);
-  const week3QA = weeklyQuestionsAndAnswers.filter(week => week.Week_ID === 3);
-  const week4QA = weeklyQuestionsAndAnswers.filter(week => week.Week_ID === 4);
-  const week5QA = weeklyQuestionsAndAnswers.filter(week => week.Week_ID === 5);
-  const week6QA = weeklyQuestionsAndAnswers.filter(week => week.Week_ID === 6);
-  const week7QA = weeklyQuestionsAndAnswers.filter(week => week.Week_ID === 7);
-  const week8QA = weeklyQuestionsAndAnswers.filter(week => week.Week_ID === 8);
-  const week9QA = weeklyQuestionsAndAnswers.filter(week => week.Week_ID === 9);
-  const week10QA = weeklyQuestionsAndAnswers.filter(week => week.Week_ID === 10);
-  const week11QA = weeklyQuestionsAndAnswers.filter(week => week.Week_ID === 11);
-  const week12QA = weeklyQuestionsAndAnswers.filter(week => week.Week_ID === 12);
-  const week13QA = weeklyQuestionsAndAnswers.filter(week => week.Week_ID === 13);
-  const week14QA = weeklyQuestionsAndAnswers.filter(week => week.Week_ID === 13);
+  const week1QA = weeklyQuestionsAndAnswers.filter(week => week.Week === 1);
+  const week2QA = weeklyQuestionsAndAnswers.filter(week => week.Week === 2);
+  const week3QA = weeklyQuestionsAndAnswers.filter(week => week.Week === 3);
+  const week4QA = weeklyQuestionsAndAnswers.filter(week => week.Week === 4);
+  const week5QA = weeklyQuestionsAndAnswers.filter(week => week.Week === 5);
+  const week6QA = weeklyQuestionsAndAnswers.filter(week => week.Week === 6);
+  const week7QA = weeklyQuestionsAndAnswers.filter(week => week.Week === 7);
+  const week8QA = weeklyQuestionsAndAnswers.filter(week => week.Week === 8);
+  const week9QA = weeklyQuestionsAndAnswers.filter(week => week.Week === 9);
+  const week10QA = weeklyQuestionsAndAnswers.filter(week => week.Week === 10);
+  const week11QA = weeklyQuestionsAndAnswers.filter(week => week.Week === 11);
+  const week12QA = weeklyQuestionsAndAnswers.filter(week => week.Week === 12);
+  const week13QA = weeklyQuestionsAndAnswers.filter(week => week.Week === 13);
+  const week14QA = weeklyQuestionsAndAnswers.filter(week => week.Week === 14);
   
   // Filter each one week for player results
   const week1R = weeklyResults.filter(week => week.Week === 1);
@@ -91,7 +91,7 @@ export default function WeeklysResults() {
           </div>
         }
 
-        {(week3R.length > 0) && 
+        {(week3QA.length > 0) && 
           <div className="my-2">
             <h2>Week 3</h2>
 
@@ -103,7 +103,7 @@ export default function WeeklysResults() {
               <p>{week3QA[0].Weeklys_Q5} <span className="font-900">{(week3QA[0].Weeklys_Q5_Answer) ? "True" : "False"}</span></p> 
             </div>
 
-            <WeeklysResultsTable questionAndAnswers={week3QA} playerResults={week3R} />
+            {(week3R.length > 0) && <WeeklysResultsTable questionAndAnswers={week3QA} playerResults={week3R} />}
           </div>
         }
 
