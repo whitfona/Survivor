@@ -10,10 +10,10 @@ export default function Navbar() {
         <NavLink activeClassName="link-active" to='/weeklys-results'>Weeklys</NavLink>
         <NavLink activeClassName="link-active" to='/advantage-results'>Advantage</NavLink>
         <NavLink activeClassName="link-active" to='/leaderboard'>Leaderboard</NavLink>
-        <NavLink activeClassName="link-active" exact to='/'>Survivors</NavLink>
+        <NavLink activeClassName="link-active" exact to='/survivors'>Survivors</NavLink>
       </div>
       <div>
-        <Link className="btn-primary mx-0" to='/signup'>Sign Up!</Link>
+        <Link className="btn-primary mx-0" to='/login'>Log In!</Link>
       </div>
     </nav>
   )

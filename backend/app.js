@@ -90,9 +90,9 @@ app.get('/mc-questions-and-results', (req, res) => {
 
 // Add Player answer for Weekly Questions
 app.post('/weekly-submissions', (req, res) => {
-  const { user, week, q1, q2, q3, q4, q5 } = req.body;
+  const { userID, week, q1, q2, q3, q4, q5 } = req.body;
 
-  connection.query("INSERT INTO `WeeklysPlayerAnswers` (`Weeklys_Player_Results_ID`, `Player_ID`, `Week`, `WC_Q1_Answer`, `WC_Q2_Answer`, `WC_Q3_Answer`, `WC_Q4_Answer`, `WC_Q5_Answer`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?)", [user, week, q1, q2, q3, q4, q5], (err, result) => {
+  connection.query("INSERT INTO `WeeklysPlayerAnswers` (`Weeklys_Player_Results_ID`, `Player_ID`, `Week`, `WC_Q1_Answer`, `WC_Q2_Answer`, `WC_Q3_Answer`, `WC_Q4_Answer`, `WC_Q5_Answer`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?)", [userID, week, q1, q2, q3, q4, q5], (err, result) => {
     if(err) {
       console.log(err)
     } else {
@@ -126,26 +126,48 @@ app.post('/login-user', (req, res) => {
     if(err) {
       console.log(err);
     } else {
-      if (result.length > 0) {
-        if (result[0].Player_Password === password) {
-          user = {
+      if ((result.length > 0) && (result[0].Player_Password === password)) {
+        user = {
             Player_ID: result[0].Player_ID,
             Player_Name: result[0].Player_Name,
             Player_Tribe: result[0].Player_Tribe,
             Player_Email: result[0].Player_Email,
             Admin: result[0].Admin
           }
-          res.send(user);
-        }
-        else {
-          res.status(404).send('Username or Password is incorrect.')
-        }
+          res.status(200).send(user);
       } else {
         res.status(404).send('Username or Password is incorrect.')
       }
     }
   })
 })
+// app.post('/login-user', (req, res) => {
+//   const { email, password } = req.body;
+
+//   connection.query('SELECT * FROM `Players` WHERE Player_Email = ?', [email], (err, result) => {
+//     if(err) {
+//       console.log(err);
+//     } else {
+//       if (result.length > 0) {
+//         if (result[0].Player_Password === password) {
+//           user = {
+//             Player_ID: result[0].Player_ID,
+//             Player_Name: result[0].Player_Name,
+//             Player_Tribe: result[0].Player_Tribe,
+//             Player_Email: result[0].Player_Email,
+//             Admin: result[0].Admin
+//           }
+//           res.send(user);
+//         }
+//         else {
+//           res.status(404).send('Username or Password is incorrect.')
+//         }
+//       } else {
+//         res.status(404).send('Username or Password is incorrect.')
+//       }
+//     }
+//   })
+// })
 
 // Get all players id, name and player tribe
 // SELECT Player_ID, Player_Name, Player_Tribe FROM `Players`

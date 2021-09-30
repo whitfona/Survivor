@@ -48,7 +48,7 @@ export default function WeeklysResultsTable({ questionAndAnswers, playerResults 
           <tbody key={index}>
             <tr>
               <td>{result.Player_Name}</td>
-              <td>{calcWeeklyScore(result)}</td>
+              <td className="font-900">{calcWeeklyScore(result)}</td>
               <td>{result.WC_Q1_Answer}</td>
               <td>{result.WC_Q2_Answer}</td>
               <td>{result.WC_Q3_Answer}</td>

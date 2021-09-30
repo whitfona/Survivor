@@ -6,20 +6,21 @@ export const UserContext = createContext(null);
 
 export const UserProvider = ({children}) => {
 
-  const [player, setPlayer] = useState({});
-  const [ tribeTotals, setTribeTotals ] = useState([]);
-  const [ weeklysTotals, setWeeklysTotals ] = useState([]);
-  const [ advantageTotals, setAdvantageTotals ] = useState([]);
+  const [ players, setPlayers ] = useState([{}]);
+  const [ advantageTotals, setAdvantageTotals ] = useState([{}]);
+  const [ survivorTotals, setSurvivorTotals ] = useState([{}]);
+  const [ week, setWeek ] = useState(5);
+  const [ currentPlayer, setCurrentPlayer ] = useState({});
 
-  const value = useMemo(() => ({ player, setPlayer, tribeTotals, setTribeTotals, weeklysTotals, setWeeklysTotals, advantageTotals, setAdvantageTotals }), [ player, setPlayer, tribeTotals, setTribeTotals, weeklysTotals, setWeeklysTotals, advantageTotals, setAdvantageTotals ]);
+  const value = useMemo(() => ({ players, advantageTotals, survivorTotals, week, setWeek, currentPlayer, setCurrentPlayer }), [ players, advantageTotals, survivorTotals, week, setWeek, currentPlayer, setCurrentPlayer ]);
 
 
   // PLAYERS START
-  const [players, setPlayers] = useState([])
+  const [playersRaw, setPlayersRaw] = useState([])
 
   useEffect(() => {
     axios.get('http://localhost:5000/all-players')
-      .then((data) => setPlayers(data.data))
+      .then((data) => setPlayersRaw(data.data))
       .catch((err) => console.log(err))
   }, [])
 
@@ -35,50 +36,51 @@ export const UserProvider = ({children}) => {
       .catch((err) => console.log(err));
   }, []);
 
+  useEffect(() => {
+    let tribeTotalEric = 0, tribeTotalHeather = 0, tribeTotalErika = 0, tribeTotalGenie = 0, tribeTotalRicard = 0, tribeTotalXander = 0, tribeTotalEvvie = 0, tribeTotalDanny = 0, tribeTotalNasser = 0, tribeTotalDeshawn = 0, tribeTotalBrad = 0, tribeTotalJairus = 0, tribeTotalTiffany = 0, tribeTotalSydney = 0, tribeTotalShantel = 0, tribeTotalDavid = 0, tribeTotalLiana = 0, tribeTotalSara = 0;
+    
+    tribeQandA.forEach((question) => {
+      if (question.Eric_E) { tribeTotalEric += question.Eric_E * question.MC_Point_Value }
+      if (question.Heather_A) { tribeTotalHeather += question.Heather_A * question.MC_Point_Value }
+      if (question.Erika_C) { tribeTotalErika += question.Erika_C * question.MC_Point_Value }
+      if (question.Genie_C) { tribeTotalGenie += question.Genie_C * question.MC_Point_Value }
+      if (question.Ricard_F) { tribeTotalRicard += question.Ricard_F * question.MC_Point_Value }
+      if (question.Xander_H) { tribeTotalXander += question.Xander_H * question.MC_Point_Value }
+      if (question.Evvie_J) { tribeTotalEvvie += question.Evvie_J * question.MC_Point_Value }
+      if (question.Danny_M) { tribeTotalDanny += question.Danny_M * question.MC_Point_Value }
+      if (question.Nasser_M) { tribeTotalNasser += question.Nasser_M * question.MC_Point_Value }
+      if (question.Deshawn_R) { tribeTotalDeshawn += question.Deshawn_R * question.MC_Point_Value }
+      if (question.Brad_R) { tribeTotalBrad += question.Brad_R * question.MC_Point_Value }
+      if (question.Jairus_R) { tribeTotalJairus += question.Jairus_R * question.MC_Point_Value }
+      if (question.Tiffany_S) { tribeTotalTiffany += question.Tiffany_S * question.MC_Point_Value }
+      if (question.Sydney_S) { tribeTotalSydney += question.Sydney_S * question.MC_Point_Value }
+      if (question.Shantel_S) { tribeTotalShantel += question.Shantel_S* question.MC_Point_Value }
+      if (question.David_V) { tribeTotalDavid += question.David_V * question.MC_Point_Value }
+      if (question.Liana_W) { tribeTotalLiana += question.Liana_W * question.MC_Point_Value }
+      if (question.Sara_W) { tribeTotalSara += question.Sara_W* question.MC_Point_Value }
+    })
   
-  let tribeTotalEric = 0, tribeTotalHeather = 0, tribeTotalErika = 0, tribeTotalGenie = 0, tribeTotalRicard = 0, tribeTotalXander = 0, tribeTotalEvvie = 0, tribeTotalDanny = 0, tribeTotalNasser = 0, tribeTotalDeshawn = 0, tribeTotalBrad = 0, tribeTotalJairus = 0, tribeTotalTiffany = 0, tribeTotalSydney = 0, tribeTotalShantel = 0, tribeTotalDavid = 0, tribeTotalLiana = 0, tribeTotalSara = 0;
-  
-  tribeQandA.forEach((question) => {
-    if (question.Eric_E) { tribeTotalEric += question.Eric_E * question.MC_Point_Value }
-    if (question.Heather_A) { tribeTotalHeather += question.Heather_A * question.MC_Point_Value }
-    if (question.Erika_C) { tribeTotalErika += question.Erika_C * question.MC_Point_Value }
-    if (question.Genie_C) { tribeTotalGenie += question.Genie_C * question.MC_Point_Value }
-    if (question.Ricard_F) { tribeTotalRicard += question.Ricard_F * question.MC_Point_Value }
-    if (question.Xander_H) { tribeTotalXander += question.Xander_H * question.MC_Point_Value }
-    if (question.Evvie_J) { tribeTotalEvvie += question.Evvie_J * question.MC_Point_Value }
-    if (question.Danny_M) { tribeTotalDanny += question.Danny_M * question.MC_Point_Value }
-    if (question.Nasser_M) { tribeTotalNasser += question.Nasser_M * question.MC_Point_Value }
-    if (question.Deshawn_R) { tribeTotalDeshawn += question.Deshawn_R * question.MC_Point_Value }
-    if (question.Brad_R) { tribeTotalBrad += question.Brad_R * question.MC_Point_Value }
-    if (question.Jairus_R) { tribeTotalJairus += question.Jairus_R * question.MC_Point_Value }
-    if (question.Tiffany_S) { tribeTotalTiffany += question.Tiffany_S * question.MC_Point_Value }
-    if (question.Sydney_S) { tribeTotalSydney += question.Sydney_S * question.MC_Point_Value }
-    if (question.Shantel_S) { tribeTotalShantel += question.Shantel_S* question.MC_Point_Value }
-    if (question.David_V) { tribeTotalDavid += question.David_V * question.MC_Point_Value }
-    if (question.Liana_W) { tribeTotalLiana += question.Liana_W * question.MC_Point_Value }
-    if (question.Sara_W) { tribeTotalSara += question.Sara_W* question.MC_Point_Value }
-  })
-
-  const survivorTotals = [
-    { name: "Eric E", total: tribeTotalEric },
-    { name: "Heather A", total: tribeTotalHeather }, 
-    { name: "Erika C", total: tribeTotalErika }, 
-    { name: "Genie C", total: tribeTotalGenie }, 
-    { name: "Ricard F", total: tribeTotalRicard }, 
-    { name: "Xander H", total: tribeTotalXander }, 
-    { name: "Evvie J", total: tribeTotalEvvie }, 
-    { name: "Danny M", total: tribeTotalDanny }, 
-    { name: "Nasser M", total: tribeTotalNasser }, 
-    { name: "Deshawn R", total: tribeTotalDeshawn }, 
-    { name: "Brad R", total: tribeTotalBrad }, 
-    { name: "Jairus R", total: tribeTotalJairus }, 
-    { name: "Tiffany S", total: tribeTotalTiffany }, 
-    { name: "Sydney S", total: tribeTotalSydney }, 
-    { name: "Shantel S", total: tribeTotalShantel }, 
-    { name: "David V", total: tribeTotalDavid }, 
-    { name: "Liana W", total: tribeTotalLiana }, 
-    { name: "Sara W", total: tribeTotalSara }
-    ]
+    setSurvivorTotals([
+      { name: "Eric E", total: tribeTotalEric },
+      { name: "Heather A", total: tribeTotalHeather }, 
+      { name: "Erika C", total: tribeTotalErika }, 
+      { name: "Genie C", total: tribeTotalGenie }, 
+      { name: "Ricard F", total: tribeTotalRicard }, 
+      { name: "Xander H", total: tribeTotalXander }, 
+      { name: "Evvie J", total: tribeTotalEvvie }, 
+      { name: "Danny M", total: tribeTotalDanny }, 
+      { name: "Nasser M", total: tribeTotalNasser }, 
+      { name: "Deshawn R", total: tribeTotalDeshawn }, 
+      { name: "Brad R", total: tribeTotalBrad }, 
+      { name: "Jairus R", total: tribeTotalJairus }, 
+      { name: "Tiffany S", total: tribeTotalTiffany }, 
+      { name: "Sydney S", total: tribeTotalSydney }, 
+      { name: "Shantel S", total: tribeTotalShantel }, 
+      { name: "David V", total: tribeTotalDavid }, 
+      { name: "Liana W", total: tribeTotalLiana }, 
+      { name: "Sara W", total: tribeTotalSara }
+    ])
+  }, [tribeQandA])
 
   // TRIBE SCORES END
 
@@ -102,26 +104,29 @@ export const UserProvider = ({children}) => {
     return score;
   }
 
-  let advantageTotalNick = 0, advantageTotalJill = 0, advantageTotalAnna = 0;
+  useEffect(() => {
+    let advantageTotalNick = 0, advantageTotalJill = 0, advantageTotalAnna = 0;
+  
+    advantageData.forEach(item => {
+      if (item.Player_Name === "Nick") {
+        advantageTotalNick += addAdvantageScores(item);
+      }
+      if (item.Player_Name === "Jill") {
+        advantageTotalJill += addAdvantageScores(item);
+      }
+      if (item.Player_Name === "Anna") {
+        advantageTotalAnna += addAdvantageScores(item);
+      }
+    })
+  
+    setAdvantageTotals([
+      { Player_ID: 1, Player_Name: "Nick", Advantage_Total: advantageTotalNick },
+      { Player_ID: 2, Player_Name: "Anna", Advantage_Total: advantageTotalAnna },
+      { Player_ID: 3, Player_Name: "Jill", Advantage_Total: advantageTotalJill }
+    ])
 
-  advantageData.forEach(item => {
-    if (item.Player_Name === "Nick") {
-      advantageTotalNick += addAdvantageScores(item);
-    }
-    if (item.Player_Name === "Jill") {
-      advantageTotalJill += addAdvantageScores(item);
-    }
-    if (item.Player_Name === "Anna") {
-      advantageTotalAnna += addAdvantageScores(item);
-    }
-  })
-
-  const advantageTotal = [
-    { Player_ID: 1, Player_Name: "Nick", Advantage_Total: advantageTotalNick },
-    { Player_ID: 2, Player_Name: "Anna", Advantage_Total: advantageTotalAnna },
-    { Player_ID: 3, Player_Name: "Jill", Advantage_Total: advantageTotalJill }
-  ]
-
+  }, [advantageData])
+  
   // ADVANTAGE SCORES END
 
   // WEEKLYS SCORES START
@@ -196,43 +201,49 @@ export const UserProvider = ({children}) => {
   ]
 
   // WEEKLYS SCORES END
-  let playersChanged = [{}]
 
-  for (let i = 0; i < players.length; i++) {
+  let playersOrdered = [{}];
+
+  useEffect(() => {
+
+    for (let i = 0; i < playersRaw.length; i++) {
     let tribe = 0;
     let weeklys = 0;
     let advantage = 0;
 
-    for (let j = 0; j < advantageTotal.length; j++) {
-      if (players[i].Player_ID === advantageTotal[j].Player_ID) {
-        advantage += advantageTotal[j].Advantage_Total
+    for (let j = 0; j < advantageTotals.length; j++) {
+      if (playersRaw[i].Player_ID === advantageTotals[j].Player_ID) {
+        advantage += advantageTotals[j].Advantage_Total
       }
-    
     }
 
     for (let j = 0; j < weeklysTotal.length; j++) {
-      if (players[i].Player_ID === weeklysTotal[j].Player_ID) {
+      if (playersRaw[i].Player_ID === weeklysTotal[j].Player_ID) {
         weeklys += weeklysTotal[j].Weeklys_Total
       }
     }
 
     for(let j = 0; j < survivorTotals.length; j++) {
-      if (players[i].Player_Tribe.includes(survivorTotals[j].name)) {
+      if (playersRaw[i].Player_Tribe.includes(survivorTotals[j].name)) {
         tribe += survivorTotals[j].total
       }
     }
 
-    playersChanged[i] = { 
-      Player_ID: players[i].Player_ID, 
-      Player_Name: players[i].Player_Name, 
+    playersOrdered[i] = { 
+      Player_ID: playersRaw[i].Player_ID, 
+      Player_Name: playersRaw[i].Player_Name, 
       Tribe_Total: tribe,
       Weeklys_Total: weeklys,
-      Bonuse: 0,
+      Bonus: 0,
       Pay_Bonus: 0,
-      Advantage_Total: advantage
+      Advantage_Total: advantage,
+      Total_Score: (tribe + weeklys + 0 + 0 + advantage)
     }
   }
-  
+
+    setPlayers(playersOrdered)
+  }, [advantageTotals, playersRaw, survivorTotals])
+
   return (
     <UserContext.Provider value={value}>
       {children}

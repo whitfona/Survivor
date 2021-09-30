@@ -221,6 +221,23 @@ nav a:hover {
   font-weight: 600;
 }
 
+/****************************** HOME ******************************/
+
+.home .cols-2 {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+/****************************** SURVIVORS ******************************/
+
+.survivors table {
+  width: 50%;
+  margin: auto;
+}
+
 /****************************** TABLES ******************************/
 
 .table-container {
