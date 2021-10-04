@@ -16,7 +16,6 @@ export const UserProvider = ({children}) => {
 
   const value = useMemo(() => ({ players, advantageTotals, survivorTotals, week, setWeek, currentPlayer, setCurrentPlayer, authenticated, setAuthenticated }), [ players, advantageTotals, survivorTotals, week, setWeek, currentPlayer, setCurrentPlayer, authenticated, setAuthenticated ]);
 
-
   // PLAYERS START
   const [playersRaw, setPlayersRaw] = useState([])
 
@@ -89,7 +88,7 @@ export const UserProvider = ({children}) => {
   // ADVANTAGE SCORES START
   const [ advantageData, setAdvantageData ] = useState([]);
 
-   useEffect(() => {
+  useEffect(() => {
     axios.get('http://localhost:5000/advantage-v2',)
       .then((data) => setAdvantageData(data.data))
       .catch((err) => console.log(err));
@@ -132,32 +131,19 @@ export const UserProvider = ({children}) => {
   // ADVANTAGE SCORES END
 
   // WEEKLYS SCORES START
-  const [ weeklysQnA, setWeeklysQnA ] = useState([]);
+  const [ weeklysQuestions, setweeklysQuestions ] = useState([]);
   const [ weeklysPlayerAnswers, setWeeklysPlayerAnswers] = useState([]);
 
   useEffect(() => {
     axios.get('http://localhost:5000/weeklys-questions',)
       .then((data) => {
-        setWeeklysQnA(data.data)
+        setweeklysQuestions(data.data)
       })
       .catch((err) => console.log(err));
     axios.get('http://localhost:5000/weeklys-answers',)
       .then((data) => setWeeklysPlayerAnswers(data.data))
       .catch((err) => console.log(err));
   }, []);
-
- let weeklysAnswerKey = [{}];
-
- for (let i = 0; i< weeklysQnA.length; i++) {
-   weeklysAnswerKey[i] = {
-     week: weeklysQnA[i].Week,
-     q1: weeklysQnA[i].Weeklys_Q1_Answer,
-     q2: weeklysQnA[i].Weeklys_Q2_Answer,
-     q3: weeklysQnA[i].Weeklys_Q3_Answer,
-     q4: weeklysQnA[i].Weeklys_Q4_Answer,
-     q5: weeklysQnA[i].Weeklys_Q5_Answer,
-   }
- }
 
   const checkScores = (playerAnswers, answerKey) => {
     let score = 0;
@@ -173,8 +159,20 @@ export const UserProvider = ({children}) => {
     return score;
   }
 
-  
+ let weeklysAnswerKey = [{}];
+
   useEffect(() => {
+    for (let i = 0; i< weeklysQuestions.length; i++) {
+      weeklysAnswerKey[i] = {
+        week: weeklysQuestions[i].Week,
+        q1: weeklysQuestions[i].Weeklys_Q1_Answer,
+        q2: weeklysQuestions[i].Weeklys_Q2_Answer,
+        q3: weeklysQuestions[i].Weeklys_Q3_Answer,
+        q4: weeklysQuestions[i].Weeklys_Q4_Answer,
+        q5: weeklysQuestions[i].Weeklys_Q5_Answer,
+      }
+    }
+    
     let weeklysOrdered = [{}];
 
     let weeklysTotalNick = 0, weeklysTotalJill = 0, weeklysTotalAnna = 0;
@@ -206,7 +204,7 @@ export const UserProvider = ({children}) => {
     ]
 
     setWeeklysTotals(weeklysOrdered);
-  },[weeklysPlayerAnswers])
+  },[weeklysPlayerAnswers, weeklysQuestions])
 
   // WEEKLYS SCORES END
 
@@ -230,11 +228,6 @@ export const UserProvider = ({children}) => {
         weeklys += weeklysTotals[j].Weeklys_Total
       }
     }
-    // for (let j = 0; j < weeklysTotal.length; j++) {
-    //   if (playersRaw[i].Player_ID === weeklysTotal[j].Player_ID) {
-    //     weeklys += weeklysTotal[j].Weeklys_Total
-    //   }
-    // }
 
     for(let j = 0; j < survivorTotals.length; j++) {
       if (playersRaw[i].Player_Tribe.includes(survivorTotals[j].name)) {
@@ -255,7 +248,7 @@ export const UserProvider = ({children}) => {
   }
 
     setPlayers(playersOrdered)
-  }, [advantageTotals, playersRaw, survivorTotals])
+  }, [advantageTotals, weeklysTotals, playersRaw, survivorTotals])
 
   return (
     <UserContext.Provider value={value}>
@@ -263,34 +256,3 @@ export const UserProvider = ({children}) => {
     </UserContext.Provider>
   )
 }
-
-
-
-
-
-
-
-
-
-
-// import { createContext, useMemo, useState } from "react";
-
-
-// export const UserContext = createContext(null);
-
-// export const UserProvider = ({children}) => {
-
-//   const [user, setUser] = useState(null);
-//   const [week, setWeek] = useState(null);
-//   const [playerAdvantageScores, setPlayerAdvantageScores] = useState([]);
-//   const [playerWeeklysScores, setPlayersWeeklyScores] = useState([]);
-//   const [survivorScores, setSurvivorScores] = useState([]);
-
-//   const value = useMemo(() => ({user, setUser, week, setWeek, playerAdvantageScores, setPlayerAdvantageScores, playerWeeklysScores, setPlayersWeeklyScores, survivorScores, setSurvivorScores}), [user, setUser, week, setWeek, playerAdvantageScores, setPlayerAdvantageScores, playerWeeklysScores, setPlayersWeeklyScores, survivorScores, setSurvivorScores])
-
-//   return (
-//     <UserContext.Provider value={value}>
-//       {children}
-//     </UserContext.Provider>
-//   )
-// }
