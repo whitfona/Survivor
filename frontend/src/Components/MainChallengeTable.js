@@ -1,30 +1,6 @@
 import React from 'react'
 
-export default function MainChallengeTable({ questionAndResults} ) {
-
-let countEric = 0, countHeather = 0, countErika = 0, countGenie = 0, countRicard = 0, countXander = 0, countEvvie = 0, countDanny = 0, countNasser = 0, countDeshawn = 0, countBrad = 0, countJairus = 0, countTiffany = 0, countSydney = 0, countShantel = 0, countDavid = 0, countLiana = 0, countSara = 0;
-
-questionAndResults.map((result) => (
-  // eslint-disable-next-line no-sequences
-  countEric += (result.Eric_E * result.MC_Point_Value),
-  countHeather += (result.Heather_A * result.MC_Point_Value),
-  countErika += (result.Erika_C * result.MC_Point_Value),
-  countGenie += (result.Genie_C * result.MC_Point_Value),
-  countRicard += (result.Ricard_F * result.MC_Point_Value),
-  countXander += (result.Xander_H * result.MC_Point_Value),
-  countEvvie += (result.Evvie_J * result.MC_Point_Value),
-  countDanny += (result.Danny_M * result.MC_Point_Value),
-  countNasser += (result.Nasser_M * result.MC_Point_Value),
-  countDeshawn += (result.Deshawn_R * result.MC_Point_Value),
-  countBrad += (result.Brad_R * result.MC_Point_Value),
-  countJairus += (result.Jairus_R * result.MC_Point_Value),
-  countTiffany += (result.Tiffany_S * result.MC_Point_Value),
-  countSydney += (result.Sydney_S * result.MC_Point_Value),
-  countShantel += (result.Shantel_S * result.MC_Point_Value),
-  countDavid += (result.David_V * result.MC_Point_Value),
-  countLiana += (result.Liana_W * result.MC_Point_Value),
-  countSara += (result.Sara_W * result.MC_Point_Value)
-))
+export default function MainChallengeTable({ questionAndResults, totals } ) {
 
   return (
     <>
@@ -54,53 +30,55 @@ questionAndResults.map((result) => (
               <th>Sara W</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td></td>
-              <td></td>
-              <td className="font-900">{countEric}</td>
-              <td className="font-900">{countHeather}</td>
-              <td className="font-900">{countErika}</td>
-              <td className="font-900">{countGenie}</td>
-              <td className="font-900">{countRicard}</td>
-              <td className="font-900">{countXander}</td>
-              <td className="font-900">{countEvvie}</td>
-              <td className="font-900">{countDanny}</td>
-              <td className="font-900">{countNasser}</td>
-              <td className="font-900">{countDeshawn}</td>
-              <td className="font-900">{countBrad}</td>
-              <td className="font-900">{countJairus}</td>
-              <td className="font-900">{countTiffany}</td>
-              <td className="font-900">{countSydney}</td>
-              <td className="font-900">{countShantel}</td>
-              <td className="font-900">{countDavid}</td>
-              <td className="font-900">{countLiana}</td>
-              <td className="font-900">{countSara}</td>
-            </tr>
-          </tbody>
+          {totals.map((result, index) => (
+            <tbody key={index}>
+              <tr>
+                <td></td>
+                <td></td>
+                <td className="font-900">{result.Eric_E}</td>
+                <td className="font-900">{result.Heather_A}</td>
+                <td className="font-900">{result.Erika_C}</td>
+                <td className="font-900">{result.Genie_C}</td>
+                <td className="font-900">{result.Ricard_F}</td>
+                <td className="font-900">{result.Xander_H}</td>
+                <td className="font-900">{result.Evvie_J}</td>
+                <td className="font-900">{result.Danny_M}</td>
+                <td className="font-900">{result.Nasser_M}</td>
+                <td className="font-900">{result.Deshawn_R}</td>
+                <td className="font-900">{result.Brad_R}</td>
+                <td className="font-900">{result.Jairus_R}</td>
+                <td className="font-900">{result.Tiffany_S}</td>
+                <td className="font-900">{result.Sydney_S}</td>
+                <td className="font-900">{result.Shantel_S}</td>
+                <td className="font-900">{result.David_V}</td>
+                <td className="font-900">{result.Liana_W}</td>
+                <td className="font-900">{result.Sara_W}</td>
+              </tr>
+            </tbody>
+          ))}
           {questionAndResults.map((result, index) => (
             <tbody key={index}>
               <tr>
-                <td>{result.MC_Questions}</td>
-                <td>{result.MC_Point_Value}</td>
-                <td>{result.Eric_E * result.MC_Point_Value}</td>
-                <td>{result.Heather_A * result.MC_Point_Value}</td>
-                <td>{result.Erika_C * result.MC_Point_Value}</td>
-                <td>{result.Genie_C * result.MC_Point_Value}</td>
-                <td>{result.Ricard_F * result.MC_Point_Value}</td>
-                <td>{result.Xander_H * result.MC_Point_Value}</td>
-                <td>{result.Evvie_J * result.MC_Point_Value}</td>
-                <td>{result.Danny_M * result.MC_Point_Value}</td>
-                <td>{result.Nasser_M * result.MC_Point_Value}</td>
-                <td>{result.Deshawn_R * result.MC_Point_Value}</td>
-                <td>{result.Brad_R * result.MC_Point_Value}</td>
-                <td>{result.Jairus_R * result.MC_Point_Value}</td>
-                <td>{result.Tiffany_S * result.MC_Point_Value}</td>
-                <td>{result.Sydney_S * result.MC_Point_Value}</td>
-                <td>{result.Shantel_S * result.MC_Point_Value}</td>
-                <td>{result.David_V * result.MC_Point_Value}</td>
-                <td>{result.Liana_W * result.MC_Point_Value}</td>
-                <td>{result.Sara_W * result.MC_Point_Value}</td>
+                <td>{result.Question}</td>
+                <td>{result.Point_Value}</td>
+                <td>{result.Eric_E}</td>
+                <td>{result.Heather_A}</td>
+                <td>{result.Erika_C}</td>
+                <td>{result.Genie_C}</td>
+                <td>{result.Ricard_F}</td>
+                <td>{result.Xander_H}</td>
+                <td>{result.Evvie_J}</td>
+                <td>{result.Danny_M}</td>
+                <td>{result.Nasser_M}</td>
+                <td>{result.Deshawn_R}</td>
+                <td>{result.Brad_R}</td>
+                <td>{result.Jairus_R}</td>
+                <td>{result.Tiffany_S}</td>
+                <td>{result.Sydney_S}</td>
+                <td>{result.Shantel_S}</td>
+                <td>{result.David_V}</td>
+                <td>{result.Liana_W}</td>
+                <td>{result.Sara_W}</td>
               </tr>
             </tbody>
           ))}

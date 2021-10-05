@@ -126,32 +126,128 @@ app.get('/advantage-totals', (req, res) => {
   })
 })
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// SELECT MainChallengeAdmin_V2.MC_Questions, MainChallengeAdmin_V2.MC_Point_Value, MainChallengeResults_V2.* FROM MainChallengeAdmin_V2 JOIN MainChallengeResults_V2 WHERE MainChallengeAdmin_V2.Question_Number = MainChallengeResults_V2.Question_Number;
-
-// Get Main Challenge questions and results from MainChallengeAdmin_V2 and MainChallengeResults_V2 table
-app.get('/mc-questions-and-results', (req, res) => {
+// Get Main Challenge questions and results & weekly player totals from MainChallengeAdmin_V2 and MainChallengeResults_V2 table
+app.get('/mc-questions-and-totals', (req, res) => {
     connection.query('SELECT MainChallengeAdmin_V2.MC_Questions, MainChallengeAdmin_V2.MC_Point_Value, MainChallengeResults_V2.* FROM MainChallengeAdmin_V2 JOIN MainChallengeResults_V2 WHERE MainChallengeAdmin_V2.Question_Number = MainChallengeResults_V2.Question_Number;', (err, result) => {
       if(err) {
         console.log(err);
       } else {
-        res.send(result);
+
+        let data = [];
+        let totals = [];
+
+        for (let i = 0; i < result.length; i++) {
+          data.push({
+            Question_Number: result[i].Question_Number,
+            Question: result[i].MC_Questions,
+            Point_Value: result[i].MC_Point_Value,
+            Week: result[i].Week,
+            Eric_E: result[i].Eric_E * result[i].MC_Point_Value,
+            Heather_A: result[i].Heather_A * result[i].MC_Point_Value,
+            Erika_C: result[i].Erika_C * result[i].MC_Point_Value,
+            Genie_C: result[i].Genie_C * result[i].MC_Point_Value,
+            Ricard_F: result[i].Ricard_F * result[i].MC_Point_Value,
+            Xander_H: result[i].Xander_H * result[i].MC_Point_Value,
+            Evvie_J: result[i].Evvie_J * result[i].MC_Point_Value,
+            Danny_M: result[i].Danny_M * result[i].MC_Point_Value,
+            Nasser_M: result[i].Nasser_M * result[i].MC_Point_Value,
+            Deshawn_R: result[i].Deshawn_R * result[i].MC_Point_Value,
+            Brad_R: result[i].Brad_R * result[i].MC_Point_Value,
+            Jairus_R: result[i].Jairus_R * result[i].MC_Point_Value,
+            Tiffany_S: result[i].Tiffany_S * result[i].MC_Point_Value,
+            Sydney_S: result[i].Sydney_S * result[i].MC_Point_Value,
+            Shantel_S: result[i].Shantel_S * result[i].MC_Point_Value,
+            David_V: result[i].David_V * result[i].MC_Point_Value,
+            Liana_W: result[i].Liana_W * result[i].MC_Point_Value,
+            Sara_W: result[i].Sara_W * result[i].MC_Point_Value
+          })
+        }
+
+        const week1 = data.filter(week => week.Week === 1);
+        const week2 = data.filter(week => week.Week === 2);
+        const week3 = data.filter(week => week.Week === 3);
+        const week4 = data.filter(week => week.Week === 4);
+        const week5 = data.filter(week => week.Week === 5);
+        const week6 = data.filter(week => week.Week === 6);
+        const week7 = data.filter(week => week.Week === 7);
+        const week8 = data.filter(week => week.Week === 8);
+        const week9 = data.filter(week => week.Week === 9);
+        const week10 = data.filter(week => week.Week === 10);
+        const week11 = data.filter(week => week.Week === 11);
+        const week12 = data.filter(week => week.Week === 12);
+        const week13 = data.filter(week => week.Week === 13);
+        const week14 = data.filter(week => week.Week === 14);
+
+        const weeks = [ week1, week2, week3, week4, week5, week6, week7, week8, week9, week10, week11, week12, week13, week14 ]
+
+        for(let i = 0; i < weeks.length; i++) {
+          let countEric = 0, countHeather = 0, countErika = 0, countGenie = 0, countRicard = 0, countXander = 0, countEvvie = 0, countDanny = 0, countNasser = 0, countDeshawn = 0, countBrad = 0, countJairus = 0, countTiffany = 0, countSydney = 0, countShantel = 0, countDavid = 0, countLiana = 0, countSara = 0;
+
+          if (weeks[i].length === 0) {
+            break;
+          } else {
+            weeks[i].map((result) => (
+              countEric += result.Eric_E,
+              countHeather += result.Heather_A,
+              countErika += result.Erika_C,
+              countGenie += result.Genie_C,
+              countRicard += result.Ricard_F,
+              countXander += result.Xander_H,
+              countEvvie += result.Evvie_J,
+              countDanny += result.Danny_M,
+              countNasser += result.Nasser_M,
+              countDeshawn += result.Deshawn_R,
+              countBrad += result.Brad_R,
+              countJairus += result.Jairus_R,
+              countTiffany += result.Tiffany_S,
+              countSydney += result.Sydney_S,
+              countShantel += result.Shantel_S,
+              countDavid += result.David_V,
+              countLiana += result.Liana_W,
+              countSara += result.Sara_W
+            ))
+  
+            totals.push({
+              Week: i+1,
+              Eric_E: countEric,
+              Heather_A: countHeather,
+              Erika_C: countErika,
+              Genie_C: countGenie,
+              Ricard_F: countRicard,
+              Xander_H: countXander,
+              Evvie_J: countEvvie,
+              Danny_M: countDanny,
+              Nasser_M: countNasser,
+              Deshawn_R: countDeshawn,
+              Brad_R: countBrad,
+              Jairus_R: countJairus,
+              Tiffany_S: countTiffany,
+              Sydney_S: countSydney,
+              Shantel_S: countShantel,
+              David_V: countDavid,
+              Liana_W: countLiana,
+              Sara_W: countSara
+            })
+          }
+        }
+
+        res.send({questions: data, totals: totals});
       }
   })
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Add Player answer for Weekly Questions
 app.post('/weekly-submissions', (req, res) => {
