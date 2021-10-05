@@ -7,283 +7,179 @@ export default function WeeklysResults() {
   // Questions from Josh and proper answer to questions
   const [weeklyQuestionsAndAnswers, setWeeklyQuestionsAndAnswers] = useState([]);
   // Answers from players
-  const [weeklyResults, setWeeklyResults] = useState([]);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [weeklyPlayerResults, setWeeklyPlayerResults] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/weeklys-questions',)
+    axios.get('http://localhost:5000/weeklys-questions-and-answers',)
       .then((data) => {
         setWeeklyQuestionsAndAnswers(data.data)
-        setIsLoaded(true);
       })
       .catch((err) => console.log(err));
-    axios.get('http://localhost:5000/weeklys-answers',)
-      .then((data) => setWeeklyResults(data.data))
+    axios.get('http://localhost:5000/weeklys-players-answers',)
+      .then((data) => setWeeklyPlayerResults(data.data))
       .catch((err) => console.log(err));
   }, []);
 
   // Filter each one week for Questions and Answers
-  const week1QA = weeklyQuestionsAndAnswers.filter(week => week.Week === 1);
-  const week2QA = weeklyQuestionsAndAnswers.filter(week => week.Week === 2);
-  const week3QA = weeklyQuestionsAndAnswers.filter(week => week.Week === 3);
-  const week4QA = weeklyQuestionsAndAnswers.filter(week => week.Week === 4);
-  const week5QA = weeklyQuestionsAndAnswers.filter(week => week.Week === 5);
-  const week6QA = weeklyQuestionsAndAnswers.filter(week => week.Week === 6);
-  const week7QA = weeklyQuestionsAndAnswers.filter(week => week.Week === 7);
-  const week8QA = weeklyQuestionsAndAnswers.filter(week => week.Week === 8);
-  const week9QA = weeklyQuestionsAndAnswers.filter(week => week.Week === 9);
-  const week10QA = weeklyQuestionsAndAnswers.filter(week => week.Week === 10);
-  const week11QA = weeklyQuestionsAndAnswers.filter(week => week.Week === 11);
-  const week12QA = weeklyQuestionsAndAnswers.filter(week => week.Week === 12);
-  const week13QA = weeklyQuestionsAndAnswers.filter(week => week.Week === 13);
-  const week14QA = weeklyQuestionsAndAnswers.filter(week => week.Week === 14);
+  const week1Questions = weeklyQuestionsAndAnswers.filter(week => week.Week === 1);
+  const week2Questions = weeklyQuestionsAndAnswers.filter(week => week.Week === 2);
+  const week3Questions = weeklyQuestionsAndAnswers.filter(week => week.Week === 3);
+  const week4Questions = weeklyQuestionsAndAnswers.filter(week => week.Week === 4);
+  const week5Questions = weeklyQuestionsAndAnswers.filter(week => week.Week === 5);
+  const week6Questions = weeklyQuestionsAndAnswers.filter(week => week.Week === 6);
+  const week7Questions = weeklyQuestionsAndAnswers.filter(week => week.Week === 7);
+  const week8Questions = weeklyQuestionsAndAnswers.filter(week => week.Week === 8);
+  const week9Questions = weeklyQuestionsAndAnswers.filter(week => week.Week === 9);
+  const week10Questions = weeklyQuestionsAndAnswers.filter(week => week.Week === 10);
+  const week11Questions = weeklyQuestionsAndAnswers.filter(week => week.Week === 11);
+  const week12Questions = weeklyQuestionsAndAnswers.filter(week => week.Week === 12);
+  const week13Questions = weeklyQuestionsAndAnswers.filter(week => week.Week === 13);
+  const week14Questions = weeklyQuestionsAndAnswers.filter(week => week.Week === 14);
   
   // Filter each one week for player results
-  const week1R = weeklyResults.filter(week => week.Week === 1);
-  const week2R = weeklyResults.filter(week => week.Week === 2);
-  const week3R = weeklyResults.filter(week => week.Week === 3);
-  const week4R = weeklyResults.filter(week => week.Week === 4);
-  const week5R = weeklyResults.filter(week => week.Week === 5);
-  const week6R = weeklyResults.filter(week => week.Week === 6);
-  const week7R = weeklyResults.filter(week => week.Week === 7);
-  const week8R = weeklyResults.filter(week => week.Week === 8);
-  const week9R = weeklyResults.filter(week => week.Week === 9);
-  const week10R = weeklyResults.filter(week => week.Week === 10);
-  const week11R = weeklyResults.filter(week => week.Week === 11);
-  const week12R = weeklyResults.filter(week => week.Week === 12);
-  const week13R = weeklyResults.filter(week => week.Week === 13);
-  const week14R = weeklyResults.filter(week => week.Week === 14);
+  const week1Answers = weeklyPlayerResults.filter(week => week.Week === 1);
+  const week2Answers = weeklyPlayerResults.filter(week => week.Week === 2);
+  const week3Answers = weeklyPlayerResults.filter(week => week.Week === 3);
+  const week4Answers = weeklyPlayerResults.filter(week => week.Week === 4);
+  const week5Answers = weeklyPlayerResults.filter(week => week.Week === 5);
+  const week6Answers = weeklyPlayerResults.filter(week => week.Week === 6);
+  const week7Answers = weeklyPlayerResults.filter(week => week.Week === 7);
+  const week8Answers = weeklyPlayerResults.filter(week => week.Week === 8);
+  const week9Answers = weeklyPlayerResults.filter(week => week.Week === 9);
+  const week10Answers = weeklyPlayerResults.filter(week => week.Week === 10);
+  const week11Answers = weeklyPlayerResults.filter(week => week.Week === 11);
+  const week12Answers = weeklyPlayerResults.filter(week => week.Week === 12);
+  const week13Answers = weeklyPlayerResults.filter(week => week.Week === 13);
+  const week14Answers = weeklyPlayerResults.filter(week => week.Week === 14);
+
+  const formatQuestionsAndAnswers = (week) => {
+    return (
+      <>
+      {week.map(item => (
+        <div className="my-1">
+          <p>{item.Weeklys_Q1}: <span className="font-900">{item.Weeklys_Q1_Answer}</span></p>
+          <p>{item.Weeklys_Q2}: <span className="font-900">{item.Weeklys_Q2_Answer}</span></p>
+          <p>{item.Weeklys_Q3} <span className="font-900">{(item.Weeklys_Q3_Answer) ? "True" : "False"}</span></p>
+          <p>{item.Weeklys_Q4} <span className="font-900">{(item.Weeklys_Q4_Answer) ? "True" : "False"}</span></p>
+          <p>{item.Weeklys_Q5} <span className="font-900">{(item.Weeklys_Q5_Answer) ? "True" : "False"}</span></p> 
+        </div>
+      ))}
+    </>
+    )
+  }
 
   return (
     <div>
-      {isLoaded ?
-        <>
-        <h1>Weeklys Scores</h1>
+      <h1>Weeklys Scores</h1>
 
-        {(week1R.length > 0) &&
-          <div className="my-2">
-            <h2>Week 1</h2>
-
-            <div className="my-1">
-              <p>{week1QA[0].Weeklys_Q1}: <span className="font-900">{week1QA[0].Weeklys_Q1_Answer}</span></p>
-              <p>{week1QA[0].Weeklys_Q2}: <span className="font-900">{week1QA[0].Weeklys_Q2_Answer}</span></p>
-              <p>{week1QA[0].Weeklys_Q3} <span className="font-900">{(week1QA[0].Weeklys_Q3_Answer) ? "True" : "False"}</span></p>
-              <p>{week1QA[0].Weeklys_Q4} <span className="font-900">{(week1QA[0].Weeklys_Q4_Answer) ? "True" : "False"}</span></p>
-              <p>{week1QA[0].Weeklys_Q5} <span className="font-900">{(week1QA[0].Weeklys_Q5_Answer) ? "True" : "False"}</span></p> 
-            </div>
-            <WeeklysResultsTable questionAndAnswers={week1QA} playerResults={week1R} />
-          </div>
-        }
-
-        {(week2R.length > 0) &&
-          <div className="my-2">
-            <h2>Week 2</h2>
-
-            <div className="my-1">
-              <p>{week2QA[0].Weeklys_Q1}: <span className="font-900">{week2QA[0].Weeklys_Q1_Answer}</span></p>
-              <p>{week2QA[0].Weeklys_Q2}: <span className="font-900">{week2QA[0].Weeklys_Q2_Answer}</span></p>
-              <p>{week2QA[0].Weeklys_Q3} <span className="font-900">{(week2QA[0].Weeklys_Q3_Answer) ? "True" : "False"}</span></p>
-              <p>{week2QA[0].Weeklys_Q4} <span className="font-900">{(week2QA[0].Weeklys_Q4_Answer) ? "True" : "False"}</span></p>
-              <p>{week2QA[0].Weeklys_Q5} <span className="font-900">{(week2QA[0].Weeklys_Q5_Answer) ? "True" : "False"}</span></p> 
-            </div>
-
-            <WeeklysResultsTable questionAndAnswers={week2QA} playerResults={week2R} />
-          </div>
-        }
-
-        {(week3QA.length > 0) && 
-          <div className="my-2">
-            <h2>Week 3</h2>
-
-            <div className="my-1">
-              <p>{week3QA[0].Weeklys_Q1}: <span className="font-900">{week3QA[0].Weeklys_Q1_Answer}</span></p>
-              <p>{week3QA[0].Weeklys_Q2}: <span className="font-900">{week3QA[0].Weeklys_Q2_Answer}</span></p>
-              <p>{week3QA[0].Weeklys_Q3} <span className="font-900">{(week3QA[0].Weeklys_Q3_Answer) ? "True" : "False"}</span></p>
-              <p>{week3QA[0].Weeklys_Q4} <span className="font-900">{(week3QA[0].Weeklys_Q4_Answer) ? "True" : "False"}</span></p>
-              <p>{week3QA[0].Weeklys_Q5} <span className="font-900">{(week3QA[0].Weeklys_Q5_Answer) ? "True" : "False"}</span></p> 
-            </div>
-
-            {(week3R.length > 0) && <WeeklysResultsTable questionAndAnswers={week3QA} playerResults={week3R} />}
-          </div>
-        }
-
-        {(week4R.length > 0) && 
-          <div className="my-2">
-            <h2>Week 4</h2>
-
-            <div className="my-1">
-              <p>{week4QA[0].Weeklys_Q1}: <span className="font-900">{week4QA[0].Weeklys_Q1_Answer}</span></p>
-              <p>{week4QA[0].Weeklys_Q2}: <span className="font-900">{week4QA[0].Weeklys_Q2_Answer}</span></p>
-              <p>{week4QA[0].Weeklys_Q3} <span className="font-900">{(week4QA[0].Weeklys_Q3_Answer) ? "True" : "False"}</span></p>
-              <p>{week4QA[0].Weeklys_Q4} <span className="font-900">{(week4QA[0].Weeklys_Q4_Answer) ? "True" : "False"}</span></p>
-              <p>{week4QA[0].Weeklys_Q5} <span className="font-900">{(week4QA[0].Weeklys_Q5_Answer) ? "True" : "False"}</span></p> 
-            </div>
-            <WeeklysResultsTable questionAndAnswers={week4QA} playerResults={week4R} />
-          </div>
-        }
-
-        {(week5R.length > 0) && 
-          <div className="my-2">
-            <h2>Week 5</h2>
-
-            <div className="my-1">
-              <p>{week5QA[0].Weeklys_Q1}: <span className="font-900">{week5QA[0].Weeklys_Q1_Answer}</span></p>
-              <p>{week5QA[0].Weeklys_Q2}: <span className="font-900">{week5QA[0].Weeklys_Q2_Answer}</span></p>
-              <p>{week5QA[0].Weeklys_Q3} <span className="font-900">{(week5QA[0].Weeklys_Q3_Answer) ? "True" : "False"}</span></p>
-              <p>{week5QA[0].Weeklys_Q4} <span className="font-900">{(week5QA[0].Weeklys_Q4_Answer) ? "True" : "False"}</span></p>
-              <p>{week5QA[0].Weeklys_Q5} <span className="font-900">{(week5QA[0].Weeklys_Q5_Answer) ? "True" : "False"}</span></p> 
-            </div>
-
-            <WeeklysResultsTable questionAndAnswers={week5QA} playerResults={week5R} />
-          </div>
-        }
-
-        {(week6R.length > 0) && 
-          <div className="my-2">
-            <h2>Week 6</h2>
-
-            <div className="my-1">
-              <p>{week6QA[0].Weeklys_Q1}: <span className="font-900">{week6QA[0].Weeklys_Q1_Answer}</span></p>
-              <p>{week6QA[0].Weeklys_Q2}: <span className="font-900">{week6QA[0].Weeklys_Q2_Answer}</span></p>
-              <p>{week6QA[0].Weeklys_Q3} <span className="font-900">{(week6QA[0].Weeklys_Q3_Answer) ? "True" : "False"}</span></p>
-              <p>{week6QA[0].Weeklys_Q4} <span className="font-900">{(week6QA[0].Weeklys_Q4_Answer) ? "True" : "False"}</span></p>
-              <p>{week6QA[0].Weeklys_Q5} <span className="font-900">{(week6QA[0].Weeklys_Q5_Answer) ? "True" : "False"}</span></p> 
-            </div>
-
-            <WeeklysResultsTable questionAndAnswers={week6QA} playerResults={week6R} />
-          </div>
-        }
-
-        {(week7R.length > 0) && 
-          <div className="my-2">
-            <h2>Week 7</h2>
-
-            <div className="my-1">
-              <p>{week7QA[0].Weeklys_Q1}: <span className="font-900">{week7QA[0].Weeklys_Q1_Answer}</span></p>
-              <p>{week7QA[0].Weeklys_Q2}: <span className="font-900">{week7QA[0].Weeklys_Q2_Answer}</span></p>
-              <p>{week7QA[0].Weeklys_Q3} <span className="font-900">{(week7QA[0].Weeklys_Q3_Answer) ? "True" : "False"}</span></p>
-              <p>{week7QA[0].Weeklys_Q4} <span className="font-900">{(week7QA[0].Weeklys_Q4_Answer) ? "True" : "False"}</span></p>
-              <p>{week7QA[0].Weeklys_Q5} <span className="font-900">{(week7QA[0].Weeklys_Q5_Answer) ? "True" : "False"}</span></p> 
-            </div>
-
-            <WeeklysResultsTable questionAndAnswers={week7QA} playerResults={week7R} />
-          </div>
-        }
-
-        {(week8R.length > 0) && 
-          <div className="my-2">
-            <h2>Week 8</h2>
-
-            <div className="my-1">
-              <p>{week8QA[0].Weeklys_Q1}: <span className="font-900">{week8QA[0].Weeklys_Q1_Answer}</span></p>
-              <p>{week8QA[0].Weeklys_Q2}: <span className="font-900">{week8QA[0].Weeklys_Q2_Answer}</span></p>
-              <p>{week8QA[0].Weeklys_Q3} <span className="font-900">{(week8QA[0].Weeklys_Q3_Answer) ? "True" : "False"}</span></p>
-              <p>{week8QA[0].Weeklys_Q4} <span className="font-900">{(week8QA[0].Weeklys_Q4_Answer) ? "True" : "False"}</span></p>
-              <p>{week8QA[0].Weeklys_Q5} <span className="font-900">{(week8QA[0].Weeklys_Q5_Answer) ? "True" : "False"}</span></p> 
-            </div>
-
-            <WeeklysResultsTable questionAndAnswers={week8QA} playerResults={week8R} />
-          </div>
-        }
-
-        {(week9R.length > 0) && 
-          <div className="my-2">
-            <h2>Week 9</h2>
-
-            <div className="my-1">
-              <p>{week9QA[0].Weeklys_Q1}: <span className="font-900">{week9QA[0].Weeklys_Q1_Answer}</span></p>
-              <p>{week9QA[0].Weeklys_Q9}: <span className="font-900">{week9QA[0].Weeklys_Q9_Answer}</span></p>
-              <p>{week9QA[0].Weeklys_Q3} <span className="font-900">{(week9QA[0].Weeklys_Q3_Answer) ? "True" : "False"}</span></p>
-              <p>{week9QA[0].Weeklys_Q4} <span className="font-900">{(week9QA[0].Weeklys_Q4_Answer) ? "True" : "False"}</span></p>
-              <p>{week9QA[0].Weeklys_Q5} <span className="font-900">{(week9QA[0].Weeklys_Q5_Answer) ? "True" : "False"}</span></p> 
-            </div>
-
-            <WeeklysResultsTable questionAndAnswers={week9QA} playerResults={week9R} />
-          </div>
-        }
-
-        {(week10R.length > 0) && 
-          <div className="my-2">
-            <h2>Week 10</h2>
-
-            <div className="my-1">
-              <p>{week10QA[0].Weeklys_Q1}: <span className="font-900">{week10QA[0].Weeklys_Q1_Answer}</span></p>
-              <p>{week10QA[0].Weeklys_Q2}: <span className="font-900">{week10QA[0].Weeklys_Q2_Answer}</span></p>
-              <p>{week10QA[0].Weeklys_Q3} <span className="font-900">{(week10QA[0].Weeklys_Q3_Answer) ? "True" : "False"}</span></p>
-              <p>{week10QA[0].Weeklys_Q4} <span className="font-900">{(week10QA[0].Weeklys_Q4_Answer) ? "True" : "False"}</span></p>
-              <p>{week10QA[0].Weeklys_Q5} <span className="font-900">{(week10QA[0].Weeklys_Q5_Answer) ? "True" : "False"}</span></p>  
-            </div>
-
-            <WeeklysResultsTable questionAndAnswers={week10QA} playerResults={week10R} />
-          </div>
-        }
-
-        {(week11R.length > 0) && 
-          <div className="my-2">
-            <h2>Week 11</h2>
-
-            <div className="my-1">
-              <p>{week11QA[0].Weeklys_Q1}: <span className="font-900">{week11QA[0].Weeklys_Q1_Answer}</span></p>
-              <p>{week11QA[0].Weeklys_Q2}: <span className="font-900">{week11QA[0].Weeklys_Q2_Answer}</span></p>
-              <p>{week11QA[0].Weeklys_Q3} <span className="font-900">{(week11QA[0].Weeklys_Q3_Answer) ? "True" : "False"}</span></p>
-              <p>{week11QA[0].Weeklys_Q4} <span className="font-900">{(week11QA[0].Weeklys_Q4_Answer) ? "True" : "False"}</span></p>
-              <p>{week11QA[0].Weeklys_Q5} <span className="font-900">{(week11QA[0].Weeklys_Q5_Answer) ? "True" : "False"}</span></p> 
-            </div>
-
-            <WeeklysResultsTable questionAndAnswers={week11QA} playerResults={week11R} />
-          </div>
-        }
-
-        {(week12R.length > 0) && 
-          <div className="my-2">
-            <h2>Week 12</h2>
-
-            <div className="my-1">
-              <p>{week12QA[0].Weeklys_Q1}: <span className="font-900">{week12QA[0].Weeklys_Q1_Answer}</span></p>
-              <p>{week12QA[0].Weeklys_Q2}: <span className="font-900">{week12QA[0].Weeklys_Q2_Answer}</span></p>
-              <p>{week12QA[0].Weeklys_Q3} <span className="font-900">{(week12QA[0].Weeklys_Q3_Answer) ? "True" : "False"}</span></p>
-              <p>{week12QA[0].Weeklys_Q4} <span className="font-900">{(week12QA[0].Weeklys_Q4_Answer) ? "True" : "False"}</span></p>
-              <p>{week12QA[0].Weeklys_Q5} <span className="font-900">{(week12QA[0].Weeklys_Q5_Answer) ? "True" : "False"}</span></p> 
-            </div>
-
-            <WeeklysResultsTable questionAndAnswers={week12QA} playerResults={week12R} />
-          </div>
-        }
-
-        {(week13R.length > 0) && 
-          <div className="my-2">
-            <h2>Week 13</h2>
-
-            <div className="my-1">
-              <p>{week13QA[0].Weeklys_Q1}: <span className="font-900">{week13QA[0].Weeklys_Q1_Answer}</span></p>
-              <p>{week13QA[0].Weeklys_Q2}: <span className="font-900">{week13QA[0].Weeklys_Q2_Answer}</span></p>
-              <p>{week13QA[0].Weeklys_Q3} <span className="font-900">{(week13QA[0].Weeklys_Q3_Answer) ? "True" : "False"}</span></p>
-              <p>{week13QA[0].Weeklys_Q4} <span className="font-900">{(week13QA[0].Weeklys_Q4_Answer) ? "True" : "False"}</span></p>
-              <p>{week13QA[0].Weeklys_Q5} <span className="font-900">{(week13QA[0].Weeklys_Q5_Answer) ? "True" : "False"}</span></p> 
-            </div>
-
-            <WeeklysResultsTable questionAndAnswers={week13QA} playerResults={week13R} />
-          </div>
-        }
-
-        {(week14R.length > 0) && 
-          <div className="my-2">
-            <h2>Week 14</h2>
-
-            <div className="my-1">
-              <p>{week14QA[0].Weeklys_Q1}: <span className="font-900">{week14QA[0].Weeklys_Q1_Answer}</span></p>
-              <p>{week14QA[0].Weeklys_Q2}: <span className="font-900">{week14QA[0].Weeklys_Q2_Answer}</span></p>
-              <p>{week14QA[0].Weeklys_Q3} <span className="font-900">{(week14QA[0].Weeklys_Q3_Answer) ? "True" : "False"}</span></p>
-              <p>{week14QA[0].Weeklys_Q4} <span className="font-900">{(week14QA[0].Weeklys_Q4_Answer) ? "True" : "False"}</span></p>
-              <p>{week14QA[0].Weeklys_Q5} <span className="font-900">{(week14QA[0].Weeklys_Q5_Answer) ? "True" : "False"}</span></p> 
-            </div>
-
-            <WeeklysResultsTable questionAndAnswers={week14QA} playerResults={week14R} />
-          </div>
-        }
-      </>
-      : null
+      <div className="my-2">
+        <h2>Week 1</h2>
+          {formatQuestionsAndAnswers(week1Questions)}
+          <WeeklysResultsTable questions={week1Questions} answers={week1Answers} />
+      </div>
+  
+      <div className="my-2">
+        <h2>Week 2</h2>
+          {formatQuestionsAndAnswers(week2Questions)}
+          <WeeklysResultsTable questions={week2Questions} answers={week2Answers} />
+      </div>
+   
+      {week3Questions.length > 0 && 
+        <div className="my-2">
+          <h2>Week 3</h2>
+            {formatQuestionsAndAnswers(week3Questions)}
+            <WeeklysResultsTable questions={week3Questions} answers={week3Answers} />
+        </div>
       }
+
+      {week4Questions.length > 0 && 
+        <div className="my-2">
+          <h2>Week 4</h2>
+            {formatQuestionsAndAnswers(week4Questions)}
+            <WeeklysResultsTable questions={week4Questions} answers={week4Answers} />
+        </div>
+      }
+
+      {week5Questions.length > 0 && 
+        <div className="my-2">
+          <h2>Week 5</h2>
+            {formatQuestionsAndAnswers(week5Questions)}
+            <WeeklysResultsTable questions={week5Questions} answers={week5Answers} />
+        </div>
+      }
+
+      {week6Questions.length > 0 && 
+        <div className="my-2">
+          <h2>Week 6</h2>
+            {formatQuestionsAndAnswers(week6Questions)}
+            <WeeklysResultsTable questions={week6Questions} answers={week6Answers} />
+        </div>
+      }
+
+      {week7Questions.length > 0 && 
+        <div className="my-2">
+          <h2>Week 7</h2>
+            {formatQuestionsAndAnswers(week7Questions)}
+            <WeeklysResultsTable questions={week7Questions} answers={week7Answers} />
+        </div>
+      }
+
+      {week8Questions.length > 0 && 
+        <div className="my-2">
+          <h2>Week 8</h2>
+            {formatQuestionsAndAnswers(week8Questions)}
+            <WeeklysResultsTable questions={week8Questions} answers={week8Answers} />
+        </div>
+      }
+
+      {week9Questions.length > 0 && 
+        <div className="my-2">
+          <h2>Week 9</h2>
+            {formatQuestionsAndAnswers(week9Questions)}
+            <WeeklysResultsTable questions={week9Questions} answers={week9Answers} />
+        </div>
+      }
+
+      {week10Questions.length > 0 && 
+        <div className="my-2">
+          <h2>Week 10</h2>
+            {formatQuestionsAndAnswers(week10Questions)}
+            <WeeklysResultsTable questions={week10Questions} answers={week10Answers} />
+        </div>
+      }
+
+      {week11Questions.length > 0 && 
+        <div className="my-2">
+          <h2>Week 11</h2>
+            {formatQuestionsAndAnswers(week11Questions)}
+            <WeeklysResultsTable questions={week11Questions} answers={week11Answers} />
+        </div>
+      }
+
+      {week12Questions.length > 0 && 
+        <div className="my-2">
+          <h2>Week 12</h2>
+            {formatQuestionsAndAnswers(week12Questions)}
+            <WeeklysResultsTable questions={week12Questions} answers={week12Answers} />
+        </div>
+      }
+
+      {week13Questions.length > 0 && 
+        <div className="my-2">
+          <h2>Week 13</h2>
+            {formatQuestionsAndAnswers(week13Questions)}
+            <WeeklysResultsTable questions={week13Questions} answers={week13Answers} />
+        </div>
+      }
+
+      {week14Questions.length > 0 && 
+        <div className="my-2">
+          <h2>Week 14</h2>
+            {formatQuestionsAndAnswers(week14Questions)}
+            <WeeklysResultsTable questions={week14Questions} answers={week14Answers} />
+        </div>
+      }
+
     </div>
   )
 }
