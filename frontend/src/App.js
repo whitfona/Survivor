@@ -14,8 +14,9 @@ import Signup from './Pages/signup';
 import { UserProvider } from './Components/UserContext';
 import Leaderboard from './Pages/leaderboard';
 import Survivors from './Pages/survivor';
-import { ProtectedRoute } from './Components/ProtectedRoute';
+// import { ProtectedRoute } from './Components/ProtectedRoute';
 import Welcome from './Pages/welcome';
+// import { AdminRoute } from './Components/AdminRoute';
 // import logo from './logo.svg';
 
 export default function App() {
@@ -27,13 +28,14 @@ export default function App() {
           <div className="content-container">
             <Switch>
               <Route exact path='/' component={Welcome} />
-              <ProtectedRoute path='/leaderboard' component={Leaderboard} />
-              <ProtectedRoute path='/tribe-scores' component={MCResults} />
-              <ProtectedRoute path='/weeklys' component={WeeklysResults} />
-              <ProtectedRoute path='/advantage' component={AdvantageResults} />
-              <ProtectedRoute path='/profile' component={Home} />
-              <ProtectedRoute path='/survivors' component={Survivors} />
+              <Route path='/leaderboard' component={Leaderboard} />
+              <Route path='/tribe-scores' component={MCResults} />
+              <Route path='/weeklys' component={WeeklysResults} />
+              <Route path='/advantage' component={AdvantageResults} />
+              <Route path='/profile' component={Home} />
+              <Route path='/survivors' component={Survivors} />
               <Route path='/admin-dashboard' component={AdminDashboard} />
+              {/* <AdminRoute path='/admin-dashboard' component={AdminDashboard} /> */}
               <Route path='/login' component={Login} />
               <Route path='/signup' component={Signup} />
               <Route path='*' component={Error404} />

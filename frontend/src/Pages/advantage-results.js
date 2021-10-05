@@ -1,15 +1,13 @@
 import axios from 'axios';
-import React, { useContext, useEffect, useState } from 'react';
-import { UserContext } from '../Components/UserContext';
+import React, { useEffect, useState } from 'react';
 
 export default function AdvantageResults() {
 
 
   const [ advantageResults, setAdvantageResults ] = useState([]);
-  const { advantageTotals } = useContext(UserContext);
   
   useEffect(() => {
-    axios.get('http://localhost:5000/advantage')
+    axios.get('http://localhost:5000/advantage-all-weeks')
     .then((data) => setAdvantageResults(data.data))
     .catch((err) => console.log(err));
   }, []);
@@ -43,9 +41,7 @@ export default function AdvantageResults() {
             <tbody key={index}>
               <tr>
                 <td>{result.Player_Name}</td>
-                  {advantageTotals.map((advTotal) => {
-                    if(result.Player_ID === advTotal.Player_ID) return <td className="font-900">{advTotal.Advantage_Total}</td>
-                  })}
+                <td className="font-900">{result.Total}</td>
                 <td>{result.Week_1}</td>
                 <td>{result.Week_2}</td>
                 <td>{result.Week_3}</td>

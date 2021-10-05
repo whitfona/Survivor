@@ -10,7 +10,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const hostname = '127.0.0.1';
 
-app.use(cors({ origin: 'http://localhost:3000'}));
+app.use(cors({ origin: 'http://localhost:3000' }));
 app.set('view-engine', 'ejs');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -21,6 +21,7 @@ const connection = mysql.createConnection({
   database: process.env.DB,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
+  multipleStatements: true
 });
 
 connection.connect();
@@ -41,20 +42,8 @@ app.get('/survivors', (req, res) => {
   })
 })
 
-// Get all data showing the advantage scores from Advantage table
-app.get('/advantage', (req, res) => {
-    connection.query('SELECT Players.Player_Name, Advantage.* FROM Players RIGHT JOIN Advantage ON Players.Player_ID = Advantage.Player_ID;', (err, result) => {
-      if(err) {
-        console.log(err);
-      } else {
-        // res.send(result);
-        res.json(result);
-      }
-  })
-})
-
-// Get Weeklys questions from WeeklysAdmin table
-app.get('/weeklys-questions', (req, res) => {
+// Get Weeklys questions and answers from WeeklysAdmin table
+app.get('/weeklys-questions-and-answers', (req, res) => {
     connection.query('SELECT * FROM WeeklysAdmin;', (err, result) => {
       if(err) {
         console.log(err);
@@ -64,16 +53,92 @@ app.get('/weeklys-questions', (req, res) => {
   })
 })
 
-// Get Weeklys players answers from WeeklysPlayerAnswers table
-app.get('/weeklys-answers', (req, res) => {
-    connection.query('SELECT Players.Player_Name, WeeklysPlayerAnswers.* FROM Players JOIN WeeklysPlayerAnswers ON Players.Player_ID = WeeklysPlayerAnswers.Player_ID;', (err, result) => {
+// Get Player_ID, Player_Name, Week, Week_Total_Points, Q1, Q2, Q3, Q4,  players answers from WeeklysPlayerAnswers table
+app.get('/weeklys-players-answers', (req, res) => {
+    connection.query('SELECT Week, Weeklys_Q1_Answer, Weeklys_Q2_Answer, Weeklys_Q3_Answer, Weeklys_Q4_Answer, Weeklys_Q5_Answer FROM WeeklysAdmin; SELECT WeeklysPlayerAnswers.Week, Players.Player_Name, WeeklysPlayerAnswers.Player_ID, WC_Q1_Answer, WC_Q2_Answer, WC_Q3_Answer, WC_Q4_Answer, WC_Q5_Answer FROM WeeklysPlayerAnswers JOIN Players ON Players.Player_ID = WeeklysPlayerAnswers.Player_ID;', (err, result, fields) => {
       if(err) {
         console.log(err);
       } else {
-        res.send(result);
-      }
+
+        let data = [{}];
+        for (let i = 0; i < result[1].length; i++) {
+
+          const calcWeeklyScore = ( ) => {
+            let score = 0;
+            for (let j = 0; j < result[0].length; j++) {
+              if (result[1][i].Week === result[0][j].Week) {
+
+                const q1Answer = result[0][j].Weeklys_Q1_Answer;
+                const q2Answer = result[0][j].Weeklys_Q2_Answer;
+                const q3Answer = result[0][j].Weeklys_Q3_Answer;
+                const q4Answer = result[0][j].Weeklys_Q4_Answer;
+                const q5Answer = result[0][j].Weeklys_Q5_Answer;
+    
+                let playerQ1Array = result[1][i].WC_Q1_Answer.split(', ');
+                let playerQ2Array = result[1][i].WC_Q2_Answer.split(', ');
+    
+                if (q1Answer.includes(playerQ1Array[0]) || q1Answer.includes(playerQ1Array[1])) { score += 2; }
+                if (q2Answer.includes(playerQ2Array[0]) || q1Answer.includes(playerQ2Array[1])) { score += 2; }
+                if (result[1][i].WC_Q3_Answer === q3Answer) { score += 2;}
+                if (result[1][i].WC_Q4_Answer === q4Answer) { score += 2; }
+                if (result[1][i].WC_Q5_Answer === q5Answer) { score += 2; }
+                }
+              }
+            return score;
+          }
+
+          data.push({
+            Player_ID: result[1][i].Player_ID,
+            Player_Name: result[1][i].Player_Name,
+            Week: result[1][i].Week,
+            Week_Total: calcWeeklyScore(),
+            Q1_Answer: result[1][i].WC_Q1_Answer,
+            Q2_Answer: result[1][i].WC_Q2_Answer,
+            Q3_Answer: result[1][i].WC_Q3_Answer,
+            Q4_Answer: result[1][i].WC_Q4_Answer,
+            Q5_Answer: result[1][i].WC_Q5_Answer
+          })
+        }        
+        res.send(data);
+    }
   })
 })
+
+// Get Player, Player_ID, Sum of each week and every weekly score from Advantage
+app.get('/advantage-all-weeks', (req, res) => {
+  connection.query('SELECT Players.Player_Name, (Week_1 + Week_2 + Week_3 + Week_4 + Week_5 + Week_6 + Week_7 + Week_8 + Week_9 + Week_10 + Week_11 + Week_12 + Week_13 + Week_14) AS "Total", Advantage.* FROM Advantage JOIN Players ON Players.Player_ID = Advantage.Player_ID GROUP BY Player_ID;', (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  })
+})
+
+// Get Player_ID, Player_Name and total from Advantage table
+app.get('/advantage-totals', (req, res) => {
+  connection.query('SELECT Advantage.Player_ID, Players.Player_Name, (Week_1 + Week_2 + Week_3 + Week_4 + Week_5 + Week_6 + Week_7 + Week_8 + Week_9 + Week_10 + Week_11 + Week_12 + Week_13 + Week_14) AS "Total" FROM Advantage JOIN Players ON Players.Player_ID = Advantage.Player_ID GROUP BY Player_ID;', (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  })
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // SELECT MainChallengeAdmin_V2.MC_Questions, MainChallengeAdmin_V2.MC_Point_Value, MainChallengeResults_V2.* FROM MainChallengeAdmin_V2 JOIN MainChallengeResults_V2 WHERE MainChallengeAdmin_V2.Question_Number = MainChallengeResults_V2.Question_Number;
 
@@ -182,27 +247,14 @@ app.get('/all-players', (req, res) => {
 })
 
 
-// Get Advantage from Advantage_V2
-app.get('/advantage-v2', (req, res) => {
-  connection.query('SELECT Players.Player_Name, Advantage_V2.* FROM Players JOIN Advantage_V2 WHERE Players.Player_ID = Advantage_V2.Player_ID;', (err, result) => {
-    if (err) {
-      console.log(err);
-    } else {
-      res.send(result);
-    }
-  })
+
+// Insert into Advantage Table
+app.post('/set-advantage', (req, res) => {
+  console.log(req.body, req.body.winnerPlayerID);
+  const { week, winner, loser } = req.body;
+  console.log(winner)
 })
 
-// // Get Main Challenge questions from MainChallengeAdmin table
-// app.get('/mc-questions', (req, res) => {
-//     connection.query('SELECT * FROM MainChallengeAdmin;', (err, result) => {
-//       if(err) {
-//         console.log(err);
-//       } else {
-//         res.send(result);
-//       }
-//   })
-// })
 
 // // Get Main Challenge players answers from MainChallengeResults table
 // app.get('/mc-answers', (req, res) => {

@@ -15,7 +15,6 @@ export const UserProvider = ({children}) => {
   const [ authenticated, setAuthenticated ] = useState(false);
 
   const value = useMemo(() => ({ players, advantageTotals, survivorTotals, week, setWeek, currentPlayer, setCurrentPlayer, authenticated, setAuthenticated }), [ players, advantageTotals, survivorTotals, week, setWeek, currentPlayer, setCurrentPlayer, authenticated, setAuthenticated ]);
-
   // PLAYERS START
   const [playersRaw, setPlayersRaw] = useState([])
 
