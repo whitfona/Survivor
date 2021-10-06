@@ -46,7 +46,6 @@ export default function MCResults() {
   const week13Totals = mcTotals.filter(week => week.Week === 13);
   const week14Totals = mcTotals.filter(week => week.Week === 14);
 
-  console.log(week4Totals)
   return (
     <div>
       <h1>Tribe Scores</h1>

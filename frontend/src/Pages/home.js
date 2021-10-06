@@ -1,10 +1,31 @@
-import React, { useContext } from 'react'
+import axios from 'axios';
+import React, { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../Components/UserContext';
 import WeeklysSubmissionForm from '../Components/WeeklysSubmissionForm'
 
 export default function Home() {
 
-  const { currentPlayer, players, survivorTotals } = useContext(UserContext);
+  const [ players, setPlayers ] = useState([]);
+  const [ contestantTotals, setContestantTotals ] = useState([]);
+
+  const { currentPlayer } = useContext(UserContext);
+
+  useEffect(() => {
+    axios.get('http://localhost:5000/players',)
+      .then((data) => {
+        setPlayers(data.data)
+      })
+      .catch((err) => console.log(err));
+    axios.get('http://localhost:5000/survivor-totals',)
+      .then((data) => {
+        setContestantTotals(data.data)
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  const totalScore = (player) => {
+    return player.TribeTotals + player.WeeklysTotals + player.Bonus + player.Pay_Bonus + player.TribeTotals;
+  }
 
   return (
     <div className="home">
@@ -21,27 +42,26 @@ export default function Home() {
               <th>Pay Bonus</th>
               <th>Advantage</th>
               <th>Total Score</th>
-              <th>Points Behind</th>
             </tr>
           </thead>
-          {players.map((player) => {
-            if (player.Player_ID === currentPlayer.Player_ID) {
+          {players.map(player => {
+            if (player.Player_Name === currentPlayer.Player_Name) {
               return (
                 <tbody key={player.Player_ID}>
                   <tr>
                     <td>{player.Player_Name}</td>
-                    <td>{player.Tribe_Total}</td>
-                    <td>{player.Weeklys_Total}</td>
+                    <td>{player.TribeTotals}</td>
+                    <td>{player.WeeklysTotals}</td>
                     <td>{player.Bonus}</td>
                     <td>{player.Pay_Bonus}</td>
-                    <td>{player.Advantage_Total}</td>
-                    <td>{player.Total_Score}</td>
-                    <td>TBD</td>
+                    <td>{player.AdvantageTotals}</td>
+                    <td>{totalScore(player)}</td>
                   </tr>
                 </tbody>
               )
             }
           })}
+
         </table>
       </div>
 
@@ -55,12 +75,12 @@ export default function Home() {
                 <th>Points</th>
               </tr>
             </thead>
-            {survivorTotals.map((survivor, index) => {
-              if(currentPlayer.Player_Tribe.includes(survivor.name)) {
+            {contestantTotals.map((survivor, index) => {
+              if(currentPlayer.Player_Tribe.replace(/ /g,"_").includes(survivor.contestantName)) {
                 return (
                   <tbody key={index}>
                     <tr>
-                      <td>{survivor.name}</td>
+                      <td>{survivor.contestantName.replace(/_/g," ")}</td>
                       <td>{survivor.total}</td>
                     </tr>
                   </tbody>

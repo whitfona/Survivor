@@ -1,10 +1,46 @@
-import React, { useContext } from 'react'
-import { UserContext } from '../Components/UserContext';
-// import axios from 'axios';
+import React, { useEffect, useState } from 'react'
+import axios from 'axios';
 
 export default function Leaderboard() {
 
-  const { players } = useContext(UserContext);
+  // Get all players
+  const [ players, setPlayers ] = useState([]);
+  const [ highestScore, setHighestScore ] = useState(0);
+
+  useEffect(() => {
+    axios.get('http://localhost:5000/players',)
+      .then((data) => {
+        setPlayers(data.data)
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  const totalScore = (player) => {
+    return player.TribeTotals + player.WeeklysTotals + player.Bonus + player.Pay_Bonus + player.TribeTotals;
+  }
+
+  players.forEach(player => {
+    if (totalScore(player) > highestScore) {
+      setHighestScore(totalScore(player))
+    }
+  })
+
+  const bubbleSort = (array) =>{
+    let swapped;
+    do {
+        swapped = false;
+        for (let i = 0; i < array.length - 1; i++) {
+            if (totalScore(array[i]) < totalScore(array[i + 1])) {
+                var temp = array[i];
+                array[i] = array[i + 1];
+                array[i + 1] = temp;
+                swapped = true;
+            }
+        }
+    } while (swapped);
+  }
+
+  bubbleSort(players);
 
   return (
     <div>
@@ -24,15 +60,15 @@ export default function Leaderboard() {
         </thead>
         {players.map((player) => (
         <tbody key={player.Player_ID}>
-            <tr key={player.Player_ID}>
+            <tr>
               <td>{player.Player_Name}</td>
-              <td>{player.Tribe_Total}</td>
-              <td>{player.Weeklys_Total}</td>
+              <td>{player.TribeTotals}</td>
+              <td>{player.WeeklysTotals}</td>
               <td>{player.Bonus}</td>
               <td>{player.Pay_Bonus}</td>
-              <td>{player.Advantage_Total}</td>
-              <td>{player.Total_Score}</td>
-              <td>TBD</td>
+              <td>{player.WeeklysTotals}</td>
+              <td>{totalScore(player)}</td>
+              <td>{highestScore - totalScore(player)}</td>
             </tr>
         </tbody>
         ))}

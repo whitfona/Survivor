@@ -162,23 +162,23 @@ app.get('/mc-questions-and-totals', (req, res) => {
             Sara_W: result[i].Sara_W * result[i].MC_Point_Value
           })
         }
-
-        const week1 = data.filter(week => week.Week === 1);
-        const week2 = data.filter(week => week.Week === 2);
-        const week3 = data.filter(week => week.Week === 3);
-        const week4 = data.filter(week => week.Week === 4);
-        const week5 = data.filter(week => week.Week === 5);
-        const week6 = data.filter(week => week.Week === 6);
-        const week7 = data.filter(week => week.Week === 7);
-        const week8 = data.filter(week => week.Week === 8);
-        const week9 = data.filter(week => week.Week === 9);
-        const week10 = data.filter(week => week.Week === 10);
-        const week11 = data.filter(week => week.Week === 11);
-        const week12 = data.filter(week => week.Week === 12);
-        const week13 = data.filter(week => week.Week === 13);
-        const week14 = data.filter(week => week.Week === 14);
-
-        const weeks = [ week1, week2, week3, week4, week5, week6, week7, week8, week9, week10, week11, week12, week13, week14 ]
+        
+        const weeks = [
+          data.filter(week => week.Week === 1),
+          data.filter(week => week.Week === 2),
+          data.filter(week => week.Week === 3),
+          data.filter(week => week.Week === 4),
+          data.filter(week => week.Week === 5),
+          data.filter(week => week.Week === 6),
+          data.filter(week => week.Week === 7),
+          data.filter(week => week.Week === 8),
+          data.filter(week => week.Week === 9),
+          data.filter(week => week.Week === 10),
+          data.filter(week => week.Week === 11),
+          data.filter(week => week.Week === 12),
+          data.filter(week => week.Week === 13),
+          data.filter(week => week.Week === 14),
+        ]
 
         for(let i = 0; i < weeks.length; i++) {
           let countEric = 0, countHeather = 0, countErika = 0, countGenie = 0, countRicard = 0, countXander = 0, countEvvie = 0, countDanny = 0, countNasser = 0, countDeshawn = 0, countBrad = 0, countJairus = 0, countTiffany = 0, countSydney = 0, countShantel = 0, countDavid = 0, countLiana = 0, countSara = 0;
@@ -236,7 +236,158 @@ app.get('/mc-questions-and-totals', (req, res) => {
   })
 })
 
+// Get All Player Information, Player_ID, Player_Name, Tribe_Total, Weeklys_Total, Bonus, Pay_Bonus, Advantage_Total
+app.get('/players', (req, res) => {
+  connection.query('SELECT Player_ID, Player_Name, Player_Tribe, Admin FROM Players;SELECT Advantage.Player_ID, Players.Player_Name, (Week_1 + Week_2 + Week_3 + Week_4 + Week_5 + Week_6 + Week_7 + Week_8 + Week_9 + Week_10 + Week_11 + Week_12 + Week_13 + Week_14) AS "Total" FROM Advantage JOIN Players ON Players.Player_ID = Advantage.Player_ID GROUP BY Player_ID;SELECT MainChallengeAdmin_V2.MC_Questions, MainChallengeAdmin_V2.MC_Point_Value, MainChallengeResults_V2.* FROM MainChallengeAdmin_V2 JOIN MainChallengeResults_V2 WHERE MainChallengeAdmin_V2.Question_Number = MainChallengeResults_V2.Question_Number;SELECT Week, Weeklys_Q1_Answer, Weeklys_Q2_Answer, Weeklys_Q3_Answer, Weeklys_Q4_Answer, Weeklys_Q5_Answer FROM WeeklysAdmin; SELECT WeeklysPlayerAnswers.Week, Players.Player_Name, WeeklysPlayerAnswers.Player_ID, WC_Q1_Answer, WC_Q2_Answer, WC_Q3_Answer, WC_Q4_Answer, WC_Q5_Answer FROM WeeklysPlayerAnswers JOIN Players ON Players.Player_ID = WeeklysPlayerAnswers.Player_ID;SELECT Contestant_ID, Contestant_Name FROM `Contestants`;', (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
 
+      // result[0] = Players info, Player_ID, Player_Name, Admin, Player_Tribe
+      // result[1] = Advantage Scores Total for each Player, Player_ID, Player_Name, Advantage_Total
+      // result[2] = Tribe Scores Total for each Contestant, Contestant_Name, Contestant_Total
+      // result[3] = Weeklys Admin answers each week
+      // result[4] = Weeklys Player responses each week
+      // result[5] = Get all Contestants
+      
+      // PLAYER START
+      let players = [];
+
+      for (let i = 0; i < result[0].length; i++) {
+        players[i] = {
+          Player_ID: result[0][i].Player_ID,
+          Player_Name: result[0][i].Player_Name,
+          TribeTotals: 0,
+          WeeklysTotals: 0,
+          AdvantageTotals: 0,
+          Bonus: 0,
+          Pay_Bonus: 0,
+          Player_Tribe: result[0][i].Player_Tribe,
+          Admin: result[0][i].Admin,
+        }
+      }
+      // PLAYER END
+
+      // ADVANTAGE SCORES TOTAL START
+
+      for (i = 0; i < result[1].length; i++) {
+        for (a = 0; a < players.length; a++) {
+          if (result[4][i].Player_Name === players[a].Player_Name) {
+            players[a].AdvantageTotals = result[1][i].Total;
+          }
+        }
+      }  
+      // ADVANTAGE SCORES TOTAL END
+      
+      // TRIBE SCORES TOTAL START
+      let tribeTotals= [];
+
+      for (let i = 0; i < result[5].length; i++) {
+        tribeTotals[i] = { contestantName: result[5][i].Contestant_Name.replace(/ /g,"_"), total: 0 }
+      }
+
+      result[2].forEach((item) => {  
+        for (let i = 0; i < tribeTotals.length; i++) {
+          for(key in item) {
+            if(key.includes(tribeTotals[i].contestantName) ) {
+              tribeTotals[i].total += item[key] * item.MC_Point_Value;
+            }
+          }
+        }
+      })
+
+      for (let i = 0; i < players.length; i++) {
+        tribeTotals.map(contestant => {
+          if (players[i].Player_Tribe.replace(/ /g,"_").includes(contestant.contestantName)) {
+            players[i].TribeTotals += contestant.total
+          }
+        })
+      }
+      // TRIBE SCORES TOTAL END
+
+      // WEEKLYS SCORES TOTAL START
+      const checkWeeklysAnswers = (adminAnswers, playerAnswers) => {
+        let score = 0;
+        const q1Answer = adminAnswers.Weeklys_Q1_Answer;
+        const q2Answer = adminAnswers.Weeklys_Q2_Answer;
+        const q3Answer = adminAnswers.Weeklys_Q3_Answer;
+        const q4Answer = adminAnswers.Weeklys_Q4_Answer;
+        const q5Answer = adminAnswers.Weeklys_Q5_Answer;
+
+        let playerQ1Array = playerAnswers.WC_Q1_Answer.split(', ');
+        let playerQ2Array = playerAnswers.WC_Q2_Answer.split(', ');
+
+        if (q1Answer.includes(playerQ1Array[0]) || q1Answer.includes(playerQ1Array[1])) { score += 2; }
+        if (q2Answer.includes(playerQ2Array[0]) || q1Answer.includes(playerQ2Array[1])) { score += 2; }
+        if (playerAnswers.WC_Q3_Answer === q3Answer) { score += 2;}
+        if (playerAnswers.WC_Q4_Answer === q4Answer) { score += 2; }
+        if (playerAnswers.WC_Q5_Answer === q5Answer) { score += 2; }
+
+        return score;
+      }
+
+      for (i = 0; i < result[4].length; i++) {
+        for (j = 0; j < result[3].length; j++) {
+          for (a = 0; a < players.length; a++) {
+            if (result[4][i].Player_Name === players[a].Player_Name) {
+              if (result[4][i].Week === result[3][j].Week) {
+                players[a].WeeklysTotals += checkWeeklysAnswers(result[3][j], result[4][i])
+              }
+            }
+          }
+        }
+      }        
+      // WEEKLYS SCORES TOTAL END
+      
+      res.send(players);
+    }
+  })
+})
+
+// Get Contestant and this total score
+app.get('/survivor-totals', (req, res) => {
+  connection.query('SELECT Player_ID, Player_Name, Player_Tribe, Admin FROM Players;SELECT MainChallengeAdmin_V2.MC_Questions, MainChallengeAdmin_V2.MC_Point_Value, MainChallengeResults_V2.* FROM MainChallengeAdmin_V2 JOIN MainChallengeResults_V2 WHERE MainChallengeAdmin_V2.Question_Number = MainChallengeResults_V2.Question_Number;SELECT Contestant_ID, Contestant_Name, Contestant_Tribe_One FROM `Contestants`;', (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+
+      
+      // result[0] = Players info, Player_ID, Player_Name, Admin, Player_Tribe
+      // result[1] = Tribe Scores Total for each Contestant, Contestant_Name, Contestant_Total
+      // result[2] = Get all Contestants
+      
+      
+      // TRIBE SCORES TOTAL START
+      let tribeTotals= [];
+
+      for (let i = 0; i < result[2].length; i++) {
+        tribeTotals[i] = { contestantName: result[2][i].Contestant_Name.replace(/ /g,"_"), total: 0, tribeOne: result[2][i].Contestant_Tribe_One }
+      }
+
+      result[1].forEach((item) => {  
+        for (let i = 0; i < tribeTotals.length; i++) {
+          for(key in item) {
+            if(key.includes(tribeTotals[i].contestantName) ) {
+              tribeTotals[i].total += item[key] * item.MC_Point_Value;
+            }
+          }
+        }
+      })
+
+      for (let i = 0; i < result[0].length; i++) {
+        tribeTotals.map(contestant => {
+          if (result[0][i].Player_Tribe.replace(/ /g,"_").includes(contestant.contestantName)) {
+            result[0][i].TribeTotals += contestant.total
+          }
+        })
+      }
+      // TRIBE SCORES TOTAL END
+
+      
+      res.send(tribeTotals);
+    }
+  })
+})
 
 
 
