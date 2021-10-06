@@ -5,9 +5,9 @@ export default function WeeklysResultsTable({ questions, answers }) {
   return (
     <>
       <table>
-          <thead>
-            {questions.map((result, index) => (
-              <tr key={index}>
+        {questions.map((result, index) => (
+          <thead key={index}>
+              <tr>
                 <th>Player</th>
                 <th>Total</th>
                 <th>{result.Weeklys_Q1}</th>
@@ -16,8 +16,8 @@ export default function WeeklysResultsTable({ questions, answers }) {
                 <th>{result.Weeklys_Q4}</th>
                 <th>{result.Weeklys_Q5}</th>
               </tr>
-            ))}
           </thead>
+        ))}
         {answers.map((result, index) => (
           <tbody key={index}>
             <tr>

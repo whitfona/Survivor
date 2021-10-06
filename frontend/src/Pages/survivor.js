@@ -1,16 +1,16 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import axios from 'axios'
-import { UserContext } from "../Components/UserContext";
 
 export default function Survivors() {
   
-  const [ survivorsFromDB, setSurvivorsFromDB ] = useState([{}]);
-  const { survivorTotals } = useContext(UserContext);
-  
+  const [ contestantTotals, setContestantTotals ] = useState([]);
+
   useEffect(() => {
-    axios.get('http://localhost:5000/survivors',)
-    .then((data) => setSurvivorsFromDB(data.data))
-    .catch((err) => console.log(err));
+    axios.get('http://localhost:5000/survivor-totals',)
+      .then((data) => {
+        setContestantTotals(data.data)
+      })
+      .catch((err) => console.log(err));
   }, []);
 
   const bgColor = (tribe) => {
@@ -31,16 +31,12 @@ export default function Survivors() {
            <th>Total Points</th>
          </tr>
        </thead>
-       {survivorsFromDB.map((survivor) => (
-         <tbody key={survivor.Contestant_ID}>
+       {contestantTotals.map((contestant, index) => (
+         <tbody key={index}>
            <tr>
-             <td>{survivor.Contestant_Name}</td>
-             <td style={{ backgroundColor: bgColor(survivor.Contestant_Tribe_One) }}>{survivor.Contestant_Tribe_One}</td>
-              {survivorTotals.map((survivorTotal, index) => {
-               if(survivorTotal.name === survivor.Contestant_Name) {
-                 return <td>{survivorTotal.total}</td>
-               }
-             })}
+             <td>{contestant.contestantName.replace(/_/g," ")}</td>
+             <td style={{ backgroundColor: bgColor(contestant.tribeOne) }}>{contestant.tribeOne}</td>
+             <td>{contestant.total}</td>
            </tr>
          </tbody>
        ))}
