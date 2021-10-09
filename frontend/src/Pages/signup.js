@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 
-export default function Signup() {
+export default function Signup(props) {
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -14,7 +14,7 @@ export default function Signup() {
   const showMsg = () => {
     setTimeout(() => {
       setShowErrorMsg(false)
-    }, 3000);
+    }, 6000);
   }
 
   const createUser = (e) => {
@@ -34,12 +34,12 @@ export default function Signup() {
       axios.post('http://localhost:5000/create-user', user)
         .then((res) => {
           console.log(res);
+          props.history.push('/login');
         })
         .catch((err) => {
-          setErrorMsg('Error setting up player, please call Josh.')
+          setErrorMsg(err.response.data)
           setShowErrorMsg(true);
           showMsg();
-          console.log(err);
         })
   
         setName('');
