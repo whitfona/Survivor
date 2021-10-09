@@ -3,7 +3,7 @@ const express = require('express');
 const mysql = require('mysql');
 const cors = require('cors');
 const e = require('express');
-// const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt');
 
 const app = express();
 
@@ -242,7 +242,6 @@ app.get('/players', (req, res) => {
     if (err) {
       console.log(err);
     } else {
-
       // result[0] = Players info, Player_ID, Player_Name, Admin, Player_Tribe
       // result[1] = Advantage Scores Total for each Player, Player_ID, Player_Name, Advantage_Total
       // result[2] = Tribe Scores Total for each Contestant, Contestant_Name, Contestant_Total
@@ -266,7 +265,6 @@ app.get('/players', (req, res) => {
           Admin: result[0][i].Admin,
         }
       }
-      // PLAYER END
 
       // ADVANTAGE SCORES TOTAL START
 
@@ -277,7 +275,6 @@ app.get('/players', (req, res) => {
           }
         }
       }  
-      // ADVANTAGE SCORES TOTAL END
       
       // TRIBE SCORES TOTAL START
       let tribeTotals= [];
@@ -303,7 +300,6 @@ app.get('/players', (req, res) => {
           }
         })
       }
-      // TRIBE SCORES TOTAL END
 
       // WEEKLYS SCORES TOTAL START
       const checkWeeklysAnswers = (adminAnswers, playerAnswers) => {
@@ -350,12 +346,9 @@ app.get('/survivor-totals', (req, res) => {
     if (err) {
       console.log(err);
     } else {
-
-      
       // result[0] = Players info, Player_ID, Player_Name, Admin, Player_Tribe
       // result[1] = Tribe Scores Total for each Contestant, Contestant_Name, Contestant_Total
       // result[2] = Get all Contestants
-      
       
       // TRIBE SCORES TOTAL START
       let tribeTotals= [];
@@ -381,24 +374,11 @@ app.get('/survivor-totals', (req, res) => {
           }
         })
       }
-      // TRIBE SCORES TOTAL END
 
-      
       res.send(tribeTotals);
     }
   })
 })
-
-
-
-
-
-
-
-
-
-
-
 
 // Add Player answer for Weekly Questions
 app.post('/weekly-submissions', (req, res) => {
@@ -417,17 +397,34 @@ app.post('/weekly-submissions', (req, res) => {
 app.post('/create-user', (req, res) => {
   const { name, email, password, passphrase } = req.body;
 
-  if (passphrase != process.env.PASSPHRASE) {
-    console.log('Incorrect Passphrase!');
-  } else {
-    connection.query('INSERT INTO `Players` (`Player_ID`, `Admin`, `Player_Name`, `Player_Password`, `Player_Email`, `Player_Tribe`) VALUES (NULL, 0, ?, ?, ?, null);', [name, password, email], (err, result) => {
-      if(err) {
-        res.status(400).send('Player not added.')
-      } else {
-        res.send('Player Added!');
+  connection.query('SELECT Player_Email FROM Players WHERE Player_Email = ?;', email, (err, result) => {
+    if (err) {
+      res.send(err);
+    } else {
+      if (result.length > 0) {
+        res.status(409).send('Player email already exisits');
+      } 
+      else if (passphrase != process.env.PASSPHRASE) {
+        res.status(406).send('Incorrect passphrase');
+      } 
+      else {
+        bcrypt.hash(password, 10, (err, hash) => {
+          if (err) {
+            console.log(err)
+          } else {
+            connection.query('INSERT INTO `Players` (`Player_ID`, `Admin`, `Player_Name`, `Player_Password`, `Player_Email`, `Player_Tribe`) VALUES (NULL, 0, ?, ?, ?, null);', [name, hash, email], (err, result) => {
+              if(err) {
+                console.log(err)
+                res.status(400).send('Error setting up player, please call Josh.')
+              } else {
+                res.send('Player Added!');
+              }
+            })
+          }
+        });
       }
-    })
-  }
+    }
+  })
 })
 
 // Login User
@@ -436,10 +433,13 @@ app.post('/login-user', (req, res) => {
 
   connection.query('SELECT * FROM `Players` WHERE Player_Email = ?', [email], (err, result) => {
     if(err) {
-      console.log(err);
+      res.send(err);
     } else {
-      if ((result.length > 0) && (result[0].Player_Password === password)) {
-        user = {
+      bcrypt.compare(password, result[0].Player_Password, (err) => {
+        if (err) {
+          res.status(404).send('Username or Password is incorrect.')
+        } else {
+          user = {
             Player_ID: result[0].Player_ID,
             Player_Name: result[0].Player_Name,
             Player_Tribe: result[0].Player_Tribe,
@@ -447,39 +447,23 @@ app.post('/login-user', (req, res) => {
             Admin: result[0].Admin
           }
           res.status(200).send(user);
-      } else {
-        res.status(404).send('Username or Password is incorrect.')
-      }
+        }
+      })
     }
   })
 })
-// app.post('/login-user', (req, res) => {
-//   const { email, password } = req.body;
 
-//   connection.query('SELECT * FROM `Players` WHERE Player_Email = ?', [email], (err, result) => {
-//     if(err) {
-//       console.log(err);
-//     } else {
-//       if (result.length > 0) {
-//         if (result[0].Player_Password === password) {
-//           user = {
-//             Player_ID: result[0].Player_ID,
-//             Player_Name: result[0].Player_Name,
-//             Player_Tribe: result[0].Player_Tribe,
-//             Player_Email: result[0].Player_Email,
-//             Admin: result[0].Admin
-//           }
-//           res.send(user);
-//         }
-//         else {
-//           res.status(404).send('Username or Password is incorrect.')
-//         }
-//       } else {
-//         res.status(404).send('Username or Password is incorrect.')
-//       }
-//     }
-//   })
-// })
+
+
+
+
+
+
+
+
+
+
+
 
 // Get all players id, name and player tribe
 // SELECT Player_ID, Player_Name, Player_Tribe FROM `Players`
