@@ -458,6 +458,19 @@ app.post('/login-user', (req, res) => {
 
 
 
+// Insert into Advantage Table
+app.post('/set-advantage', (req, res) => {
+  const { Week, Advantaged_Player, Disadvantaged_Player } = req.body;
+
+  connection.query(`UPDATE Advantage SET Week_${Week} = 5 WHERE Advantage.Player_ID = ?;UPDATE Advantage SET Week_${Week} = -5 WHERE Advantage.Player_ID = ?;`, [Advantaged_Player, Disadvantaged_Player], (err, result) => {
+    if (err) {
+      res.status(400).send(err.message);
+      console.log(err)
+    } else {
+      res.status(200).send("Advantage scores updated");
+    }
+  })
+})
 
 
 
@@ -478,13 +491,6 @@ app.get('/all-players', (req, res) => {
 })
 
 
-
-// Insert into Advantage Table
-app.post('/set-advantage', (req, res) => {
-  console.log(req.body, req.body.winnerPlayerID);
-  const { week, winner, loser } = req.body;
-  console.log(winner)
-})
 
 
 // // Get Main Challenge players answers from MainChallengeResults table

@@ -60,6 +60,7 @@ export default function Home() {
                 </tbody>
               )
             }
+            return null
           })}
 
         </table>
@@ -86,6 +87,7 @@ export default function Home() {
                   </tbody>
                 )
               }
+              return null;
             })}
           </table>
         </div>
