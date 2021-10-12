@@ -453,12 +453,7 @@ app.post('/login-user', (req, res) => {
   })
 })
 
-
-
-
-
-
-// Insert into Advantage Table
+// Update scores in Advantage Table from Admin Dashboard
 app.post('/set-advantage', (req, res) => {
   const { Week, Advantaged_Player, Disadvantaged_Player } = req.body;
 
@@ -467,10 +462,42 @@ app.post('/set-advantage', (req, res) => {
       res.status(400).send(err.message);
       console.log(err)
     } else {
-      res.status(200).send("Advantage scores updated");
+      res.status(200).send("Advantage scores updated!");
     }
   })
 })
+
+// Add weeklys questions from admin Dashboard
+app.post('/set-weeklys-questions', (req, res) => {
+  const { Week, Q1, Q2, Q3, Q4, Q5 } = req.body;
+
+  connection.query('INSERT INTO WeeklysAdmin (Week, Weeklys_Q1, Weeklys_Q2, Weeklys_Q3, Weeklys_Q4, Weeklys_Q5) VALUES (?, ?, ?, ?, ?, ?);', [Week, Q1, Q2, Q3, Q4, Q5], (err, result) => {
+    if (err) {
+      res.status(400).send(err.message);
+      console.log(err)
+    } else {
+      res.status(200).send("Weeklys questions updated!");
+    }
+  })
+})
+
+// Add weeklys answers from admin Dashboard
+app.post('/set-weeklys-answers', (req, res) => {
+  const { Week, Q1, Q2, Q3, Q4, Q5 } = req.body;
+
+  connection.query('UPDATE WeeklysAdmin SET Weeklys_Q1_Answer = ?, Weeklys_Q2_Answer = ?, Weeklys_Q3_Answer = ?, Weeklys_Q4_Answer = ?, Weeklys_Q5_Answer = ? WHERE Week = ?', [Q1, Q2, Q3, Q4, Q5, Week], (err, result) => {
+    if (err) {
+      res.status(400).send(err.message);
+      console.log(err)
+    } else {
+      res.status(200).send("Weeklys questions updated!");
+    }
+  })
+})
+
+
+
+
 
 
 

@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import { UserContext } from '../Components/UserContext'
-import WeeklysAdminPanel from '../Components/WeeklysAdminPanel'
+import AdvantageAdminPanel from '../Components/AdvantageAdminPanel'
+import WeeklysAdminPanel from '../Components/WeeklysAdminPanel';
 
 export default function AdminDashboard() {
 
@@ -28,7 +29,9 @@ export default function AdminDashboard() {
           <option value="14">14</option>
         </select>
       </div>
-  < WeeklysAdminPanel />
+      < AdvantageAdminPanel />
+      < WeeklysAdminPanel />
+
     </div>
   )
 }
