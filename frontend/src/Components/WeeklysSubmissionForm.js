@@ -9,14 +9,15 @@ export default function WeeklysSubmissionForm() {
   const { currentPlayer, week } = useContext(UserContext);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/weeklys-answers',)
+    axios.get('http://localhost:5000/weeklys-players-answers')
       .then((data) => (data.data).map((result) => {
         if (result.Player_ID === currentPlayer.Player_ID && result.Week === week) {
           setAnswersSubmitted(true);
         }
+        return null
       }))
       .catch((err) => console.log(err));
-  }, [])
+  }, [currentPlayer.Player_ID, week])
 
   const [q1a, setq1a] = useState('Eric E');
   const [q1b, setq1b] = useState('Eric E');

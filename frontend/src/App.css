@@ -69,6 +69,7 @@ p {
   font-size: 20px;
   transition: var(--btn-transition);
   cursor: pointer;
+  display: block;
 }
 
 .btn-primary:hover {
@@ -236,6 +237,18 @@ nav a:hover {
   color: red;
   font-size: 20px;
   font-weight: 600;
+}
+
+/****************************** ADMIN-DASHBOARD ******************************/
+#admin-dashboard .btn-primary {
+  width: 300px;
+  height: 85px;
+}
+.advantage-form {
+  margin-top: 2rem;
+}
+.advantage-form select {
+  margin-bottom: 2rem;
 }
 
 /****************************** HOME ******************************/

@@ -4,7 +4,7 @@ export const UserContext = createContext(null);
 
 export const UserProvider = ({children}) => {
 
-  const [ week, setWeek ] = useState(5);
+  const [ week, setWeek ] = useState(1);
   const [ currentPlayer, setCurrentPlayer ] = useState({});
   const [ authenticated, setAuthenticated ] = useState(false);
 
