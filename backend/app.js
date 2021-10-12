@@ -340,7 +340,7 @@ app.get('/players', (req, res) => {
   })
 })
 
-// Get Contestant and this total score
+// Get Contestant and their total score
 app.get('/survivor-totals', (req, res) => {
   connection.query('SELECT Player_ID, Player_Name, Player_Tribe, Admin FROM Players;SELECT MainChallengeAdmin_V2.MC_Questions, MainChallengeAdmin_V2.MC_Point_Value, MainChallengeResults_V2.* FROM MainChallengeAdmin_V2 JOIN MainChallengeResults_V2 WHERE MainChallengeAdmin_V2.Question_Number = MainChallengeResults_V2.Question_Number;SELECT Contestant_ID, Contestant_Name, Contestant_Tribe_One FROM `Contestants`;', (err, result) => {
     if (err) {
@@ -495,7 +495,17 @@ app.post('/set-weeklys-answers', (req, res) => {
   })
 })
 
-
+// Get just the main challeng questions from MainChallengeAdmin_V2
+app.get('/mc-questions', (req, res) => {
+  connection.query('SELECT * FROM MainChallengeAdmin_V2', (err, result) => {
+    if (err) {
+      res.status(400).send(err.message);
+      console.log(err)
+    } else {
+      res.status(200).send(result)
+    }
+  })
+})
 
 
 
