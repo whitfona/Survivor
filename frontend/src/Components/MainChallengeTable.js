@@ -8,8 +8,8 @@ export default function MainChallengeTable({ questionAndResults, totals } ) {
         <table>
           <thead>
             <tr className="font-900">
-              <th>Activity</th>
-              <th>Points</th>
+              <th className="sticky-col-1">Activity</th>
+              <th className="sticky-col-2">Points</th>
               <th>Eric E</th>
               <th>Heather A</th>
               <th>Erika C</th>
@@ -33,8 +33,8 @@ export default function MainChallengeTable({ questionAndResults, totals } ) {
           {totals.map((result, index) => (
             <tbody key={index}>
               <tr>
-                <td></td>
-                <td></td>
+                <td className="sticky-col-1"></td>
+                <td className="sticky-col-2"></td>
                 <td className="font-900">{result.Eric_E}</td>
                 <td className="font-900">{result.Heather_A}</td>
                 <td className="font-900">{result.Erika_C}</td>
@@ -59,8 +59,8 @@ export default function MainChallengeTable({ questionAndResults, totals } ) {
           {questionAndResults.map((result, index) => (
             <tbody key={index}>
               <tr>
-                <td>{result.Question}</td>
-                <td>{result.Point_Value}</td>
+                <td className="sticky-col-1">{result.Question}</td>
+                <td className="sticky-col-2">{result.Point_Value}</td>
                 <td>{result.Eric_E}</td>
                 <td>{result.Heather_A}</td>
                 <td>{result.Erika_C}</td>

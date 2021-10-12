@@ -307,12 +307,34 @@ nav a:hover {
 
 .table-container {
   overflow-x: auto;
-  white-space: nowrap;
+  overflow-y: auto;
+  /* white-space: nowrap; */
+  height: 626px;
 }
 
 table {
   border-collapse: collapse;
   width: 100%;
+}
+
+table .sticky-col-1 {
+  position: sticky;
+  left: 0;
+  min-width: 278px;
+}
+
+table .sticky-col-2 {
+  position: sticky;
+  left: 278px;
+  min-width: 20px;
+}
+
+table tbody:nth-child(odd) .sticky-col-1, table tbody:nth-child(odd) .sticky-col-2 {
+  background-color: var(--clr-table-grey);
+}
+
+table tbody:nth-child(even) .sticky-col-1, table tbody:nth-child(even) .sticky-col-2 {
+  background-color: var(--clr-table-blue);
 }
 
 table tbody:nth-child(odd) {
@@ -324,7 +346,14 @@ table tbody:nth-child(even) {
 }
 
 table th {
+  position: sticky;
+  top: 0;
   padding: 1rem;
+  background: #fff;
+}
+
+table thead th:nth-child(1), table thead th:nth-child(2) {
+  z-index: 10;
 }
 
 table td {

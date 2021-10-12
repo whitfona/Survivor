@@ -1,7 +1,8 @@
 import React, { useContext } from 'react'
 import { UserContext } from '../Components/UserContext'
 import AdvantageAdminPanel from '../Components/AdvantageAdminPanel'
-import WeeklysAdminPanel from '../Components/WeeklysAdminPanel';
+import WeeklysAdminPanel from '../Components/WeeklysAdminPanel'
+import TribeScoreAdminPanel from '../Components/TribeScoreAdminPanel'
 
 export default function AdminDashboard() {
 
@@ -31,6 +32,7 @@ export default function AdminDashboard() {
       </div>
       < AdvantageAdminPanel />
       < WeeklysAdminPanel />
+      < TribeScoreAdminPanel />
 
     </div>
   )
