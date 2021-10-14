@@ -1,11 +1,10 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { UserContext } from './UserContext';
 
 export default function WeeklysAdminPanel() {
 
   const [ contestants, setContestants ] = useState([]);
-  const { week } = useContext(UserContext);
+  const [ week, setWeek ] = useState();
   const [ questions, setQuestions] = useState({
     q1: "",
     q2: "",
@@ -30,6 +29,11 @@ export default function WeeklysAdminPanel() {
     axios.get('http://localhost:5000/survivors')
       .then((data) => {
         setContestants(data.data)
+      })
+      .catch((err) => console.log(err));
+    axios.get('http://localhost:5000/week')
+      .then((data) => {
+        setWeek(data.data[0].week)
       })
       .catch((err) => console.log(err));
   }, []);

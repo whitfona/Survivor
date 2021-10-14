@@ -4,11 +4,10 @@ export const UserContext = createContext(null);
 
 export const UserProvider = ({children}) => {
 
-  const [ week, setWeek ] = useState(1);
   const [ currentPlayer, setCurrentPlayer ] = useState({});
   const [ authenticated, setAuthenticated ] = useState(false);
 
-  const value = useMemo(() => ({ week, setWeek, currentPlayer, setCurrentPlayer, authenticated, setAuthenticated }), [ week, setWeek, currentPlayer, setCurrentPlayer, authenticated, setAuthenticated ]);
+  const value = useMemo(() => ({ currentPlayer, setCurrentPlayer, authenticated, setAuthenticated }), [ currentPlayer, setCurrentPlayer, authenticated, setAuthenticated ]);
 
   return (
     <UserContext.Provider value={value}>

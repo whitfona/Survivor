@@ -15,7 +15,7 @@ export const AdminRoute = ({ component: Component, ...rest}) => {
       } else {
         return <Redirect to={
           {
-            pathname: "/login",
+            pathname: "/leaderboard",
             state: {
               from: props.location
             }

@@ -16,6 +16,7 @@ import Leaderboard from './Pages/leaderboard';
 import Survivors from './Pages/survivor';
 import { ProtectedRoute } from './Components/ProtectedRoute';
 import Welcome from './Pages/welcome';
+import { AdminRoute } from './Components/AdminRoute';
 // import { AdminRoute } from './Components/AdminRoute';
 // import logo from './logo.svg';
 
@@ -34,8 +35,8 @@ export default function App() {
               <ProtectedRoute path='/advantage' component={AdvantageResults} />
               <ProtectedRoute path='/profile' component={Home} />
               <ProtectedRoute path='/survivors' component={Survivors} />
-              <Route path='/admin-dashboard' component={AdminDashboard} />
-              {/* <AdminRoute path='/admin-dashboard' component={AdminDashboard} /> */}
+              {/* <Route path='/admin-dashboard' component={AdminDashboard} /> */}
+              <AdminRoute path='/admin-dashboard' component={AdminDashboard} />
               <Route path='/login' component={Login} />
               <Route path='/signup' component={Signup} />
               <Route path='*' component={Error404} />
