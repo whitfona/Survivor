@@ -12,13 +12,13 @@ export default function AdvantageAdminPanel() {
   const [ questionsLoaded, setQuestionsLoaded ] = useState(false);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/survivors')
+    axios.get('https://survivor-node-js.herokuapp.com/survivors')
       .then((data) => {
         setContestants(data.data)
         setContestantsLoaded(true)
       })
       .catch((err) => console.log(err));
-    axios.get('http://localhost:5000/mc-questions')
+    axios.get('https://survivor-node-js.herokuapp.com/mc-questions')
       .then((data) => {
         setQuestions(data.data)
         setQuestionsLoaded(true);
@@ -37,7 +37,7 @@ export default function AdvantageAdminPanel() {
   const sendScores = (e) => {
     e.preventDefault();
 
-    axios.post('http://localhost:5000/update-main-challenge-questions', scores)
+    axios.post('https://survivor-node-js.herokuapp.com/update-main-challenge-questions', scores)
       .then((res) => {
         console.log(res)
       })

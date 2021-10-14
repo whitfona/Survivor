@@ -25,7 +25,7 @@ export default function Login(props) {
       password
     }
 
-    axios.post('http://localhost:5000/login-user', user)
+    axios.post('https://survivor-node-js.herokuapp.com/login-user', user)
       .then((res) => {
         setCurrentPlayer(res.data)
         setEmail('')

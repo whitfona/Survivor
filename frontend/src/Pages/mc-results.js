@@ -8,7 +8,7 @@ export default function MCResults() {
   const [mcTotals, setMCTotals] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/mc-questions-and-totals',)
+    axios.get('https://survivor-node-js.herokuapp.com/mc-questions-and-totals',)
       .then((data) => {
         setMCQuestionsAndResults(data.data.questions)
         setMCTotals(data.data.totals)

@@ -26,12 +26,12 @@ export default function WeeklysAdminPanel() {
   const [ questionsSubmitted, setQuestionsSubmitted ] = useState(false);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/survivors')
+    axios.get('https://survivor-node-js.herokuapp.com/survivors')
       .then((data) => {
         setContestants(data.data)
       })
       .catch((err) => console.log(err));
-    axios.get('http://localhost:5000/week')
+    axios.get('https://survivor-node-js.herokuapp.com/week')
       .then((data) => {
         setWeek(data.data[0].week)
       })
@@ -75,7 +75,7 @@ export default function WeeklysAdminPanel() {
       Q5: questions.q5,
     }
 
-    axios.post('http://localhost:5000/set-weeklys-questions', questionsToSubmit)
+    axios.post('https://survivor-node-js.herokuapp.com/set-weeklys-questions', questionsToSubmit)
       .then((res) => {
         setQuestionsSubmitted(true);
       })
@@ -96,7 +96,7 @@ export default function WeeklysAdminPanel() {
       Q5: answerFive,
     }
 
-    axios.post('http://localhost:5000/set-weeklys-answers', answersToSubmit)
+    axios.post('https://survivor-node-js.herokuapp.com/set-weeklys-answers', answersToSubmit)
       .then((res) => {
         setQuestionsSubmitted(true);
       })

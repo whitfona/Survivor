@@ -31,7 +31,7 @@ export default function Signup(props) {
       setShowErrorMsg(true);
       showMsg();
     } else {
-      axios.post('http://localhost:5000/create-user', user)
+      axios.post('https://survivor-node-js.herokuapp.com/create-user', user)
         .then((res) => {
           console.log(res);
           props.history.push('/login');
