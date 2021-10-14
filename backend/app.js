@@ -8,16 +8,24 @@ const bcrypt = require('bcrypt');
 const app = express();
 
 const PORT = process.env.PORT || 5000;
-const hostname = '127.0.0.1';
 
-app.use(cors({ origin: 'http://localhost:3000' }));
+app.use(cors());
 app.set('view-engine', 'ejs');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use((req, res, next) => {
+
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Credentials', false);
+
+    next();
+});
 
 // create database connection
 const connection = mysql.createConnection({
-  host: process.env.DB_HOSTNAME,
+  host: process.env.DB_HOST,
   database: process.env.DB,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
@@ -568,6 +576,6 @@ app.post('/set-week', (req, res) => {
   })
 })
 
-app.listen(PORT, hostname, () =>
-  console.log(`Server running on http://${hostname}:${PORT}`)
+app.listen(PORT, () =>
+  console.log(`Server running on ${PORT}`)
 );
