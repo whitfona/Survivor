@@ -9,7 +9,7 @@ export default function AdminDashboard() {
     const [ week, setWeek ] = useState(1);
 
   useEffect(() => {
-    axios.post('http://localhost:5000/set-week', { week} )
+    axios.post('https://survivor-node-js.herokuapp.com/set-week', { week} )
       .then((res) => {
         console.log(res)
       })

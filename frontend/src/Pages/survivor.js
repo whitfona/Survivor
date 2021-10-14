@@ -6,7 +6,7 @@ export default function Survivors() {
   const [ contestantTotals, setContestantTotals ] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/survivor-totals',)
+    axios.get('https://survivor-node-js.herokuapp.com/survivor-totals',)
       .then((data) => {
         setContestantTotals(data.data)
       })

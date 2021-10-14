@@ -9,7 +9,7 @@ export default function WeeklysSubmissionForm() {
   const { currentPlayer, week } = useContext(UserContext);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/weeklys-players-answers')
+    axios.get('https://survivor-node-js.herokuapp.com/weeklys-players-answers')
       .then((data) => (data.data).map((result) => {
         if (result.Player_ID === currentPlayer.Player_ID && result.Week === week) {
           setAnswersSubmitted(true);
@@ -41,7 +41,7 @@ export default function WeeklysSubmissionForm() {
       q4,
       q5
     }
-    axios.post('http://localhost:5000/weekly-submissions', answers)
+    axios.post('https://survivor-node-js.herokuapp.com/weekly-submissions', answers)
       .then((res) => {
         console.log(res);
         setAnswersSubmitted(true);

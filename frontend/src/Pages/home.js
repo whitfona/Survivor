@@ -11,12 +11,12 @@ export default function Home() {
   const { currentPlayer } = useContext(UserContext);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/players',)
+    axios.get('https://survivor-node-js.herokuapp.com/players',)
       .then((data) => {
         setPlayers(data.data)
       })
       .catch((err) => console.log(err));
-    axios.get('http://localhost:5000/survivor-totals',)
+    axios.get('https://survivor-node-js.herokuapp.com/survivor-totals',)
       .then((data) => {
         setContestantTotals(data.data)
       })

@@ -7,7 +7,7 @@ export default function AdvantageResults() {
   const [ advantageResults, setAdvantageResults ] = useState([]);
   
   useEffect(() => {
-    axios.get('http://localhost:5000/advantage-all-weeks')
+    axios.get('https://survivor-node-js.herokuapp.com/advantage-all-weeks')
     .then((data) => setAdvantageResults(data.data))
     .catch((err) => console.log(err));
   }, []);

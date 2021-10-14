@@ -10,12 +10,12 @@ export default function WeeklysResults() {
   const [weeklyPlayerResults, setWeeklyPlayerResults] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/weeklys-questions-and-answers',)
+    axios.get('https://survivor-node-js.herokuapp.com/weeklys-questions-and-answers',)
       .then((data) => {
         setWeeklyQuestionsAndAnswers(data.data)
       })
       .catch((err) => console.log(err));
-    axios.get('http://localhost:5000/weeklys-players-answers',)
+    axios.get('https://survivor-node-js.herokuapp.com/weeklys-players-answers',)
       .then((data) => setWeeklyPlayerResults(data.data))
       .catch((err) => console.log(err));
   }, []);

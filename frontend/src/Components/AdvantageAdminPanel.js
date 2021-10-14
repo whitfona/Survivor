@@ -10,12 +10,12 @@ export default function AdvantageAdminPanel() {
   const [ week, setWeek ] = useState();
 
   useEffect(() => {
-    axios.get('http://localhost:5000/players')
+    axios.get('https://survivor-node-js.herokuapp.com/players')
       .then((data) => {
         setPlayers(data.data)
       })
       .catch((err) => console.log(err));
-    axios.get('http://localhost:5000/week')
+    axios.get('https://survivor-node-js.herokuapp.com/week')
       .then((data) => {
         setWeek(data.data[0].week)
       })
@@ -37,7 +37,7 @@ export default function AdvantageAdminPanel() {
       Disadvantaged_Player: disadvantagedPlayer
     }
 
-    axios.post('http://localhost:5000/set-advantage', advantageScores)
+    axios.post('https://survivor-node-js.herokuapp.com/set-advantage', advantageScores)
       .then((res) => {
         setWeekSubmitted(true);
       })
