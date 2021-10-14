@@ -1,6 +1,5 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { UserContext } from './UserContext';
 
 export default function AdvantageAdminPanel() {
 
@@ -8,13 +7,17 @@ export default function AdvantageAdminPanel() {
   const [ disadvantagedPlayer, setDisadvantagedPlayer ] = useState(1);
   const [ players, setPlayers ] = useState([]);
   const [ weekSubmitted, setWeekSubmitted ] = useState(false);
-  
-  const { week } = useContext(UserContext);
+  const [ week, setWeek ] = useState();
 
   useEffect(() => {
     axios.get('http://localhost:5000/players')
       .then((data) => {
         setPlayers(data.data)
+      })
+      .catch((err) => console.log(err));
+    axios.get('http://localhost:5000/week')
+      .then((data) => {
+        setWeek(data.data[0].week)
       })
       .catch((err) => console.log(err));
   }, []);

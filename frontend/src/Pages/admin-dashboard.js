@@ -1,12 +1,21 @@
-import React, { useContext } from 'react'
-import { UserContext } from '../Components/UserContext'
+import React, { useState, useEffect } from 'react'
 import AdvantageAdminPanel from '../Components/AdvantageAdminPanel'
 import WeeklysAdminPanel from '../Components/WeeklysAdminPanel'
 import TribeScoreAdminPanel from '../Components/TribeScoreAdminPanel'
+import axios from 'axios'
 
 export default function AdminDashboard() {
 
-  const { setWeek } = useContext(UserContext);
+    const [ week, setWeek ] = useState(1);
+
+  useEffect(() => {
+    axios.post('http://localhost:5000/set-week', { week} )
+      .then((res) => {
+        console.log(res)
+      })
+      .catch((err) => console.log(err));
+  }, [week]);
+
 
   return (
     <div id="admin-dashboard">

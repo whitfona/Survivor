@@ -126,9 +126,9 @@ app.get('/advantage-totals', (req, res) => {
   })
 })
 
-// Get Main Challenge questions and results & weekly player totals from MainChallengeAdmin_V2 and MainChallengeResults_V2 table
+// Get Main Challenge questions and results & weekly player totals from MainChallengeAdmin and MainChallengeResults table
 app.get('/mc-questions-and-totals', (req, res) => {
-    connection.query('SELECT MainChallengeAdmin_V2.MC_Questions, MainChallengeAdmin_V2.MC_Point_Value, MainChallengeResults_V2.* FROM MainChallengeAdmin_V2 JOIN MainChallengeResults_V2 WHERE MainChallengeAdmin_V2.Question_Number = MainChallengeResults_V2.Question_Number;', (err, result) => {
+    connection.query('SELECT MainChallengeAdmin.MC_Questions, MainChallengeAdmin.MC_Point_Value, MainChallengeResults.* FROM MainChallengeAdmin JOIN MainChallengeResults WHERE MainChallengeAdmin.Question_Number = MainChallengeResults.Question_Number;', (err, result) => {
       if(err) {
         console.log(err);
       } else {
@@ -238,7 +238,7 @@ app.get('/mc-questions-and-totals', (req, res) => {
 
 // Get All Player Information, Player_ID, Player_Name, Tribe_Total, Weeklys_Total, Bonus, Pay_Bonus, Advantage_Total
 app.get('/players', (req, res) => {
-  connection.query('SELECT Player_ID, Player_Name, Player_Tribe, Admin FROM Players;SELECT Advantage.Player_ID, Players.Player_Name, (Week_1 + Week_2 + Week_3 + Week_4 + Week_5 + Week_6 + Week_7 + Week_8 + Week_9 + Week_10 + Week_11 + Week_12 + Week_13 + Week_14) AS "Total" FROM Advantage JOIN Players ON Players.Player_ID = Advantage.Player_ID GROUP BY Player_ID;SELECT MainChallengeAdmin_V2.MC_Questions, MainChallengeAdmin_V2.MC_Point_Value, MainChallengeResults_V2.* FROM MainChallengeAdmin_V2 JOIN MainChallengeResults_V2 WHERE MainChallengeAdmin_V2.Question_Number = MainChallengeResults_V2.Question_Number;SELECT Week, Weeklys_Q1_Answer, Weeklys_Q2_Answer, Weeklys_Q3_Answer, Weeklys_Q4_Answer, Weeklys_Q5_Answer FROM WeeklysAdmin; SELECT WeeklysPlayerAnswers.Week, Players.Player_Name, WeeklysPlayerAnswers.Player_ID, WC_Q1_Answer, WC_Q2_Answer, WC_Q3_Answer, WC_Q4_Answer, WC_Q5_Answer FROM WeeklysPlayerAnswers JOIN Players ON Players.Player_ID = WeeklysPlayerAnswers.Player_ID;SELECT Contestant_ID, Contestant_Name FROM `Contestants`;', (err, result) => {
+  connection.query('SELECT Player_ID, Player_Name, Player_Tribe, Admin FROM Players;SELECT Advantage.Player_ID, Players.Player_Name, (Week_1 + Week_2 + Week_3 + Week_4 + Week_5 + Week_6 + Week_7 + Week_8 + Week_9 + Week_10 + Week_11 + Week_12 + Week_13 + Week_14) AS "Total" FROM Advantage JOIN Players ON Players.Player_ID = Advantage.Player_ID GROUP BY Player_ID;SELECT MainChallengeAdmin.MC_Questions, MainChallengeAdmin.MC_Point_Value, MainChallengeResults.* FROM MainChallengeAdmin JOIN MainChallengeResults WHERE MainChallengeAdmin.Question_Number = MainChallengeResults.Question_Number;SELECT Week, Weeklys_Q1_Answer, Weeklys_Q2_Answer, Weeklys_Q3_Answer, Weeklys_Q4_Answer, Weeklys_Q5_Answer FROM WeeklysAdmin; SELECT WeeklysPlayerAnswers.Week, Players.Player_Name, WeeklysPlayerAnswers.Player_ID, WC_Q1_Answer, WC_Q2_Answer, WC_Q3_Answer, WC_Q4_Answer, WC_Q5_Answer FROM WeeklysPlayerAnswers JOIN Players ON Players.Player_ID = WeeklysPlayerAnswers.Player_ID;SELECT Contestant_ID, Contestant_Name FROM `Contestants`;', (err, result) => {
     if (err) {
       console.log(err);
     } else {
@@ -342,7 +342,7 @@ app.get('/players', (req, res) => {
 
 // Get Contestant and their total score
 app.get('/survivor-totals', (req, res) => {
-  connection.query('SELECT Player_ID, Player_Name, Player_Tribe, Admin FROM Players;SELECT MainChallengeAdmin_V2.MC_Questions, MainChallengeAdmin_V2.MC_Point_Value, MainChallengeResults_V2.* FROM MainChallengeAdmin_V2 JOIN MainChallengeResults_V2 WHERE MainChallengeAdmin_V2.Question_Number = MainChallengeResults_V2.Question_Number;SELECT Contestant_ID, Contestant_Name, Contestant_Tribe_One FROM `Contestants`;', (err, result) => {
+  connection.query('SELECT Player_ID, Player_Name, Player_Tribe, Admin FROM Players;SELECT MainChallengeAdmin.MC_Questions, MainChallengeAdmin.MC_Point_Value, MainChallengeResults.* FROM MainChallengeAdmin JOIN MainChallengeResults WHERE MainChallengeAdmin.Question_Number = MainChallengeResults.Question_Number;SELECT Contestant_ID, Contestant_Name, Contestant_Tribe_One FROM `Contestants`;', (err, result) => {
     if (err) {
       console.log(err);
     } else {
@@ -435,20 +435,25 @@ app.post('/login-user', (req, res) => {
     if(err) {
       res.send(err);
     } else {
-      bcrypt.compare(password, result[0].Player_Password, (err) => {
-        if (err) {
-          res.status(404).send('Username or Password is incorrect.')
-        } else {
-          user = {
-            Player_ID: result[0].Player_ID,
-            Player_Name: result[0].Player_Name,
-            Player_Tribe: result[0].Player_Tribe,
-            Player_Email: result[0].Player_Email,
-            Admin: result[0].Admin
+      if (result.length > 0) {
+        bcrypt.compare(password, result[0].Player_Password, (err) => {
+          if (err) {
+            res.status(404).send('Username or Password is incorrect.')
+          } else {
+            user = {
+              Player_ID: result[0].Player_ID,
+              Player_Name: result[0].Player_Name,
+              Player_Tribe: result[0].Player_Tribe,
+              Player_Email: result[0].Player_Email,
+              Admin: result[0].Admin
+            }
+            res.status(200).send(user);
           }
-          res.status(200).send(user);
-        }
-      })
+        })
+      }
+      else {
+        res.status(404).send('Username or Password is incorrect.')
+      }
     }
   })
 })
@@ -495,9 +500,9 @@ app.post('/set-weeklys-answers', (req, res) => {
   })
 })
 
-// Get just the main challeng questions from MainChallengeAdmin_V2
+// Get just the main challeng questions from MainChallengeAdmin
 app.get('/mc-questions', (req, res) => {
-  connection.query('SELECT * FROM MainChallengeAdmin_V2', (err, result) => {
+  connection.query('SELECT * FROM MainChallengeAdmin', (err, result) => {
     if (err) {
       res.status(400).send(err.message);
       console.log(err)
@@ -507,16 +512,28 @@ app.get('/mc-questions', (req, res) => {
   })
 })
 
+// Update main challange score for each contestant
+app.post('/update-main-challenge-questions', (req, res) => {
+  const { week, q } = req.body;
+  const scoresAsArray = Object.entries(req.body);
 
+  for (let i = 2; i < scoresAsArray.length; i++) {
+    const key = Object.keys(req.body)[i];
+    console.log(week, q, scoresAsArray[i][0], scoresAsArray[i][1])
+    const contestant = scoresAsArray[i][0];
 
+    connection.query(`UPDATE MainChallengeResults SET ${contestant} = ? WHERE Week = ? AND Question_Number = ?;`, [scoresAsArray[i][1], week, q], (err, result) => {
+      if (err) {
+        return res.status(400).send(err.message);
+      } else {
+        return res.status(200);
+      }
+    })
+  }
 
-
-
-
-
+})
 
 // Get all players id, name and player tribe
-// SELECT Player_ID, Player_Name, Player_Tribe FROM `Players`
 app.get('/all-players', (req, res) => {
   connection.query('SELECT Player_ID, Player_Name, Player_Tribe FROM `Players`', (err, result) => {
     if(err) {
@@ -527,19 +544,29 @@ app.get('/all-players', (req, res) => {
   })
 })
 
+// Get week from database
+app.get('/week', (req, res) => {
+  connection.query('SELECT * FROM week', (err, result) => {
+    if(err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  })
+})
 
+// Set week into database
+app.post('/set-week', (req, res) => {
+  const { week } = req.body;
 
-
-// // Get Main Challenge players answers from MainChallengeResults table
-// app.get('/mc-answers', (req, res) => {
-//     connection.query('SELECT Contestants.Contestant_Name, MainChallengeResults.* FROM Contestants JOIN MainChallengeResults ON Contestants.Contestant_ID = MainChallengeResults.Contestant_ID;', (err, result) => {
-//       if(err) {
-//         console.log(err);
-//       } else {
-//         res.send(result);
-//       }
-//   })
-// })
+  connection.query('UPDATE Week SET week= ?', week, (err, result) => {
+    if(err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  })
+})
 
 app.listen(PORT, hostname, () =>
   console.log(`Server running on http://${hostname}:${PORT}`)
