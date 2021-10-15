@@ -16,7 +16,7 @@ export default function Leaderboard() {
   }, []);
 
   const totalScore = (player) => {
-    return player.TribeTotals + player.WeeklysTotals + player.Bonus + player.Pay_Bonus + player.TribeTotals;
+    return player.TribeTotals + player.WeeklysTotals + player.Bonus + player.Pay_Bonus + player.AdvantageTotals;
   }
 
   players.forEach(player => {
@@ -66,7 +66,7 @@ export default function Leaderboard() {
               <td>{player.WeeklysTotals}</td>
               <td>{player.Bonus}</td>
               <td>{player.Pay_Bonus}</td>
-              <td>{player.WeeklysTotals}</td>
+              <td>{player.AdvantageTotals}</td>
               <td>{totalScore(player)}</td>
               <td>{highestScore - totalScore(player)}</td>
             </tr>

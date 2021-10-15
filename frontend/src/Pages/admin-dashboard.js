@@ -3,6 +3,7 @@ import AdvantageAdminPanel from '../Components/AdvantageAdminPanel'
 import WeeklysAdminPanel from '../Components/WeeklysAdminPanel'
 import TribeScoreAdminPanel from '../Components/TribeScoreAdminPanel'
 import axios from 'axios'
+import BonusAdminPanel from '../Components/BonusAdminPanel'
 
 export default function AdminDashboard() {
 
@@ -11,7 +12,7 @@ export default function AdminDashboard() {
   useEffect(() => {
     axios.post('https://survivor-node-js.herokuapp.com/set-week', { week} )
       .then((res) => {
-        console.log(res)
+        // console.log(res)
       })
       .catch((err) => console.log(err));
   }, [week]);
@@ -39,6 +40,7 @@ export default function AdminDashboard() {
           <option value="14">14</option>
         </select>
       </div>
+      < BonusAdminPanel />
       < AdvantageAdminPanel />
       < WeeklysAdminPanel />
       < TribeScoreAdminPanel />

@@ -47,12 +47,12 @@ export default function AdvantageAdminPanel() {
   }
 
   return (
-    <div>
-      <h2 className="my-1">Advantage Section</h2>
+    <div className="my-3">
+      <h2 className="my-2">Advantage Section</h2>
       <button className="btn-primary" onClick={(e) => getRandomPlayer(e)} type="submit">Click to Get Random Player</button>
 
       <form className="advantage-form" onSubmit={(e) => submitAdvantageScores(e)}>
-        <p>Player to get 5 points: {advantagedPlayer.Player_Name}</p >
+        <p>Player to get 5 points: <span>{advantagedPlayer.Player_Name}</span></p >
         <label htmlFor="disadvantagedPlayer">Player to lose 5 points: </label>
         <select name="disadvantagedPlayer" onChange={(e) => setDisadvantagedPlayer(e.target.value)}>
           {players.map(player => {
