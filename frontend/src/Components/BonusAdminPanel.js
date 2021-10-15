@@ -34,7 +34,7 @@ export default function BonusAdminPanel() {
       amount: bonusAmount
     }
 
-    axios.post('http://localhost:5000/set-bonus', bonus)
+    axios.post('https://survivor-node-js.herokuapp.com/set-bonus', bonus)
       .then((res) => {
         setBonusSubmitted(true);
         showMsg();
@@ -52,7 +52,7 @@ export default function BonusAdminPanel() {
       amount: payBonusAmount
     }
 
-    axios.post('http://localhost:5000/set-pay-bonus', payBonus)
+    axios.post('https://survivor-node-js.herokuapp.com/set-pay-bonus', payBonus)
       .then((res) => {
         setPayBonusSubmitted(true);
         showMsg();
