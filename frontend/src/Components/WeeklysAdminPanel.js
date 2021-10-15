@@ -106,7 +106,7 @@ export default function WeeklysAdminPanel() {
   }
 
   return (
-    <div id="weeklys-admin" className="my-2">
+    <div id="weeklys-admin" className="my-3">
       <h2 className="my-1">Weeklys Section</h2>
       <div className="weekly-admin-grid">
         <form onSubmit={submitWeeklyQuestions}>

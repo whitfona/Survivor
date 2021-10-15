@@ -390,7 +390,7 @@ app.get('/survivor-totals', (req, res) => {
 app.post('/weekly-submissions', (req, res) => {
   const { userID, week, q1, q2, q3, q4, q5 } = req.body;
 
-  connection.query("INSERT INTO `WeeklysPlayerAnswers` (`Weeklys_Player_Results_ID`, `Player_ID`, `Week`, `WC_Q1_Answer`, `WC_Q2_Answer`, `WC_Q3_Answer`, `WC_Q4_Answer`, `WC_Q5_Answer`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?)", [userID, week, q1, q2, q3, q4, q5], (err, result) => {
+  connection.query("INSERT INTO `WeeklysPlayerAnswers` (`Weeklys_Player_Results_ID`, `Player_ID`, `Week`, `WC_Q1_Answer`, `WC_Q2_Answer`, `WC_Q3_Answer`, `WC_Q4_Answer`, `WC_Q5_Answer`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?);", [userID, week, q1, q2, q3, q4, q5], (err, result) => {
     if(err) {
       console.log(err)
     } else {
@@ -437,7 +437,7 @@ app.post('/create-user', (req, res) => {
 app.post('/login-user', (req, res) => {
   const { email, password } = req.body;
 
-  connection.query('SELECT * FROM `Players` WHERE Player_Email = ?', [email], (err, result) => {
+  connection.query('SELECT * FROM `Players` WHERE Player_Email = ?;', [email], (err, result) => {
     if(err) {
       res.send(err);
     } else {
@@ -496,7 +496,7 @@ app.post('/set-weeklys-questions', (req, res) => {
 app.post('/set-weeklys-answers', (req, res) => {
   const { Week, Q1, Q2, Q3, Q4, Q5 } = req.body;
 
-  connection.query('UPDATE WeeklysAdmin SET Weeklys_Q1_Answer = ?, Weeklys_Q2_Answer = ?, Weeklys_Q3_Answer = ?, Weeklys_Q4_Answer = ?, Weeklys_Q5_Answer = ? WHERE Week = ?', [Q1, Q2, Q3, Q4, Q5, Week], (err, result) => {
+  connection.query('UPDATE WeeklysAdmin SET Weeklys_Q1_Answer = ?, Weeklys_Q2_Answer = ?, Weeklys_Q3_Answer = ?, Weeklys_Q4_Answer = ?, Weeklys_Q5_Answer = ? WHERE Week = ?;', [Q1, Q2, Q3, Q4, Q5, Week], (err, result) => {
     if (err) {
       res.status(400).send(err.message);
       console.log(err)
@@ -508,7 +508,7 @@ app.post('/set-weeklys-answers', (req, res) => {
 
 // Get just the main challeng questions from MainChallengeAdmin
 app.get('/mc-questions', (req, res) => {
-  connection.query('SELECT * FROM MainChallengeAdmin', (err, result) => {
+  connection.query('SELECT * FROM MainChallengeAdmin;', (err, result) => {
     if (err) {
       res.status(400).send(err.message);
       console.log(err)
@@ -541,7 +541,7 @@ app.post('/update-main-challenge-questions', (req, res) => {
 
 // Get all players id, name and player tribe
 app.get('/all-players', (req, res) => {
-  connection.query('SELECT Player_ID, Player_Name, Player_Tribe FROM `Players`', (err, result) => {
+  connection.query('SELECT Player_ID, Player_Name, Player_Tribe FROM `Players`;', (err, result) => {
     if(err) {
       console.log(err);
     } else {
@@ -552,7 +552,7 @@ app.get('/all-players', (req, res) => {
 
 // Get week from database
 app.get('/week', (req, res) => {
-  connection.query('SELECT * FROM week', (err, result) => {
+  connection.query('SELECT * FROM week;', (err, result) => {
     if(err) {
       console.log(err);
     } else {
@@ -565,11 +565,37 @@ app.get('/week', (req, res) => {
 app.post('/set-week', (req, res) => {
   const { week } = req.body;
 
-  connection.query('UPDATE Week SET week= ?', week, (err, result) => {
+  connection.query('UPDATE Week SET week = ?;', week, (err, result) => {
     if(err) {
       console.log(err);
     } else {
       res.send(result);
+    }
+  })
+})
+
+// Set bonus into players table
+app.post('/set-bonus', (req, res) => {
+  const { playerID, amount } = req.body;
+
+  connection.query('UPDATE Players SET Player_Bonus = ? WHERE Player_ID = ?;', [amount, playerID], (err, result) => {
+    if(err) {
+      res.status(400).send('Error updating bonus score.')
+    } else {
+      res.status(200).send('Player Bonus Updated!');
+    }
+  })
+})
+
+// Set pay bonus into players table
+app.post('/set-pay-bonus', (req, res) => {
+  const { playerID, amount } = req.body;
+
+  connection.query('UPDATE Players SET Player_Pay_Bonus = ? WHERE Player_ID = ?;', [amount, playerID], (err, result) => {
+    if(err) {
+      res.status(400).send('Error updating pay bonus score.')
+    } else {
+      res.status(200).send('Player Pay Bonus Updated!');
     }
   })
 })

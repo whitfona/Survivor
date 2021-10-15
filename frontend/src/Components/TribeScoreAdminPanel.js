@@ -50,7 +50,7 @@ export default function AdvantageAdminPanel() {
 
   return (
     <>
-    {(contestantsLoaded && questionsLoaded) && <div>
+    {(contestantsLoaded && questionsLoaded) && <div className="my-3">
       <h2 className="my-1">Tribe Score Section</h2>
 
 
