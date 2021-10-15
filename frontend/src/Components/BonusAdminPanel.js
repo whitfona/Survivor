@@ -76,7 +76,7 @@ export default function BonusAdminPanel() {
               return <option value={player.Player_ID} key={player.Player_ID}>{player.Player_Name}</option>
             })}
           </select>
-          <input type="number" name="amount" onChange={(e) => setBonusAmount(e.target.value)} />
+          <input type="number" name="amount" value={bonusAmount} onChange={(e) => setBonusAmount(e.target.value)} />
           {bonusSubmitted && <h3 className="my-1">The bonus score has been updated!</h3>}
           <button className="btn-primary" type="submit">Update Bonus Score</button>
         </form>
@@ -93,7 +93,7 @@ export default function BonusAdminPanel() {
               return <option value={player.Player_ID} key={player.Player_ID}>{player.Player_Name}</option>
             })}
           </select>
-          <input type="number" name="payAmount" onChange={(e) => setPayBonusAmount(e.target.value)} />
+          <input type="number" name="payAmount" value={payBonusAmount} onChange={(e) => setPayBonusAmount(e.target.value)} />
           {payBonusSubmitted && <h3 className="my-1">The pay bonus score has been updated!</h3>}
           <button className="btn-primary" type="submit">Update Pay Bonus Score</button>
         </form>
