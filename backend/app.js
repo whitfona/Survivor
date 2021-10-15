@@ -23,15 +23,14 @@ app.use((req, res, next) => {
 });
 
 // create database connection
-const connection = mysql.createConnection({
+const connection = mysql.createPool({
   host: process.env.DB_HOST,
   database: process.env.DB,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
+  connectionLimit: 10,
   multipleStatements: true
 });
-
-connection.connect();
 
 app.get('/', (req, res) => {
   res.send('<h1>Welcome to Survivor</h1>');
@@ -245,7 +244,7 @@ app.get('/mc-questions-and-totals', (req, res) => {
 
 // Get All Player Information, Player_ID, Player_Name, Tribe_Total, Weeklys_Total, Bonus, Pay_Bonus, Advantage_Total
 app.get('/players', (req, res) => {
-  connection.query('SELECT Player_ID, Player_Name, Player_Tribe, Admin FROM Players;SELECT Advantage.Player_ID, Players.Player_Name, (Week_1 + Week_2 + Week_3 + Week_4 + Week_5 + Week_6 + Week_7 + Week_8 + Week_9 + Week_10 + Week_11 + Week_12 + Week_13 + Week_14) AS "Total" FROM Advantage JOIN Players ON Players.Player_ID = Advantage.Player_ID GROUP BY Player_ID;SELECT MainChallengeAdmin.MC_Questions, MainChallengeAdmin.MC_Point_Value, MainChallengeResults.* FROM MainChallengeAdmin JOIN MainChallengeResults WHERE MainChallengeAdmin.Question_Number = MainChallengeResults.Question_Number;SELECT Week, Weeklys_Q1_Answer, Weeklys_Q2_Answer, Weeklys_Q3_Answer, Weeklys_Q4_Answer, Weeklys_Q5_Answer FROM WeeklysAdmin; SELECT WeeklysPlayerAnswers.Week, Players.Player_Name, WeeklysPlayerAnswers.Player_ID, WC_Q1_Answer, WC_Q2_Answer, WC_Q3_Answer, WC_Q4_Answer, WC_Q5_Answer FROM WeeklysPlayerAnswers JOIN Players ON Players.Player_ID = WeeklysPlayerAnswers.Player_ID;SELECT Contestant_ID, Contestant_Name FROM `Contestants`;', (err, result) => {
+  connection.query('SELECT Player_ID, Player_Name, Player_Bonus, Player_Pay_Bonus, Player_Tribe, Admin FROM Players;SELECT Advantage.Player_ID, Players.Player_Name, (Week_1 + Week_2 + Week_3 + Week_4 + Week_5 + Week_6 + Week_7 + Week_8 + Week_9 + Week_10 + Week_11 + Week_12 + Week_13 + Week_14) AS "Total" FROM Advantage JOIN Players ON Players.Player_ID = Advantage.Player_ID GROUP BY Player_ID;SELECT MainChallengeAdmin.MC_Questions, MainChallengeAdmin.MC_Point_Value, MainChallengeResults.* FROM MainChallengeAdmin JOIN MainChallengeResults WHERE MainChallengeAdmin.Question_Number = MainChallengeResults.Question_Number;SELECT Week, Weeklys_Q1_Answer, Weeklys_Q2_Answer, Weeklys_Q3_Answer, Weeklys_Q4_Answer, Weeklys_Q5_Answer FROM WeeklysAdmin; SELECT WeeklysPlayerAnswers.Week, Players.Player_Name, WeeklysPlayerAnswers.Player_ID, WC_Q1_Answer, WC_Q2_Answer, WC_Q3_Answer, WC_Q4_Answer, WC_Q5_Answer FROM WeeklysPlayerAnswers JOIN Players ON Players.Player_ID = WeeklysPlayerAnswers.Player_ID;SELECT Contestant_ID, Contestant_Name FROM `Contestants`;', (err, result) => {
     if (err) {
       console.log(err);
     } else {
@@ -266,8 +265,8 @@ app.get('/players', (req, res) => {
           TribeTotals: 0,
           WeeklysTotals: 0,
           AdvantageTotals: 0,
-          Bonus: 0,
-          Pay_Bonus: 0,
+          Bonus: result[0][i].Player_Bonus,
+          Pay_Bonus: result[0][i].Player_Pay_Bonus,
           Player_Tribe: result[0][i].Player_Tribe,
           Admin: result[0][i].Admin,
         }
