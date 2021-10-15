@@ -37,6 +37,7 @@ export default function BonusAdminPanel() {
     axios.post('https://survivor-node-js.herokuapp.com/set-bonus', bonus)
       .then((res) => {
         setBonusSubmitted(true);
+        setBonusAmount(0);
         showMsg();
       })
       .catch((err) => {
@@ -55,6 +56,7 @@ export default function BonusAdminPanel() {
     axios.post('https://survivor-node-js.herokuapp.com/set-pay-bonus', payBonus)
       .then((res) => {
         setPayBonusSubmitted(true);
+        setPayBonusAmount(0);
         showMsg();
       })
       .catch((err) => {
@@ -92,7 +94,7 @@ export default function BonusAdminPanel() {
             })}
           </select>
           <input type="number" name="payAmount" onChange={(e) => setPayBonusAmount(e.target.value)} />
-          {payBonusSubmitted && <h3>The pay bonus score has been updated!</h3>}
+          {payBonusSubmitted && <h3 className="my-1">The pay bonus score has been updated!</h3>}
           <button className="btn-primary" type="submit">Update Pay Bonus Score</button>
         </form>
 
