@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 
-export default function WeeklysAdminPanel() {
+export default function WeeklysAdminPanel({ week }) {
 
   const [ contestants, setContestants ] = useState([]);
-  const [ week, setWeek ] = useState();
   const [ questions, setQuestions] = useState({
     q1: "",
     q2: "",
@@ -24,16 +23,12 @@ export default function WeeklysAdminPanel() {
   const [ answerFour, setAnswerFour ] = useState(0);
   const [ answerFive, setAnswerFive ] = useState(0);
   const [ questionsSubmitted, setQuestionsSubmitted ] = useState(false);
+  const [ message, setMessage ] = useState(false);
 
   useEffect(() => {
     axios.get('https://survivor-node-js.herokuapp.com/survivors')
       .then((data) => {
         setContestants(data.data)
-      })
-      .catch((err) => console.log(err));
-    axios.get('https://survivor-node-js.herokuapp.com/week')
-      .then((data) => {
-        setWeek(data.data[0].week)
       })
       .catch((err) => console.log(err));
   }, []);
@@ -77,10 +72,15 @@ export default function WeeklysAdminPanel() {
 
     axios.post('https://survivor-node-js.herokuapp.com/set-weeklys-questions', questionsToSubmit)
       .then((res) => {
+        setMessage(`The Questions for week ${week} have been set!`);
         setQuestionsSubmitted(true);
+        showMsg();
+        setQuestions({ q1: "", q2: "", q3: "", q4: "", q5: "" });
       })
       .catch((err) => {
-        console.log(err)
+        setMessage('The questions have already been set for this week');
+        setQuestionsSubmitted(true)
+        showMsg();
       })
   }
 
@@ -98,11 +98,19 @@ export default function WeeklysAdminPanel() {
 
     axios.post('https://survivor-node-js.herokuapp.com/set-weeklys-answers', answersToSubmit)
       .then((res) => {
+        setMessage('Answer have been set.')
         setQuestionsSubmitted(true);
+        showMsg();
       })
       .catch((err) => {
         console.log(err)
       })
+  }
+
+  const showMsg = () => {
+    setTimeout(() => {
+      setQuestionsSubmitted(false);
+    }, 3000);
   }
 
   return (
@@ -150,7 +158,7 @@ export default function WeeklysAdminPanel() {
         </form>
       </div>
 
-      {questionsSubmitted && <h3>The Questions for week {week} have been set!</h3>}
+      {questionsSubmitted && <h3>{message}</h3>}
     </div>
   )
 }

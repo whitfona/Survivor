@@ -1,23 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 
-export default function AdvantageAdminPanel() {
+export default function AdvantageAdminPanel({ week }) {
 
   const [ advantagedPlayer, setAdvantagedPlayer ] = useState('');
   const [ disadvantagedPlayer, setDisadvantagedPlayer ] = useState(1);
   const [ players, setPlayers ] = useState([]);
   const [ weekSubmitted, setWeekSubmitted ] = useState(false);
-  const [ week, setWeek ] = useState();
 
   useEffect(() => {
     axios.get('https://survivor-node-js.herokuapp.com/players')
       .then((data) => {
         setPlayers(data.data)
-      })
-      .catch((err) => console.log(err));
-    axios.get('https://survivor-node-js.herokuapp.com/week')
-      .then((data) => {
-        setWeek(data.data[0].week)
       })
       .catch((err) => console.log(err));
   }, []);

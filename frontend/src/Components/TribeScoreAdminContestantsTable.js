@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function TribeScoreAdminContestantsTable({ contestants, index, scores,  setScores, sendScores }) {
+export default function TribeScoreAdminContestantsTable({ contestants, index, scores, setScores, sendScores }) {
 
   const handleChange = (e) => {
     const {name, value} = e.target;

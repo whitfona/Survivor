@@ -38,6 +38,14 @@ p {
   font-weight: 900;
 }
 
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
 .mx-0 {
   margin: 0;
 }
@@ -384,6 +392,7 @@ table th {
   top: 0;
   padding: 1rem;
   background: #fff;
+  min-width: 115px;
 }
 
 table thead th:nth-child(1), table thead th:nth-child(2) {
