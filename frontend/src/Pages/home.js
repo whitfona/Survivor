@@ -24,7 +24,7 @@ export default function Home() {
   }, []);
 
   const totalScore = (player) => {
-    return player.TribeTotals + player.WeeklysTotals + player.Bonus + player.Pay_Bonus + player.TribeTotals;
+    return player.TribeTotals + player.WeeklysTotals + player.Bonus + player.Pay_Bonus + player.AdvantageTotals;
   }
 
   return (

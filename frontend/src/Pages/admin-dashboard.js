@@ -41,9 +41,9 @@ export default function AdminDashboard() {
         </select>
       </div>
       < BonusAdminPanel />
-      < AdvantageAdminPanel />
-      < WeeklysAdminPanel />
-      < TribeScoreAdminPanel />
+      < AdvantageAdminPanel week={week} />
+      < WeeklysAdminPanel week={week} />
+      < TribeScoreAdminPanel week={week} />
 
     </div>
   )

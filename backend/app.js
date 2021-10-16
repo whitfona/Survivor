@@ -478,18 +478,26 @@ app.post('/set-advantage', (req, res) => {
   })
 })
 
-// Add weeklys questions from admin Dashboard
+// Add weeklys questions into admin Dashboard
 app.post('/set-weeklys-questions', (req, res) => {
   const { Week, Q1, Q2, Q3, Q4, Q5 } = req.body;
 
-  connection.query('INSERT INTO WeeklysAdmin (Week, Weeklys_Q1, Weeklys_Q2, Weeklys_Q3, Weeklys_Q4, Weeklys_Q5) VALUES (?, ?, ?, ?, ?, ?);', [Week, Q1, Q2, Q3, Q4, Q5], (err, result) => {
-    if (err) {
-      res.status(400).send(err.message);
-      console.log(err)
+  connection.query(`SELECT Week FROM WeeklysAdmin WHERE Week = ${Week}`, (err, result) => {
+    if (err || result.length > 0) {
+      res.status(404).send('The questions for this week have already been created.')
     } else {
-      res.status(200).send("Weeklys questions updated!");
+      connection.query('INSERT INTO WeeklysAdmin (Week, Weeklys_Q1, Weeklys_Q2, Weeklys_Q3, Weeklys_Q4, Weeklys_Q5) VALUES (?, ?, ?, ?, ?, ?);', [Week, Q1, Q2, Q3, Q4, Q5], (err, result) => {
+        if (err) {
+          res.status(400).send(err.message);
+          console.log(err)
+        } else {
+          res.status(200).send("Weeklys questions updated!");
+        }
+      })
     }
   })
+
+
 })
 
 // Add weeklys answers from admin Dashboard
@@ -518,25 +526,46 @@ app.get('/mc-questions', (req, res) => {
   })
 })
 
+// Create new week in Main Challenge table with all values as zero
+// INSERT INTO MainChallengeResults (Week, Question_Number) VALUES(?, 1), (?, 2), , (?, 3), (?, 4), (?, 5), (?, 6), (?, 7), (?, 8), (?, 9), (?, 10), (?, 11), (?, 12), (?, 13), (?, 14), (?, 15), (?, 16), (?, 17), (?, 18), (?, 19), (?, 20), (?, 21), (?, 22), (?, 23), (?, 24), (?, 25), (?, 26), (?, 27), (?, 28), (?, 29);
+app.post('/insert-mc-week', (req, res) => {
+  const { week } = req.body;
+
+  connection.query(`SELECT Week FROM MainChallengeResults WHERE Week = ${week}`, (err, result) => {
+    if (err || result.length > 0) {
+      res.status(404).send('This week has already been created.')
+    } else {
+      connection.query('INSERT INTO MainChallengeResults (Week, Question_Number) VALUES(?, 1), (?, 2), (?, 3), (?, 4), (?, 5), (?, 6), (?, 7), (?, 8), (?, 9), (?, 10), (?, 11), (?, 12), (?, 13), (?, 14), (?, 15), (?, 16), (?, 17), (?, 18), (?, 19), (?, 20), (?, 21), (?, 22), (?, 23), (?, 24), (?, 25), (?, 26), (?, 27), (?, 28), (?, 29);', [ week, week, week, week, week, week, week, week, week, week, week, week, week, week, week, week, week, week, week, week, week, week, week, week, week, week, week, week, week ], (err, result) => {
+        if (err) {
+          res.status(400).send(err)
+        } else {
+          res.status(200).send('Week added!')
+        }
+      })
+    }
+  })
+})
+
 // Update main challange score for each contestant
 app.post('/update-main-challenge-questions', (req, res) => {
-  const { week, q } = req.body;
-  const scoresAsArray = Object.entries(req.body);
+  const { week, scores } = req.body;
+  const arr = Object.entries(scores);
+  let exp = '';
 
-  for (let i = 2; i < scoresAsArray.length; i++) {
-    const key = Object.keys(req.body)[i];
-    console.log(week, q, scoresAsArray[i][0], scoresAsArray[i][1])
-    const contestant = scoresAsArray[i][0];
+  for (let i = 1; i < arr.length; i++) {
+      exp += `${arr[i][0]} = ${arr[i][1]}, `;
+  }
+  var finalExp = exp.replace(/[, ]+$/, "").trim();
 
-    connection.query(`UPDATE MainChallengeResults SET ${contestant} = ? WHERE Week = ? AND Question_Number = ?;`, [scoresAsArray[i][1], week, q], (err, result) => {
-      if (err) {
+  connection.query(`UPDATE MainChallengeResults SET ${finalExp} WHERE Week = ? AND Question_Number = ?;`, [week, scores.q], (err, result) => {
+    if (err) {
         return res.status(400).send(err.message);
+      } else if (result.changedRows === 0) {
+        return res.status(404).send('Error, no record to update');
       } else {
-        return res.status(200);
+        return res.status(200).send(result);
       }
     })
-  }
-
 })
 
 // Get all players id, name and player tribe
