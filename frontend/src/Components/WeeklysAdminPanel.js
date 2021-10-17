@@ -11,14 +11,8 @@ export default function WeeklysAdminPanel({ week }) {
     q4: "",
     q5: ""
   })
-  const [ answerOne, setAnswerOne] = useState({
-    a: "Eric E",
-    b: "Eric E",
-  })
-  const [ answerTwo, setAnswerTwo] = useState({
-    a: "Eric E",
-    b: "Eric E",
-  })
+  const [ answerOne, setAnswerOne] = useState("Eric E");
+  const [ answerTwo, setAnswerTwo] = useState("Eric E");
   const [ answerThree, setAnswerThree ] = useState(0);
   const [ answerFour, setAnswerFour ] = useState(0);
   const [ answerFive, setAnswerFive ] = useState(0);
@@ -37,22 +31,6 @@ export default function WeeklysAdminPanel({ week }) {
   const handleQuestionChange = e => {
     const {name, value } = e.target;
     setQuestions(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
-  }
-
-  const handleAnswerOneChange = e => {
-    const {name, value } = e.target;
-    setAnswerOne(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
-  }
- 
-  const handleAnswerTwoChange = e => {
-    const {name, value } = e.target;
-    setAnswerTwo(prevState => ({
       ...prevState,
       [name]: value
     }));
@@ -89,8 +67,8 @@ export default function WeeklysAdminPanel({ week }) {
 
     const answersToSubmit = {
       Week: week,
-      Q1: `${answerOne.a}, ${answerOne.b}`,
-      Q2: `${answerTwo.a}, ${answerTwo.b}`,
+      Q1: answerOne,
+      Q2: answerTwo,
       Q3: answerThree,
       Q4: answerFour,
       Q5: answerFive,
@@ -125,27 +103,17 @@ export default function WeeklysAdminPanel({ week }) {
           <input type="text" value={questions.q5} name="q5" id="q5" placeholder="Question 5..." onChange={handleQuestionChange} />
           <button type="submit" className="btn-primary">Lock in Weekly Questions</button>
         </form>
-        <form onSubmit={submitWeeklyAnswers}>
-          <div className="flex-2-cols">
-            <select name="a" value={answerOne.a} onChange={handleAnswerOneChange}>
-              {contestants.map(player => {
-                return <option value={player.Contestant_Name} key={player.Contestant_ID}>{player.Contestant_Name}</option>
-              })}
-            </select>
-            <select name="b" value={answerOne.b} onChange={handleAnswerOneChange}>
+        <form className="weekly-answers" onSubmit={submitWeeklyAnswers}>
+          <div>
+            <select name="a" value={answerOne} onChange={(e) => setAnswerOne(e.target.value)}>
               {contestants.map(player => {
                 return <option value={player.Contestant_Name} key={player.Contestant_ID}>{player.Contestant_Name}</option>
               })}
             </select>
           </div>
 
-          <div className="flex-2-cols">
-            <select name="a" value={answerTwo.a} onChange={handleAnswerTwoChange}>
-              {contestants.map(player => {
-                return <option value={player.Contestant_Name} key={player.Contestant_ID}>{player.Contestant_Name}</option>
-              })}
-            </select>
-            <select name="b" value={answerTwo.b} onChange={handleAnswerTwoChange}>
+          <div>
+            <select name="a" value={answerTwo} onChange={(e) => setAnswerTwo(e.target.value)}>
               {contestants.map(player => {
                 return <option value={player.Contestant_Name} key={player.Contestant_ID}>{player.Contestant_Name}</option>
               })}

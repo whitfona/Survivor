@@ -8,7 +8,7 @@ export default function Leaderboard() {
   const [ highestScore, setHighestScore ] = useState(0);
 
   useEffect(() => {
-    axios.get('https://survivor-node-js.herokuapp.com/players',)
+    axios.get('https://survivor-node-js.herokuapp.com/players')
       .then((data) => {
         setPlayers(data.data)
       })

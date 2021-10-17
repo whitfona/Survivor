@@ -12,7 +12,6 @@ export default function Survivors() {
       })
       .catch((err) => console.log(err));
   }, []);
-  console.log(contestantTotals)
 
   const bgColor = (tribe) => {
     if (tribe === undefined) return;
