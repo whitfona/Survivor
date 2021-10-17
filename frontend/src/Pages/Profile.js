@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../Components/UserContext';
 import WeeklysSubmissionForm from '../Components/WeeklysSubmissionForm'
 
-export default function Home() {
+export default function Profile() {
 
   const [ players, setPlayers ] = useState([]);
   const [ contestantTotals, setContestantTotals ] = useState([]);

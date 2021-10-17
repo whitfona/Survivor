@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import WeeklysResultsTable from '../Components/WeeklysResultsTable';
 
-export default function WeeklysResults() {
+export default function Weeklys() {
   // Questions from Josh and proper answer to questions
   const [weeklyQuestionsAndAnswers, setWeeklyQuestionsAndAnswers] = useState([]);
   // Answers from players

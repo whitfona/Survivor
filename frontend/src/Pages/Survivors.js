@@ -6,12 +6,13 @@ export default function Survivors() {
   const [ contestantTotals, setContestantTotals ] = useState([]);
 
   useEffect(() => {
-    axios.get('https://survivor-node-js.herokuapp.com/survivor-totals',)
+    axios.get('https://survivor-node-js.herokuapp.com/survivor-totals')
       .then((data) => {
         setContestantTotals(data.data)
       })
       .catch((err) => console.log(err));
   }, []);
+  console.log(contestantTotals)
 
   const bgColor = (tribe) => {
     if (tribe === undefined) return;
@@ -29,6 +30,7 @@ export default function Survivors() {
            <th>Survivor</th>
            <th>Tribe</th>
            <th>Total Points</th>
+           <th>Finish</th>
          </tr>
        </thead>
        {contestantTotals.map((contestant, index) => (
@@ -37,6 +39,7 @@ export default function Survivors() {
              <td>{contestant.contestantName.replace(/_/g," ")}</td>
              <td style={{ backgroundColor: bgColor(contestant.tribeOne) }}>{contestant.tribeOne}</td>
              <td>{contestant.total}</td>
+             <td>{contestant.finishPosition}</td>
            </tr>
          </tbody>
        ))}

@@ -348,7 +348,7 @@ app.get('/players', (req, res) => {
 
 // Get Contestant and their total score
 app.get('/survivor-totals', (req, res) => {
-  connection.query('SELECT Player_ID, Player_Name, Player_Tribe, Admin FROM Players;SELECT MainChallengeAdmin.MC_Questions, MainChallengeAdmin.MC_Point_Value, MainChallengeResults.* FROM MainChallengeAdmin JOIN MainChallengeResults WHERE MainChallengeAdmin.Question_Number = MainChallengeResults.Question_Number;SELECT Contestant_ID, Contestant_Name, Contestant_Tribe_One FROM `Contestants`;', (err, result) => {
+  connection.query('SELECT Player_ID, Player_Name, Player_Tribe, Admin FROM Players;SELECT MainChallengeAdmin.MC_Questions, MainChallengeAdmin.MC_Point_Value, MainChallengeResults.* FROM MainChallengeAdmin JOIN MainChallengeResults WHERE MainChallengeAdmin.Question_Number = MainChallengeResults.Question_Number;SELECT * FROM `Contestants`;', (err, result) => {
     if (err) {
       console.log(err);
     } else {
@@ -360,7 +360,7 @@ app.get('/survivor-totals', (req, res) => {
       let tribeTotals= [];
 
       for (let i = 0; i < result[2].length; i++) {
-        tribeTotals[i] = { contestantName: result[2][i].Contestant_Name.replace(/ /g,"_"), total: 0, tribeOne: result[2][i].Contestant_Tribe_One }
+        tribeTotals[i] = { contestantName: result[2][i].Contestant_Name.replace(/ /g,"_"), total: 0, tribeOne: result[2][i].Contestant_Tribe_One, tribeTwo: result[2][i].Contestant_Tribe_Two, finishPosition: result[2][i].Contestant_Finish_Position }
       }
 
       result[1].forEach((item) => {  
@@ -423,7 +423,8 @@ app.post('/create-user', (req, res) => {
                 console.log(err)
                 res.status(400).send('Error setting up player, please call Josh.')
               } else {
-                res.send('Player Added!');
+                res.status(200).send('Player Added!');
+                addPlayerToAdvantage(email);
               }
             })
           }
@@ -432,6 +433,24 @@ app.post('/create-user', (req, res) => {
     }
   })
 })
+
+// Add player to advantage table
+const addPlayerToAdvantage = (email) => {
+  connection.query('SELECT Player_ID FROM Players WHERE Player_Email = ?;', [email], (err, result) => {
+    if (err) {
+      console.log('Error, could not find new player in players table');
+    } else {
+      connection.query('INSERT INTO Advantage (Player_ID) VALUES (?);', [result[0].Player_ID], (err, result) => {
+        console.log(result)
+        if (err) {
+          console.log('Error, not create new player in advantage table');
+        } else {
+          console.log('New player added to advantage table!')
+        }
+      })
+    }
+  })
+}
 
 // Login User
 app.post('/login-user', (req, res) => {
@@ -625,6 +644,32 @@ app.post('/set-pay-bonus', (req, res) => {
       res.status(400).send('Error updating pay bonus score.')
     } else {
       res.status(200).send('Player Pay Bonus Updated!');
+    }
+  })
+})
+
+// Set Tribe Two name into contestants table
+app.post('/set-tribe-two', (req, res) => {
+  const { contestant, value } = req.body;
+
+  connection.query('UPDATE Contestants SET Contestant_Tribe_Two = ? WHERE Contestant_Name = ?;', [value, contestant], (err, result) => {
+    if(err) {
+      res.status(400).send('Error updating tribe two name.')
+    } else {
+      res.status(200).send('Tribe Two Updated!');
+    }
+  })
+})
+
+// Set contestant finish position into contestants table
+app.post('/set-contestant-finish', (req, res) => {
+  const { contestant, value } = req.body;
+
+  connection.query('UPDATE Contestants SET Contestant_Finish_Position = ? WHERE Contestant_Name = ?;', [value, contestant], (err, result) => {
+    if(err) {
+      res.status(400).send('Error updating players finish position.')
+    } else {
+      res.status(200).send('Updated player finish position!');
     }
   })
 })

@@ -115,7 +115,7 @@ export default function WeeklysAdminPanel({ week }) {
 
   return (
     <div id="weeklys-admin" className="my-3">
-      <h2 className="my-1">Weeklys Section</h2>
+      <h2 className="my-1">Weeklys</h2>
       <div className="weekly-admin-grid">
         <form onSubmit={submitWeeklyQuestions}>
           <input type="text" value={questions.q1} name="q1" id="q1" placeholder="Question 1..." onChange={handleQuestionChange} />

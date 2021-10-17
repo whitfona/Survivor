@@ -42,7 +42,7 @@ export default function AdvantageAdminPanel({ week }) {
 
   return (
     <div className="my-3">
-      <h2 className="my-2">Advantage Section</h2>
+      <h2 className="my-2">Advantage</h2>
       <button className="btn-primary" onClick={(e) => getRandomPlayer(e)} type="submit">Click to Get Random Player</button>
 
       <form className="advantage-form" onSubmit={(e) => submitAdvantageScores(e)}>
