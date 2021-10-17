@@ -81,7 +81,7 @@ export default function AdvantageAdminPanel({ week }) {
   return (
     <>
     {(contestantsLoaded && questionsLoaded) && <div className="my-3">
-      <h2 className="my-1">Tribe Score Section</h2>
+      <h2 className="my-1">Tribe Score</h2>
 
       <button onClick={createWeek} className="btn-primary">Click to Create Week {week}</button>
       {showMessage && <h3 className="my-1">{message}</h3>}

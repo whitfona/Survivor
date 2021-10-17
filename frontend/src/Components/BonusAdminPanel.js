@@ -67,7 +67,7 @@ export default function BonusAdminPanel() {
   return (
     <div className="bonus-flex my-3">
       <div>
-        <h2 className="my-1">Bonus Section</h2>
+        <h2 className="my-1">Bonus</h2>
 
         <form className="advantage-form" onSubmit={(e) => sendBonus(e)}>
           <label htmlFor="disadvantagedPlayer">Set bonus for player: </label>
@@ -84,7 +84,7 @@ export default function BonusAdminPanel() {
       </div>
     
       <div>
-        <h2 className="my-1">Bonus Pay Section</h2>
+        <h2 className="my-1">Bonus Pay</h2>
 
         <form className="advantage-form" onSubmit={(e) => sendPayBonus(e)}>
           <label htmlFor="payBonusPlayer">Set pay bonus for player: </label>

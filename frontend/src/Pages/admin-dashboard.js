@@ -4,10 +4,11 @@ import WeeklysAdminPanel from '../Components/WeeklysAdminPanel'
 import TribeScoreAdminPanel from '../Components/TribeScoreAdminPanel'
 import axios from 'axios'
 import BonusAdminPanel from '../Components/BonusAdminPanel'
+import SurvivorAdminPanel from '../Components/SurvivorAdminPanel'
 
 export default function AdminDashboard() {
 
-    const [ week, setWeek ] = useState(1);
+  const [ week, setWeek ] = useState(1);
 
   useEffect(() => {
     axios.post('https://survivor-node-js.herokuapp.com/set-week', { week} )
@@ -21,7 +22,7 @@ export default function AdminDashboard() {
   return (
     <div id="admin-dashboard">
       <h1>Admin Dashboard</h1>
-      <div className="my-2">
+      <div className="mt-2">
         <label htmlFor="week">Set Week: </label>
         <select name="week" onChange={(e) => setWeek(e.target.value)}>
           <option value="1">1</option>
@@ -40,8 +41,9 @@ export default function AdminDashboard() {
           <option value="14">14</option>
         </select>
       </div>
-      < BonusAdminPanel />
       < AdvantageAdminPanel week={week} />
+      < BonusAdminPanel />
+      < SurvivorAdminPanel />
       < WeeklysAdminPanel week={week} />
       < TribeScoreAdminPanel week={week} />
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from 'axios'
 import MainChallengeTable from "../Components/MainChallengeTable";
 
-export default function MCResults() {
+export default function TribeScores() {
   
   const [mcQuestionsAndResults, setMCQuestionsAndResults] = useState([]);
   const [mcTotals, setMCTotals] = useState([]);

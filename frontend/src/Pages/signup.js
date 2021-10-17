@@ -33,7 +33,6 @@ export default function Signup(props) {
     } else {
       axios.post('https://survivor-node-js.herokuapp.com/create-user', user)
         .then((res) => {
-          console.log(res);
           props.history.push('/login');
         })
         .catch((err) => {
