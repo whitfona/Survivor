@@ -23,12 +23,11 @@ export default function WeeklysResultsTable({ questions, answers }) {
             <tr>
               <td>{result.Player_Name}</td>
               <td className="font-900"> {result.Week_Total}</td>
-              <td>{result.Q1_Answer}</td>
-              {/* <td>{result.Q2_Answer}</td> */}
+              <td>{(result.Q1_Answer === 1) ? "True" : "False"}</td>
               <td>{(result.Q2_Answer === 1) ? "True" : "False"}</td>
               <td>{(result.Q3_Answer === 1) ? "True" : "False"}</td>
               <td>{(result.Q4_Answer === 1) ? "True" : "False"}</td>
-              <td>{(result.Q5_Answer === 1) ? "True" : "False"}</td>
+              <td>{result.Q5_Answer}</td>
             </tr>
           </tbody>
         ))}
