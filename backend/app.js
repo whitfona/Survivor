@@ -80,19 +80,19 @@ app.get('/weeklys-players-answers', (req, res) => {
                 const q4Answer = result[0][j].Weeklys_Q4_Answer;
                 const q5Answer = result[0][j].Weeklys_Q5_Answer;
     
-                if (!result[1][i].WC_Q1_Answer) {
-                  score += 0;
-                } else {
-                  let playerQ1Array = result[1][i].WC_Q1_Answer.split(', ');
-                  // let playerQ2Array = result[1][i].WC_Q2_Answer.split(', ');
-      
-                  if (q1Answer.includes(playerQ1Array[0]) || q1Answer.includes(playerQ1Array[1])) { score += 2; }
-                  // if (q2Answer.includes(playerQ2Array[0]) || q1Answer.includes(playerQ2Array[1])) { score += 2; }
-                }
+                if (result[1][i].WC_Q1_Answer === q1Answer) { score += 2; }
                 if (result[1][i].WC_Q2_Answer === q2Answer) { score += 2; }
                 if (result[1][i].WC_Q3_Answer === q3Answer) { score += 2; }
                 if (result[1][i].WC_Q4_Answer === q4Answer) { score += 2; }
-                if (result[1][i].WC_Q5_Answer === q5Answer) { score += 2; }
+                if (!result[1][i].WC_Q5_Answer || result[1][i].WC_Q5_Answer === undefined || result[1][i].WC_Q5_Answer === null) {
+                  score += 0;
+                } else {
+                  let playerQ5Array = result[1][i].WC_Q5_Answer.split(', ');
+                  // let playerQ2Array = result[1][i].WC_Q2_Answer.split(', ');
+      
+                  if (q5Answer.includes(playerQ5Array[0]) || q5Answer.includes(playerQ5Array[1])) { score += 2; }
+                  // if (q2Answer.includes(playerQ2Array[0]) || q1Answer.includes(playerQ2Array[1])) { score += 2; }
+                }
                 }
               }
             return score;
@@ -321,35 +321,20 @@ app.get('/players', (req, res) => {
         const q4Answer = adminAnswers.Weeklys_Q4_Answer;
         const q5Answer = adminAnswers.Weeklys_Q5_Answer;
 
-        let playerQ1Array = playerAnswers.WC_Q1_Answer.split(', ');
-        // let playerQ2Array = playerAnswers.WC_Q2_Answer.split(', ');
-
-        if (!playerAnswers.WC_Q4_Answer) {
-          score += 0;
-        } else {
-          if (q1Answer.includes(playerQ1Array[0]) || q1Answer.includes(playerQ1Array[1])) { score += 2; }
-          // if (q2Answer.includes(playerQ2Array[0]) || q1Answer.includes(playerQ2Array[1])) { score += 2; }
-
-        }
-        if (playerAnswers.WC_Q2_Answer === q2Answer) { score += 2;}
-        if (playerAnswers.WC_Q3_Answer === q3Answer) { score += 2;}
+        
+        if (playerAnswers.WC_Q1_Answer === q1Answer) { score += 2; }
+        if (playerAnswers.WC_Q2_Answer === q2Answer) { score += 2; }
+        if (playerAnswers.WC_Q3_Answer === q3Answer) { score += 2; }
         if (playerAnswers.WC_Q4_Answer === q4Answer) { score += 2; }
-        if (playerAnswers.WC_Q5_Answer === q5Answer) { score += 2; }
-
-        if (!result[1][i].WC_Q1_Answer) {
+        if (!playerAnswers.WC_Q5_Answer || playerAnswers.WC_Q5_Answer === undefined || playerAnswers.WC_Q5_Answer === null) {
           score += 0;
         } else {
-          let playerQ1Array = result[1][i].WC_Q1_Answer.split(', ');
-          // let playerQ2Array = result[1][i].WC_Q2_Answer.split(', ');
-
-          if (q1Answer.includes(playerQ1Array[0]) || q1Answer.includes(playerQ1Array[1])) { score += 2; }
+          let playerQ5Array = playerAnswers.WC_Q5_Answer.split(', ');
+          // let playerQ2Array = playerAnswers.WC_Q2_Answer.split(', ');
+          if (q5Answer.includes(playerQ5Array[0]) || q5Answer.includes(playerQ5Array[1])) { score += 2; }
           // if (q2Answer.includes(playerQ2Array[0]) || q1Answer.includes(playerQ2Array[1])) { score += 2; }
         }
-        if (result[1][i].WC_Q2_Answer === q2Answer) { score += 2; }
-        if (result[1][i].WC_Q3_Answer === q3Answer) { score += 2; }
-        if (result[1][i].WC_Q4_Answer === q4Answer) { score += 2; }
-        if (result[1][i].WC_Q5_Answer === q5Answer) { score += 2; }
-
+        
         return score;
       }
 
