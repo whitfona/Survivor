@@ -48,17 +48,18 @@ export default function WeeklysSubmissionForm() {
       .catch((err) => {
         console.log(err)
       })
-  },[week])
+  },[week, currentPlayer.Player_ID])
 
   const [q1a, setq1a] = useState('Eric E');
   const [q1b, setq1b] = useState('Eric E');
-  const [q2a, setq2a] = useState('Eric E');
-  const [q2b, setq2b] = useState('Eric E');
+  // const [q2a, setq2a] = useState('Eric E');
+  // const [q2b, setq2b] = useState('Eric E');
+  const [q2, setq2] = useState(0);
   const [q3, setq3] = useState(0);
   const [q4, setq4] = useState(0);
   const [q5, setq5] = useState(0);
   const q1 = `${q1a}, ${q1b}`;
-  const q2 = `${q2a}, ${q2b}`;
+  // const q2 = `${q2a}, ${q2b}`;
   const userID = currentPlayer.Player_ID
 
   const sendWeeklys = (e) => {
@@ -92,7 +93,7 @@ export default function WeeklysSubmissionForm() {
     : <div className="weeklysForm">
       <h3 className="my-2">Week {week} Questions</h3>
       <form onSubmit={sendWeeklys} method="post">
-        <div className="flex">
+        {/* <div className="flex">
         <label htmlFor="q1">{questions.Weeklys_Q1}
           <div>
             <select name="q1a" value={q1a} onChange={(e) => setq1a(e.target.value)}>
@@ -122,19 +123,42 @@ export default function WeeklysSubmissionForm() {
             </select>
           </div>
         </label>
-        </div>
+        </div> */}
         <div className="flex">
+        <label htmlFor="q2">{questions.Weeklys_Q2}
+          <div className="checkbox-container"><span>No</span><input type="checkbox" name="q2" id="q2" checked={q2} onChange={() => !q2 ? setq2(1) : setq2(0)} /><span>Yes</span></div>
+        </label>
+
         <label htmlFor="q3">{questions.Weeklys_Q3}
           <div className="checkbox-container"><span>No</span><input type="checkbox" name="q3" id="q3" checked={q3} onChange={() => !q3 ? setq3(1) : setq3(0)} /><span>Yes</span></div>
         </label>
-
+        </div>
+        <div className="flex">
         <label htmlFor="q4">{questions.Weeklys_Q4}
           <div className="checkbox-container"><span>No</span><input type="checkbox" name="q4" id="q4" checked={q4} onChange={() => !q4 ? setq4(1) : setq4(0)} /><span>Yes</span></div>
         </label>
-        </div>
-        <div className="flex-2">
+
         <label htmlFor="q5">{questions.Weeklys_Q5}
           <div className="checkbox-container"><span>No</span><input type="checkbox" name="q5" id="q5" checked={q5} onChange={() => !q5 ? setq5(1) : setq5(0)} /><span>Yes</span></div>
+        </label>
+        </div>
+        <div className="flex-2">
+        {/* <label htmlFor="q5">{questions.Weeklys_Q5}
+          <div className="checkbox-container"><span>No</span><input type="checkbox" name="q5" id="q5" checked={q5} onChange={() => !q5 ? setq5(1) : setq5(0)} /><span>Yes</span></div>
+        </label> */}
+        <label htmlFor="q1">{questions.Weeklys_Q1}
+          <div>
+            <select name="q1a" value={q1a} onChange={(e) => setq1a(e.target.value)}>
+              {contestants.map(player => {
+                return <option value={player.Contestant_Name} key={player.Contestant_ID}>{player.Contestant_Name}</option>
+              })}
+            </select>
+            <select name="q1b" value={q1b} onChange={(e) => setq1b(e.target.value)}>
+              {contestants.map(player => {
+                return <option value={player.Contestant_Name} key={player.Contestant_ID}>{player.Contestant_Name}</option>
+              })}
+            </select>
+          </div>
         </label>
 
         <input className="btn-primary" type="submit" value="Submit" />

@@ -80,11 +80,16 @@ app.get('/weeklys-players-answers', (req, res) => {
                 const q4Answer = result[0][j].Weeklys_Q4_Answer;
                 const q5Answer = result[0][j].Weeklys_Q5_Answer;
     
-                let playerQ1Array = result[1][i].WC_Q1_Answer.split(', ');
-                let playerQ2Array = result[1][i].WC_Q2_Answer.split(', ');
-    
-                if (q1Answer.includes(playerQ1Array[0]) || q1Answer.includes(playerQ1Array[1])) { score += 2; }
-                if (q2Answer.includes(playerQ2Array[0]) || q1Answer.includes(playerQ2Array[1])) { score += 2; }
+                if (!result[1][i].WC_Q1_Answer) {
+                  score += 0;
+                } else {
+                  let playerQ1Array = result[1][i].WC_Q1_Answer.split(', ');
+                  // let playerQ2Array = result[1][i].WC_Q2_Answer.split(', ');
+      
+                  if (q1Answer.includes(playerQ1Array[0]) || q1Answer.includes(playerQ1Array[1])) { score += 2; }
+                  // if (q2Answer.includes(playerQ2Array[0]) || q1Answer.includes(playerQ2Array[1])) { score += 2; }
+                }
+                if (result[1][i].WC_Q2_Answer === q2Answer) { score += 2;}
                 if (result[1][i].WC_Q3_Answer === q3Answer) { score += 2;}
                 if (result[1][i].WC_Q4_Answer === q4Answer) { score += 2; }
                 if (result[1][i].WC_Q5_Answer === q5Answer) { score += 2; }
@@ -612,8 +617,8 @@ app.get('/week', (req, res) => {
 // Set week into database
 app.post('/set-week', (req, res) => {
   const { week } = req.body;
-
-  connection.query('UPDATE Week SET week = ?;', week, (err, result) => {
+  
+  connection.query('UPDATE Week SET week = ?;', [week], (err, result) => {
     if(err) {
       console.log(err);
     } else {
