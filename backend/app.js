@@ -89,8 +89,8 @@ app.get('/weeklys-players-answers', (req, res) => {
                   if (q1Answer.includes(playerQ1Array[0]) || q1Answer.includes(playerQ1Array[1])) { score += 2; }
                   // if (q2Answer.includes(playerQ2Array[0]) || q1Answer.includes(playerQ2Array[1])) { score += 2; }
                 }
-                if (result[1][i].WC_Q2_Answer === q2Answer) { score += 2;}
-                if (result[1][i].WC_Q3_Answer === q3Answer) { score += 2;}
+                if (result[1][i].WC_Q2_Answer === q2Answer) { score += 2; }
+                if (result[1][i].WC_Q3_Answer === q3Answer) { score += 2; }
                 if (result[1][i].WC_Q4_Answer === q4Answer) { score += 2; }
                 if (result[1][i].WC_Q5_Answer === q5Answer) { score += 2; }
                 }
@@ -322,13 +322,33 @@ app.get('/players', (req, res) => {
         const q5Answer = adminAnswers.Weeklys_Q5_Answer;
 
         let playerQ1Array = playerAnswers.WC_Q1_Answer.split(', ');
-        let playerQ2Array = playerAnswers.WC_Q2_Answer.split(', ');
+        // let playerQ2Array = playerAnswers.WC_Q2_Answer.split(', ');
 
-        if (q1Answer.includes(playerQ1Array[0]) || q1Answer.includes(playerQ1Array[1])) { score += 2; }
-        if (q2Answer.includes(playerQ2Array[0]) || q1Answer.includes(playerQ2Array[1])) { score += 2; }
+        if (!playerAnswers.WC_Q4_Answer) {
+          score += 0;
+        } else {
+          if (q1Answer.includes(playerQ1Array[0]) || q1Answer.includes(playerQ1Array[1])) { score += 2; }
+          // if (q2Answer.includes(playerQ2Array[0]) || q1Answer.includes(playerQ2Array[1])) { score += 2; }
+
+        }
+        if (playerAnswers.WC_Q2_Answer === q2Answer) { score += 2;}
         if (playerAnswers.WC_Q3_Answer === q3Answer) { score += 2;}
         if (playerAnswers.WC_Q4_Answer === q4Answer) { score += 2; }
         if (playerAnswers.WC_Q5_Answer === q5Answer) { score += 2; }
+
+        if (!result[1][i].WC_Q1_Answer) {
+          score += 0;
+        } else {
+          let playerQ1Array = result[1][i].WC_Q1_Answer.split(', ');
+          // let playerQ2Array = result[1][i].WC_Q2_Answer.split(', ');
+
+          if (q1Answer.includes(playerQ1Array[0]) || q1Answer.includes(playerQ1Array[1])) { score += 2; }
+          // if (q2Answer.includes(playerQ2Array[0]) || q1Answer.includes(playerQ2Array[1])) { score += 2; }
+        }
+        if (result[1][i].WC_Q2_Answer === q2Answer) { score += 2; }
+        if (result[1][i].WC_Q3_Answer === q3Answer) { score += 2; }
+        if (result[1][i].WC_Q4_Answer === q4Answer) { score += 2; }
+        if (result[1][i].WC_Q5_Answer === q5Answer) { score += 2; }
 
         return score;
       }
