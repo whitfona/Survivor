@@ -11,6 +11,16 @@ export default function AdminDashboard() {
   const [ week, setWeek ] = useState(1);
 
   useEffect(() => {
+    axios.get('https://survivor-node-js.herokuapp.com/week')
+      .then((data) => {
+        setWeek(data.data[0].week)
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  }, [])
+
+  useEffect(() => {
     axios.post('https://survivor-node-js.herokuapp.com/set-week', { week} )
       .then((res) => {
         // console.log(res)
@@ -24,7 +34,7 @@ export default function AdminDashboard() {
       <h1>Admin Dashboard</h1>
       <div className="mt-2">
         <label htmlFor="week">Set Week: </label>
-        <select name="week" onChange={(e) => setWeek(e.target.value)}>
+        <select name="week" value={week} onChange={(e) => setWeek(e.target.value)}>
           <option value="1">1</option>
           <option value="2">2</option>
           <option value="3">3</option>
