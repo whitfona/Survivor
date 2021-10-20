@@ -57,11 +57,11 @@ export default function Weeklys() {
       <>
       {week.map(item => (
         <div className="my-1">
-          <p>{item.Weeklys_Q1}: <span className="font-900">{item.Weeklys_Q1_Answer}</span></p>
-          <p>{item.Weeklys_Q2}: <span className="font-900">{item.Weeklys_Q2_Answer}</span></p>
+          <p>{item.Weeklys_Q1} <span className="font-900">{(item.Weeklys_Q1_Answer) ? "True" : "False"}</span></p>
+          <p>{item.Weeklys_Q2} <span className="font-900">{(item.Weeklys_Q2_Answer) ? "True" : "False"}</span></p>
           <p>{item.Weeklys_Q3} <span className="font-900">{(item.Weeklys_Q3_Answer) ? "True" : "False"}</span></p>
-          <p>{item.Weeklys_Q4} <span className="font-900">{(item.Weeklys_Q4_Answer) ? "True" : "False"}</span></p>
-          <p>{item.Weeklys_Q5} <span className="font-900">{(item.Weeklys_Q5_Answer) ? "True" : "False"}</span></p> 
+          <p>{item.Weeklys_Q4} <span className="font-900">{(item.Weeklys_Q4_Answer) ? "True" : "False"}</span></p> 
+          <p>{item.Weeklys_Q5}: <span className="font-900">{item.Weeklys_Q5_Answer}</span></p>
         </div>
       ))}
     </>
